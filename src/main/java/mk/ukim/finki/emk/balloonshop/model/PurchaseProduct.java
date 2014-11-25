@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class PuchaseProduct {
+public class PurchaseProduct {
 
 	@Id
 	@GeneratedValue
