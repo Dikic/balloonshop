@@ -35,7 +35,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public void updateCategory(Category c) {
-		Category category = getCategory(c.getId());
+		Category category = getCategory((int) c.getId());
 		if (category != null) {
 			category.setDescription(c.getDescription());
 			category.setName(c.getName());
