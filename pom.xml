@@ -151,7 +151,7 @@
 	</repositories>
 
 	<build>
-		<finalName>elab</finalName>
+		<finalName>balloonshop</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
