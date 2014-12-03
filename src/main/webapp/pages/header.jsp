@@ -9,6 +9,7 @@
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="../css/bootstrap-theme.min.css" />
+	<link type="text/css" rel="stylesheet" href="../css/balloonshop.css" />
   </head>
   <body style="background:url(&#39;../images/balloons_back_bg.jpg&#39;) repeat">
        <br/>
@@ -36,7 +37,7 @@
           <!-- sidebar -->
 		  <div class="container-fluid">
 		  <div class="row">
-          <div class="list-group">
+          <div class="list-group shadow">
           <div class="list-group-item list-group-item-warning">Choose a category</div>
           <a class="list-group-item" href="#">Love &amp; romance</a> 
           <a class="list-group-item" href="#">Birthdays</a> 
@@ -46,7 +47,7 @@
 		  </div>
 		  </div>
          <div class="row"><!-- shopping cart -->
-                <button class="btn btn-block btn-primary" type="button">
+                <button class="btn btn-block btn-primary shadow" type="button">
 				<span class="glyphicon glyphicon-shopping-cart pull-left"></span>
                    Shopping cart 
 				<span class="badge">2</span>
@@ -58,8 +59,8 @@
         <div class="col-lg-10 col-md-9">
           <!-- main -->
           <div class="row">
-            <div class="col-lg-4 col-sm-6 col-xs-12">
-              <div class="panel panel-default">
+            <div class="col-lg-4 col-sm-6 col-xs-12 ">
+              <div class="panel panel-default shadow">
                 <div class="panel-body">
                   <h3>Balloon title 
                   <small>
@@ -73,7 +74,7 @@
               </div>
             </div>
             <div class="col-lg-4 col-sm-6 col-xs-12">
-              <div class="panel panel-default">
+              <div class="panel panel-default shadow">
                 <div class="panel-body">
                   <h3>Balloon title 
                   <small>
@@ -87,7 +88,7 @@
               </div>
             </div>
             <div class="col-lg-4 col-sm-6 col-xs-12">
-              <div class="panel panel-default">
+              <div class="panel panel-default shadow">
                 <div class="panel-body">
                   <h3>Balloon title 
                   <small>
@@ -104,7 +105,7 @@
         </div>
       </div>
       <nav class="text-center">
-        <ul class="pagination">
+        <ul class="pagination shadow">
           <li>
             <a href="#">
             <span aria-hidden="true">&laquo;</span> 
