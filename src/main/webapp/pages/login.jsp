@@ -1,28 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="../css/bootstrap-theme.min.css"/>
-</head>
-<body style="background:url('../images/balloons_back_bg.jpg') repeat"  >
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<div class="container-fluid">
+<div class="modal fade" id="sing-in-modal" tabindex="-1" role="dialog"
+	aria-labelledby="sign-in-label" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title" id="sign-in-label">Sign in</h4>
+			</div>
+			<div class="modal-body">
 
-    <form class="form-signin">
-        <div class="col-md-offset-3 col-md-4">
-            <h1 class="form-signin-heading text-muted">Sign In</h1><br>
-            <input type="text" class="form-control" placeholder="Email add..s" required="" autofocus=""><br>
-            <input type="password" class="form-control" placeholder="Password" required=""><br>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">
-                Sign In
-            </button>
-        </div>
-    </form>
+				<form:form action="/login" htmlEscape="true" method="POST"
+					role="form" commandName="user">
 
+					<div class="container-fluid">
+						<div class="row">
+							<form:input path="username" cssClass="form-control col-xs-12" placeholder="Username"/>
+							
+						</div>
+						<br />
+						<div class="row">
+							<form:password path="password" cssClass="form-control col-xs-12" placeholder="Password"/>
+							
+						</div>
+						<br />
+						<div class="row">
+							<input type="submit" value="Sign in"
+								class="btn btn-primary col-xs-12 col-md-4 col-md-offset-8">
+						</div>
+					</div>
+
+				</form:form>
+
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
 </div>
-</body>
-</html>
+<!-- /.modal -->

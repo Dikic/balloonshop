@@ -14,10 +14,10 @@ public class PurchaseProduct {
 	@GeneratedValue
 	private int id;
 
-	@OneToMany(mappedBy = "puchaseProduct")
+	@OneToMany(mappedBy = "purchaseProduct")
 	private List<Purchase> purchases;
 
-	@OneToMany(mappedBy = "puchaseProduct")
+	@OneToMany(mappedBy = "purchaseProduct")
 	private List<Product> products;
 
 	private int quantity;

@@ -50,6 +50,7 @@ public class CartDaoImpl implements CartDao {
 		return (Cart) getCurrentSession().get(Cart.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cart> getAllCarts() {
 		return (List<Cart>) getCurrentSession().createQuery("from Cart").list();

@@ -35,6 +35,17 @@ public class Purchase {
 	@ManyToOne
 	private PurchaseDetail purchaseDetail;
 
+	@ManyToOne
+	private PurchaseProduct purchaseProduct;
+
+	public PurchaseProduct getPurchaseProduct() {
+		return purchaseProduct;
+	}
+
+	public void setPurchaseProduct(PurchaseProduct purchaseProduct) {
+		this.purchaseProduct = purchaseProduct;
+	}
+
 	public PurchaseDetail getPurchaseDetail() {
 		return purchaseDetail;
 	}

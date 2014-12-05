@@ -1,9 +1,13 @@
 package mk.ukim.finki.emk.balloonshop.model;
 
+import java.util.List;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+@Entity
 public class PurchaseDetail {
 
 	@Id
@@ -17,10 +21,10 @@ public class PurchaseDetail {
 	private double unitCost;
 
 	@OneToMany(mappedBy = "purchaseDetail")
-	private Product product;
+	private List<Product> product;
 
 	@OneToMany(mappedBy = "purchaseDetail")
-	private Purchase purchase;
+	private List<Purchase> purchase;
 
 	public int getId() {
 		return id;
@@ -54,19 +58,19 @@ public class PurchaseDetail {
 		this.unitCost = unitCost;
 	}
 
-	public Product getProduct() {
+	public List<Product> getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(List<Product> product) {
 		this.product = product;
 	}
 
-	public Purchase getPurchase() {
+	public List<Purchase> getPurchase() {
 		return purchase;
 	}
 
-	public void setPurchase(Purchase purchase) {
+	public void setPurchase(List<Purchase> purchase) {
 		this.purchase = purchase;
 	}
 
