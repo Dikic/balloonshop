@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -26,13 +26,20 @@
 					src="${pageContext.request.contextPath}/images/logo.png"
 					class="img-responsive" alt="Responsive image" />
 			</div>
-			<div class="col-sm-10">
+			<div class="col-sm-8">
 				<h1>
-					Balloon Shop <small>selling happiness</small>
+					<strong>Balloon Shop</strong> <small>selling happiness</small>
 				</h1>
-				<button type="button" class="btn btn-link" data-toggle="modal"
-					data-target="#sing-in-modal">sign in</button>
+			</div>
+			<br>
+			<div class="col-sm-2">
+				<div class="btn-group " role="group">
+					<button type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#sing-in-modal">Sign in</button>
+					<button type="button" class="btn btn-warning" data-toggle="modal"
+						data-target="#sign-up-modal">Sign up</button>
 
+				</div>
 			</div>
 
 		</div>
@@ -65,57 +72,16 @@
 							Shopping cart <span class="badge">2</span>
 						</button>
 					</div>
+					<br>
 					<!-- shopping cart -->
 				</div>
 			</div>
 			<div class="col-lg-10 col-md-9">
 				<!-- main -->
 				<div class="row">
-					<div class="col-lg-4 col-sm-6 col-xs-12 ">
-						<div class="panel panel-default shadow">
-							<div class="panel-body">
-								<h3>
-									Balloon title <small> <a href="#">(View details)</a>
-									</small>
-								</h3>
-								<img src="${pageContext.request.contextPath}/images/balonce.jpg"
-									class="img img-thumbnail img-responsive" />
-								<h5>Balloon description</h5>
-								<h4>Price</h4>
-								<a href="#">Add to shopping cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-sm-6 col-xs-12">
-						<div class="panel panel-default shadow">
-							<div class="panel-body">
-								<h3>
-									Balloon title <small> <a href="#">(View details)</a>
-									</small>
-								</h3>
-								<img src="${pageContext.request.contextPath}/images/balonce.jpg"
-									class="img img-thumbnail img-responsive" />
-								<h5>Balloon description</h5>
-								<h4>Price</h4>
-								<a href="#">Add to shopping cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-sm-6 col-xs-12">
-						<div class="panel panel-default shadow">
-							<div class="panel-body">
-								<h3>
-									Balloon title <small> <a href="#">(View details)</a>
-									</small>
-								</h3>
-								<img src="${pageContext.request.contextPath}/images/balonce.jpg"
-									class="img img-thumbnail img-responsive" />
-								<h5>Balloon description</h5>
-								<h4>Price</h4>
-								<a href="#">Add to shopping cart</a>
-							</div>
-						</div>
-					</div>
+					<c:forEach begin="0" end="7">
+						<jsp:include page="product_block.jsp"></jsp:include>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -136,5 +102,6 @@
 	</div>
 
 	<jsp:include page="login.jsp"></jsp:include>
+	<jsp:include page="sign_up.jsp"></jsp:include>
 </body>
 </html>

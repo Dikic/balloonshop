@@ -6,7 +6,7 @@
 	aria-labelledby="sign-in-label" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header modal-header-primary">
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 				</button>
@@ -19,16 +19,25 @@
 
 					<div class="container-fluid">
 						<div class="row">
-							<form:input path="username" cssClass="form-control col-xs-12" placeholder="Username"/>
-							
+							<div class="input-group">
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-envelope"></span></span>
+								<form:input path="email" cssClass="form-control col-xs-12"
+									placeholder="Email" />
+							</div>
 						</div>
 						<br />
 						<div class="row">
-							<form:password path="password" cssClass="form-control col-xs-12" placeholder="Password"/>
-							
+							<div class="input-group">
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-lock"></span></span>
+								<form:password path="password" cssClass="form-control col-xs-12"
+									placeholder="Password" />
+							</div>
 						</div>
 						<br />
 						<div class="row">
+						
 							<input type="submit" value="Sign in"
 								class="btn btn-primary col-xs-12 col-md-4 col-md-offset-8">
 						</div>

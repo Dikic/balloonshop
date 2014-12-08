@@ -1,10 +1,40 @@
 body {
-	background: url("../images/balloons_back_bg.jpg") no-repeat center center fixed !important;
+	background: url("../images/balloons_back_bg.jpg") repeat center fixed
+		!important;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover !important;
 }
-.shadow{
-    box-shadow: 10px 10px 30px #111111;
+
+.shadow {
+	box-shadow: 10px 10px 30px #111111;
+}
+
+.modal-header.modal-header-primary {
+	border-radius: 5px 5px 0px 0px;
+	background-color: #337ab7;
+	color: white;
+}
+.modal-header.modal-header-warning {
+	border-radius: 5px 5px 0px 0px;
+	background-color: #f0ad4e;
+	color: white;
+}
+.form-control.form-control-2{
+	width: 50% !important;
+}
+@media screen and (max-width: 992px) {
+	p, .btn, input, div, span, h4, h3 {
+		font-size: 120%;
+	}
+	h1 {
+		font-size: 48px;
+	}
+	h2 {
+		font-size: 44px;
+	}
+	h5 {
+		font-size: 32px;
+	}
 }
