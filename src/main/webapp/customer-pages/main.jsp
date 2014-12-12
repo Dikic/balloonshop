@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1" isELIgnored="false"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
-<meta name="generator"
-	content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
 <meta charset="UTF-8" />
-<title></title>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript"
@@ -16,6 +12,8 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/balloonshop.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Balloon shop emk</title>
 </head>
 <body>
 	<br />
@@ -77,31 +75,26 @@
 				</div>
 			</div>
 			<div class="col-lg-10 col-md-9">
-				<!-- main -->
-				<div class="row">
-					<c:forEach begin="0" end="7">
-						<jsp:include page="product_block.jsp"></jsp:include>
-					</c:forEach>
-				</div>
+				<jsp:include page="${view}.jsp"></jsp:include>
 			</div>
 		</div>
 		<nav class="text-center">
-			<ul class="pagination shadow">
-				<li><a href="#"> <span aria-hidden="true">&laquo;</span> <span
-						class="sr-only">Previous</span></a></li>
-				<li class="active"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#"> <span aria-hidden="true">&raquo;</span> <span
-						class="sr-only">Next</span>
-				</a></li>
-			</ul>
+		<ul class="pagination shadow">
+			<li><a href="#"> <span aria-hidden="true">&laquo;</span> <span
+					class="sr-only">Previous</span></a></li>
+			<li class="active"><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li><a href="#"> <span aria-hidden="true">&raquo;</span> <span
+					class="sr-only">Next</span>
+			</a></li>
+		</ul>
 		</nav>
 	</div>
 
-	<jsp:include page="login.jsp"></jsp:include>
-	<jsp:include page="sign_up.jsp"></jsp:include>
+	<jsp:include page="login-modal.jsp"></jsp:include>
+	<jsp:include page="sign_up-modal.jsp"></jsp:include>
 </body>
 </html>

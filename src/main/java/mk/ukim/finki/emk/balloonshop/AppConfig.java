@@ -80,7 +80,7 @@ public class AppConfig {
 	@Bean
 	public UrlBasedViewResolver setupViewResolver() {
 		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-		resolver.setPrefix("/pages/");
+		// resolver.setPrefix("/pages/");
 		resolver.setSuffix(".jsp");
 		resolver.setViewClass(JstlView.class);
 		return resolver;
