@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -24,16 +25,20 @@ public class BalloonshopController {
 		return "redirect:";
 	}
 
-	@RequestMapping(value = "/")
-	public ModelAndView index() {
-		return new CustomerModelAndView("product_block", "user", new User());
-	}
-
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String loginPost(@ModelAttribute User user, HttpSession session) {
 		userService.addUser(user);
 		session.setAttribute("user", user);
-		return "redirect:";
+		return "redirect:?notice=Your account has been created, please verify your account!";
+	}
+
+	@RequestMapping(value = "/")
+	public ModelAndView index(@RequestParam(required = false) String notice) {
+		System.out.println(notice);
+		ModelAndView view = new CustomerModelAndView("product_block", "user",
+				new User());
+		view.addObject("notice", notice);
+		return view;
 	}
 
 }

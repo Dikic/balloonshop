@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
@@ -7,7 +8,11 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
+<script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/balloon-shop.js"></script>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet"
@@ -16,8 +21,18 @@
 <title>Balloon shop emk</title>
 </head>
 <body>
+
 	<br />
 	<div class="container">
+		<c:if test="${not empty notice}">
+			<div class="alert alert-warning alert-dismissible text-center"
+				role="alert">
+				<button type="button" class="close" data-dismiss="alert">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				${notice }
+			</div>
+		</c:if>
 		<div class="row">
 			<div class=" hidden-xs col-sm-2">
 				<img width="200"

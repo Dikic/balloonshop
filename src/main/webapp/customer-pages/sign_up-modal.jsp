@@ -15,7 +15,8 @@
 			<div class="modal-body">
 
 				<form:form action="${pageContext.request.contextPath}/signup"
-					htmlEscape="true" method="POST" role="form" commandName="user">
+					id="sing-up-form" htmlEscape="true" method="POST" role="form"
+					commandName="user">
 
 					<div class="container-fluid">
 
@@ -25,10 +26,10 @@
 									class="glyphicon glyphicon-user"></span></span>
 								<form:input path="name"
 									cssClass="form-control form-control-2 col-sm-6"
-									placeholder="Name" />
+									placeholder="Name" required="required"/>
 								<form:input path="surname"
 									cssClass="form-control form-control-2 col-sm-6"
-									placeholder="Surname" />
+									placeholder="Surname" required="required"/>
 							</div>
 							<br />
 						</div>
@@ -38,7 +39,7 @@
 								<span class="input-group-addon"><span
 									class="glyphicon glyphicon-envelope"></span></span>
 								<form:input path="email" cssClass="form-control col-xs-12"
-									placeholder="Email" />
+									placeholder="Email" required="required"/>
 							</div>
 						</div>
 						<br />
@@ -47,7 +48,7 @@
 								<span class="input-group-addon"><span
 									class="glyphicon glyphicon-lock"></span></span>
 								<form:password path="password" cssClass="form-control col-xs-12"
-									placeholder="Password" />
+									placeholder="Password" required="required"/>
 							</div>
 						</div>
 						<br>
@@ -55,7 +56,8 @@
 							<div class="input-group">
 								<span class="input-group-addon"><span
 									class="glyphicon glyphicon-lock"></span></span> <input type="password"
-									class="form-control col-xs-12" placeholder="Confirm password" />
+									class="form-control col-xs-12" name="r_password"
+									placeholder="Confirm password" required="required"/>
 							</div>
 						</div>
 						<br />
