@@ -13,7 +13,7 @@
 		</div>
 		<div class="panel-body">
 			<img src="${pageContext.request.contextPath}/images/${param.image}"
-				class="img img-thumbnail img-circle img-responsive text-center" />
+				class="img img-thumbnail img-circle img-responsive img-static" />
 			<h5>
 				${fn:length(param.description) gt maxCharsDesc ?  (fn:substring(param.description,0,maxCharsDesc)) : param.description}
 				${fn:length(param.description) gt maxCharsDesc ? '...':''} <small>

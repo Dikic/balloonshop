@@ -5,6 +5,7 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover !important;
+	-webkit-background-size: cover;
 }
 
 .shadow {
@@ -16,14 +17,17 @@ body {
 	background-color: #337ab7;
 	color: white;
 }
+
 .modal-header.modal-header-warning {
 	border-radius: 5px 5px 0px 0px;
 	background-color: #f0ad4e;
 	color: white;
 }
-.form-control.form-control-2{
+
+.form-control.form-control-2 {
 	width: 50% !important;
 }
+
 @media screen and (max-width: 992px) {
 	p, .btn, input, div, span, h4, h3 {
 		font-size: 120%;
@@ -37,4 +41,8 @@ body {
 	h5 {
 		font-size: 32px;
 	}
+}
+
+.img-static {
+	height: 120px;
 }
