@@ -7,24 +7,23 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class User {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
-	
+
 	private String name;
-	
+
 	private String surname;
 
-	
 	private String password;
-	
+
 	private String email;
-	
+
 	private String authority;
-	
+
 	private String address;
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -33,7 +32,7 @@ public class User {
 		this.address = address;
 	}
 
-	@OneToOne(mappedBy="user")
+	@OneToOne(mappedBy = "user")
 	private Cart cart;
 
 	public Cart getCart() {
@@ -91,7 +90,5 @@ public class User {
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-	
-	
 
 }

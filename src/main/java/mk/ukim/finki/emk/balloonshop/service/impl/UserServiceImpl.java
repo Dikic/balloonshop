@@ -2,6 +2,8 @@ package mk.ukim.finki.emk.balloonshop.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import mk.ukim.finki.emk.balloonshop.dao.UserDao;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
@@ -40,6 +42,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getAllUsers() {
 		return userDao.getAllUsers();
+	}
+
+	@Override
+	public boolean signInUser(User user, HttpSession session) {
+		User dbUser = userDao.checkCredentials(user.getEmail(),
+				user.getPassword());
+
+		session.setAttribute("customer", dbUser);
+		System.out.println(String.format("id: %s", dbUser.getId()));
+		return dbUser != null;
 	}
 
 }

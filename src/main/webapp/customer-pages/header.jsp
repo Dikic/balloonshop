@@ -99,7 +99,7 @@
 		</nav>
 	</div>
 
-	<jsp:include page="login-modal.jsp"></jsp:include>
-	<jsp:include page="sign_up-modal.jsp"></jsp:include>
+	<jsp:include page="sign-in-modal.jsp"></jsp:include>
+	<jsp:include page="sign-up-modal.jsp"></jsp:include>
 </body>
 </html>

@@ -17,7 +17,7 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/balloonshop.css" />
-	<link rel="icon" type="image/png" href="images/speed-logo.png" />
+<link rel="icon" type="image/png" href="images/speed-logo.png" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Balloon shop emk</title>
 </head>
@@ -48,10 +48,19 @@
 			<br>
 			<div class="col-sm-2">
 				<div class="btn-group " role="group">
-					<button type="button" class="btn btn-primary" data-toggle="modal"
-						data-target="#sing-in-modal">Sign in</button>
-					<button type="button" class="btn btn-warning" data-toggle="modal"
-						data-target="#sign-up-modal">Sign up</button>
+
+					<c:if test="${not empty customer}">
+						<a class="btn btn-default"
+							href="${pageContext.request.contextPath}/profile">${customer.name}</a>
+						<a class="btn btn-warning btn-disabled"
+							href="${pageContext.request.contextPath}/signout">sign out </a>
+					</c:if>
+					<c:if test="${empty customer}">
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#sing-in-modal">Sign in</button>
+						<button type="button" class="btn btn-warning" data-toggle="modal"
+							data-target="#sign-up-modal">Sign up</button>
+					</c:if>
 
 				</div>
 			</div>
@@ -70,8 +79,8 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="list-group shadow">
-							<div class="list-group-item list-group-item-info">Choose
-								a category</div>
+							<div class="list-group-item list-group-item-info">Choose a
+								category</div>
 							<a class="list-group-item" href="#">Love &amp; romance</a> <a
 								class="list-group-item" href="#">Birthdays</a> <a
 								class="list-group-item" href="#">Wedding</a> <a
@@ -110,7 +119,7 @@
 		</nav>
 	</div>
 
-	<jsp:include page="login-modal.jsp"></jsp:include>
-	<jsp:include page="sign_up-modal.jsp"></jsp:include>
+	<jsp:include page="sign-in-modal.jsp"></jsp:include>
+	<jsp:include page="sign-up-modal.jsp"></jsp:include>
 </body>
 </html>

@@ -14,7 +14,7 @@
 			</div>
 			<div class="modal-body">
 
-				<form:form action="/login" htmlEscape="true" method="POST"
+				<form:form action="${pageContext.request.contextPath}/signin" htmlEscape="true" method="POST"
 					role="form" commandName="user">
 
 					<div class="container-fluid">

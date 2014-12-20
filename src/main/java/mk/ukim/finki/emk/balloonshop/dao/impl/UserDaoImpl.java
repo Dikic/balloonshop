@@ -7,6 +7,7 @@ import mk.ukim.finki.emk.balloonshop.model.User;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -56,5 +57,18 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getAllUsers() {
 		return (List<User>) getCurrentSession().createQuery("from User").list();
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		return (User) getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("email", email)).uniqueResult();
+	}
+
+	@Override
+	public User checkCredentials(String email, String password) {
+		return (User) getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.eq("email", email))
+				.add(Restrictions.eq("password", password)).uniqueResult();
 	}
 }
