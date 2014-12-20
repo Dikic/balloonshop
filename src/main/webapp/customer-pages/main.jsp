@@ -17,6 +17,7 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/balloonshop.css" />
+	<link rel="icon" type="image/png" href="images/speed-logo.png" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Balloon shop emk</title>
 </head>
@@ -69,7 +70,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="list-group shadow">
-							<div class="list-group-item list-group-item-warning">Choose
+							<div class="list-group-item list-group-item-info">Choose
 								a category</div>
 							<a class="list-group-item" href="#">Love &amp; romance</a> <a
 								class="list-group-item" href="#">Birthdays</a> <a

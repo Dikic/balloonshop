@@ -3,6 +3,7 @@ package mk.ukim.finki.emk.balloonshop.controller;
 import javax.servlet.http.HttpSession;
 
 import mk.ukim.finki.emk.balloonshop.model.User;
+import mk.ukim.finki.emk.balloonshop.service.ProductService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 
@@ -20,6 +21,9 @@ public class BalloonshopController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	ProductService productService;
+
 	@RequestMapping(value = "/*")
 	public String invalid() {
 		return "redirect:";
@@ -35,10 +39,9 @@ public class BalloonshopController {
 	@RequestMapping(value = "/")
 	public ModelAndView index(@RequestParam(required = false) String notice) {
 		System.out.println(notice);
-		ModelAndView view = new CustomerModelAndView("product_block", "user",
-				new User());
+		ModelAndView view = new CustomerModelAndView("home", "user", new User());
 		view.addObject("notice", notice);
+		view.addObject("products", productService.getAllProducts());
 		return view;
 	}
-
 }
