@@ -17,11 +17,15 @@
 			<h5>
 				${fn:length(param.description) gt maxCharsDesc ?  (fn:substring(param.description,0,maxCharsDesc)) : param.description}
 				${fn:length(param.description) gt maxCharsDesc ? '...':''} <small>
-					<a href="#">(View details)</a>
+					<a href="${pageContext.request.contextPath}/details/${param.id}">(View
+						details)</a>
 				</small>
 			</h5>
+
+		</div>
+		<div class="panel-footer">
 			<h4>${param.price}&dollar;</h4>
-			<a href="#">Add to shopping cart</a>
+			<a href="${pageContext.request.contextPath}/add-to-cart/${param.id}">Add to shopping cart</a>
 		</div>
 	</div>
 </div>

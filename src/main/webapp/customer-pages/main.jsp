@@ -17,7 +17,7 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/balloonshop.css" />
-<link rel="icon" type="image/png" href="images/speed-logo.png" />
+<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/speed-logo.png" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Balloon shop emk</title>
 </head>
@@ -67,11 +67,7 @@
 
 		</div>
 		<hr />
-		<div class="row">
-			<div class="col-lg-10 col-lg-offset-2">
-				<h3>Our products</h3>
-			</div>
-		</div>
+		
 		<!-- header -->
 		<div class="row">
 			<div class="col-lg-2 col-md-3">
@@ -103,20 +99,7 @@
 				<jsp:include page="${view}.jsp"></jsp:include>
 			</div>
 		</div>
-		<nav class="text-center">
-		<ul class="pagination shadow">
-			<li><a href="#"> <span aria-hidden="true">&laquo;</span> <span
-					class="sr-only">Previous</span></a></li>
-			<li class="active"><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#"> <span aria-hidden="true">&raquo;</span> <span
-					class="sr-only">Next</span>
-			</a></li>
-		</ul>
-		</nav>
+		
 	</div>
 
 	<jsp:include page="sign-in-modal.jsp"></jsp:include>

@@ -1,36 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="../css/bootstrap-theme.min.css"/>
-</head>
-<body>
-<div class="container">
-
-    <!-- Page Heading -->
-    <div class="row">
-        <div class="col-lg-12 col-lg-offset-1">
-            <h1 class="page-header">Balloon details
-            </h1>
-        </div>
-    </div>
-    <!-- /.row -->
-    <div class="row">
-        <div class="col-md-5 col-md-offset-1">
-                <img class="img-responsive img-thumbnail" src="../images/balonce.jpg" alt="" >
-        </div>
-        <div class="col-md-6">
-            <h3>Balloon title</h3>
-            <h3>Price</h3>
-            <p>Balloon description</p>
-            <a class="btn btn-primary" href="#">Add to cart <span class="glyphicon glyphicon-shopping-cart"></span></a>
-        </div>
-    </div>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<div class="container-fluid jumbotron shadow">
+	<h2>${product.name}</h2>
+	<hr />
+	<div class="media">
+		<div class="media-left">
+			<img class="img-responsive img-thumbnail" src="../images/balonce.jpg"
+				alt="img">
+		</div>
+		<div class="media-body">
+			<h3 class="text-info">${product.price}&dollar;</h3>
+			<p class="description">${product.description}</p>
+			<a class="btn btn-primary"
+				href="${pageContext.request.contextPath}/add-to-cart/${param.id}">Add
+				to cart <span class="glyphicon glyphicon-shopping-cart"></span>
+			</a>
+		</div>
+	</div>
 </div>
-
-</body>
-</html>

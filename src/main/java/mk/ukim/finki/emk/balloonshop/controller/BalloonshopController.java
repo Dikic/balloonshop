@@ -10,6 +10,7 @@ import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,16 @@ public class BalloonshopController {
 	public String signOut(HttpSession session) {
 		session.removeAttribute("customer");
 		return "redirect:?notice=You have signed out successfully";
+	}
+
+	@RequestMapping(value = "/details/{productId}", method = RequestMethod.GET)
+	public ModelAndView details(@PathVariable int productId) {
+		ModelAndView view = new CustomerModelAndView("product_details", "user",
+				new User());
+
+		view.addObject("product", productService.getProduct(productId));
+
+		return view;
 	}
 
 	@RequestMapping(value = "/")

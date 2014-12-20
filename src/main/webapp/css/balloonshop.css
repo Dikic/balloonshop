@@ -43,6 +43,10 @@ body {
 	}
 }
 
+.description {
+	max-width: 400px !important;
+}
+
 .img-static {
 	height: 120px;
 }
