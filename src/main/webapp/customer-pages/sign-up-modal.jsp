@@ -56,7 +56,7 @@
 							<div class="input-group">
 								<span class="input-group-addon"><span
 									class="glyphicon glyphicon-lock"></span></span> <input type="password"
-									class="form-control col-xs-12" name="r_password"
+									class="form-control col-xs-12" name="r_password" id="r_password"
 									placeholder="Confirm password" required="required"/>
 							</div>
 						</div>

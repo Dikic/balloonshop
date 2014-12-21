@@ -13,12 +13,12 @@ public class Category {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	private String name;
-	
+
 	private String description;
-	
-	@ManyToMany(mappedBy="categories")
+
+	@ManyToMany(mappedBy = "categories")
 	private List<Product> products;
 
 	public List<Product> getProducts() {
@@ -52,6 +52,9 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return description;
+	}
 }

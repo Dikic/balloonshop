@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
 				user.getPassword());
 
 		session.setAttribute("customer", dbUser);
-		System.out.println(String.format("id: %s", dbUser.getId()));
 		return dbUser != null;
 	}
 

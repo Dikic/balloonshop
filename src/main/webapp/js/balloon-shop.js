@@ -13,26 +13,27 @@ $(function() {
 				minlength : 6
 			},
 			r_password : {
-				depends : function(element) {
-					return ($(element).text()) == ($("[name='password']").text());
+				required:{
+					depends : function(element) {
+						return $(element).val() == $("#password").val();
+					}
 				}
 			}
 		},
 
-		errorClass : "e",
+		errorClass : "form-error",
+		validClass: "form-success",
 		errorPlacement : function(error, element) {
-			$(element).parent().addClass("has-error has-feedback")
-			$(error).text("");
-			$(error).addClass("glyphicon glyphicon-remove form-control-feedback");
-			$(error).insertAfter($(element));
+			return false;
 		},
-		success: function(label) {
-		    label.parent().removeClass("has-error");
-		    label.parent().addClass("has-success");
-		    $(label).remove();
+		success: function(span) {
+		   return false;
 		},
 		onfocusout : true,
 		debug:true,
-		errorElement : "span"
+		errorElement : "span",
+		submitHandler:function(form){
+			form.submit();
+		}
 	});
 });

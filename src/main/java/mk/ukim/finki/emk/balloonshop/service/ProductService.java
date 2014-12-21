@@ -15,4 +15,10 @@ public interface ProductService {
 	public Product getProduct(int id);
 
 	public List<Product> getAllProducts();
+
+	public List<Product> search(String keyword);
+
+	public List<Product> getProductsInRange(int page, String keyword);
+
+	public int getProductPageCount(String keyword);
 }

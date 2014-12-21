@@ -75,6 +75,17 @@
 				<!-- sidebar -->
 				<div class="container-fluid">
 					<div class="row">
+						<form class="form-inline" role="form" method="get">
+							<div class="input-group">
+								<input type="text" class="form-control" name="search" placeholder="Search" value="${search}"> <span
+									class="input-group-btn">
+									<input class="btn btn-primary" type="submit" value="Go!">
+								</span>
+							</div>
+						</form>
+					</div>
+					<br>
+					<div class="row">
 						<div class="list-group shadow">
 							<div class="list-group-item list-group-item-info">Choose a
 								category</div>

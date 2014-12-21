@@ -5,12 +5,13 @@
 	<hr />
 	<div class="media">
 		<div class="media-left">
-			<img class="img-responsive img-thumbnail" src="../images/${product.largeImage}"
+			<img class="img-responsive img-thumbnail" src="${pageContext.request.contextPath}/images/${product.largeImage}"
 				alt="img">
 		</div>
 		<div class="media-body">
 			<h3 class="text-info">${product.price}&dollar;</h3>
 			<p class="description">${product.description}</p>
+			<p>Category: ${product.categories}</p>
 			<a class="btn btn-primary"
 				href="${pageContext.request.contextPath}/add-to-cart/${param.id}">Add
 				to cart <span class="glyphicon glyphicon-shopping-cart"></span>

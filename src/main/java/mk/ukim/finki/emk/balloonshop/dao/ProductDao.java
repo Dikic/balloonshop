@@ -15,4 +15,10 @@ public interface ProductDao {
 	public Product getProduct(int id);
 
 	public List<Product> getAllProducts();
+	
+	public List<Product> search(String keyword);
+	
+	public List<Product> getProductsInRange(int from, int to, String keyword);
+	
+	public int getProductsCount(String keyword);
 }

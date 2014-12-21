@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
+	private static final int PRODUCTS_PER_PAGE = 12;
+
 	@Autowired
 	ProductDao productDao;
 
@@ -40,6 +42,23 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAllProducts() {
 		return productDao.getAllProducts();
+	}
+
+	@Override
+	public List<Product> search(String keyword) {
+		return productDao.search(keyword);
+	}
+
+	@Override
+	public List<Product> getProductsInRange(int page, String keyword) {
+		int from = (page - 1) * PRODUCTS_PER_PAGE;
+		return productDao.getProductsInRange(from, PRODUCTS_PER_PAGE, keyword);
+	}
+
+	@Override
+	public int getProductPageCount(String keyword) {
+		return (int) Math.ceil((productDao.getProductsCount(keyword) * 1.0)
+				/ PRODUCTS_PER_PAGE);
 	}
 
 }

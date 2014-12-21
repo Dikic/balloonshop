@@ -50,6 +50,10 @@ body {
 .img-static {
 	height: 120px;
 }
-.form-error{
-	box-shadow: 0px 0px 7px rgb(240, 173, 78);
+
+.form-error {
+	box-shadow: 0px 0px 7px #fa6b16 !important;
+}
+.form-success{
+	box-shadow: 0px 0px 7px #4cae4c !important;
 }

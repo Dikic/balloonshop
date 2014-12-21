@@ -1,7 +1,10 @@
 package mk.ukim.finki.emk.balloonshop.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.ProductService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
@@ -60,11 +63,24 @@ public class BalloonshopController {
 	}
 
 	@RequestMapping(value = "/")
-	public ModelAndView index(@RequestParam(required = false) String notice) {
-		System.out.println(notice);
+	public ModelAndView index(@RequestParam(required = false) String notice,
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue="") String search) {
 		ModelAndView view = new CustomerModelAndView("home");
+		int pageCount = productService.getProductPageCount(search);
+
+		if (page < 1 || page > pageCount) {
+			page = 1;
+		}
+
+		List<Product> listProducts = productService
+				.getProductsInRange(page, search);
+
+		
 		view.addObject("notice", notice);
-		view.addObject("products", productService.getAllProducts());
+		view.addObject("pageCount", pageCount);
+		view.addObject("page", page);
+		view.addObject("search", search);
+		view.addObject("products", listProducts);
 		return view;
 	}
 
