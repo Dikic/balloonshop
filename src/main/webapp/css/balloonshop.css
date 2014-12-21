@@ -50,3 +50,6 @@ body {
 .img-static {
 	height: 120px;
 }
+.form-error{
+	box-shadow: 0px 0px 7px rgb(240, 173, 78);
+}

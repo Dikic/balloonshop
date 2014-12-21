@@ -17,7 +17,8 @@
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/balloonshop.css" />
-<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/speed-logo.png" />
+<link rel="icon" type="image/png"
+	href="${pageContext.request.contextPath}/images/speed-logo.png" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Balloon shop emk</title>
 </head>
@@ -57,9 +58,9 @@
 					</c:if>
 					<c:if test="${empty customer}">
 						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#sing-in-modal">Sign in</button>
+							data-target="#sing-in-modal" id="btn-sign-in">Sign in</button>
 						<button type="button" class="btn btn-warning" data-toggle="modal"
-							data-target="#sign-up-modal">Sign up</button>
+							data-target="#sign-up-modal" id="btn-sign-up">Sign up</button>
 					</c:if>
 
 				</div>
@@ -67,7 +68,7 @@
 
 		</div>
 		<hr />
-		
+
 		<!-- header -->
 		<div class="row">
 			<div class="col-lg-2 col-md-3">
@@ -99,10 +100,9 @@
 				<jsp:include page="${view}.jsp"></jsp:include>
 			</div>
 		</div>
-		
-	</div>
 
-	<jsp:include page="sign-in-modal.jsp"></jsp:include>
+	</div>
 	<jsp:include page="sign-up-modal.jsp"></jsp:include>
+	<jsp:include page="sign-in-modal.jsp"></jsp:include>
 </body>
 </html>

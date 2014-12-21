@@ -15,7 +15,7 @@
 			<div class="modal-body">
 
 				<form:form action="${pageContext.request.contextPath}/signup"
-					id="sing-up-form" htmlEscape="true" method="POST" role="form"
+					id="sign-up-form" htmlEscape="true" method="POST" role="form"
 					commandName="user">
 
 					<div class="container-fluid">

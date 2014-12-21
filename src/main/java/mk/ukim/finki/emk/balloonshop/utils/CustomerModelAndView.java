@@ -1,5 +1,7 @@
 package mk.ukim.finki.emk.balloonshop.utils;
 
+import mk.ukim.finki.emk.balloonshop.model.User;
+
 import org.springframework.web.servlet.ModelAndView;
 
 public class CustomerModelAndView extends ModelAndView {
@@ -7,6 +9,7 @@ public class CustomerModelAndView extends ModelAndView {
 	public CustomerModelAndView(String view) {
 		super("/customer-pages/main");
 		addObject("view", view);
+		addObject("user", new User());
 	}
 
 	public CustomerModelAndView(String view, String modelName,

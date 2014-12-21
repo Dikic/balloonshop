@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -53,8 +52,7 @@ public class BalloonshopController {
 
 	@RequestMapping(value = "/details/{productId}", method = RequestMethod.GET)
 	public ModelAndView details(@PathVariable int productId) {
-		ModelAndView view = new CustomerModelAndView("product_details", "user",
-				new User());
+		ModelAndView view = new CustomerModelAndView("product_details");
 
 		view.addObject("product", productService.getProduct(productId));
 
@@ -64,9 +62,10 @@ public class BalloonshopController {
 	@RequestMapping(value = "/")
 	public ModelAndView index(@RequestParam(required = false) String notice) {
 		System.out.println(notice);
-		ModelAndView view = new CustomerModelAndView("home", "user", new User());
+		ModelAndView view = new CustomerModelAndView("home");
 		view.addObject("notice", notice);
 		view.addObject("products", productService.getAllProducts());
 		return view;
 	}
+
 }

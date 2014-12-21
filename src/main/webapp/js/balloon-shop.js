@@ -1,6 +1,6 @@
 $(function() {
 
-	$("#sing-up-form").validate({
+	$("#sign-up-form").validate({
 		rules : {
 			name : "required",
 			surname : "required",
@@ -14,21 +14,25 @@ $(function() {
 			},
 			r_password : {
 				depends : function(element) {
-					return $(element).val() == $("[name='password']").val();
+					return ($(element).text()) == ($("[name='password']").text());
 				}
 			}
 		},
 
-		messages : {
-			name : "Name is required!",
-			surname : "Surname is required!",
-			email : "Enter a valid email!",
-			password : "6 letters minimum is required!",
-			r_password : "passwords not matched!"
+		errorClass : "e",
+		errorPlacement : function(error, element) {
+			$(element).parent().addClass("has-error has-feedback")
+			$(error).text("");
+			$(error).addClass("glyphicon glyphicon-remove form-control-feedback");
+			$(error).insertAfter($(element));
 		},
-		
-		submitHandler : function(form) {
-			form.submit();
-		}
+		success: function(label) {
+		    label.parent().removeClass("has-error");
+		    label.parent().addClass("has-success");
+		    $(label).remove();
+		},
+		onfocusout : true,
+		debug:true,
+		errorElement : "span"
 	});
 });

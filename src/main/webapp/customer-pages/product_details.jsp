@@ -5,7 +5,7 @@
 	<hr />
 	<div class="media">
 		<div class="media-left">
-			<img class="img-responsive img-thumbnail" src="../images/balonce.jpg"
+			<img class="img-responsive img-thumbnail" src="../images/${product.largeImage}"
 				alt="img">
 		</div>
 		<div class="media-body">
