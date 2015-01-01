@@ -1,10 +1,12 @@
 body {
-	background: url("../images/balloons_back_bg.jpg") repeat center fixed
+	background:url("../images/balloons_back_bg.png") repeat center fixed
 		!important;
-	-webkit-background-size: cover;
+	
+	-webkit-background-size : cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover !important;
+	-webkit-background-size: cover;
 	-webkit-background-size: cover;
 }
 
@@ -28,7 +30,7 @@ body {
 	width: 50% !important;
 }
 
-@media screen and (max-width: 992px) {
+/*@media screen and (max-width: 992px) {
 	p, .btn, input, div, span, h4, h3 {
 		font-size: 120%;
 	}
@@ -41,8 +43,7 @@ body {
 	h5 {
 		font-size: 32px;
 	}
-}
-
+}*/
 .description {
 	max-width: 400px !important;
 }
@@ -54,6 +55,13 @@ body {
 .form-error {
 	box-shadow: 0px 0px 7px #fa6b16 !important;
 }
-.form-success{
+
+.form-success {
 	box-shadow: 0px 0px 7px #4cae4c !important;
+}
+
+.no-wrap {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

@@ -9,8 +9,7 @@
 <div class="col-lg-3 col-sm-12 col-xs-12 col-md-6">
 	<div class="panel panel-warning shadow">
 		<div class="panel panel-heading">
-			<h3 data-toggle="tooltip" data-placement="top" title="${param.title }" >${fn:length(param.title) gt maxCharsTitle ? (fn:substring(param.title, 0 ,maxCharsTitle)) : param.title }
-				${fn:length(param.title) gt maxCharsTitle ?'...':''}</h3>
+			<h3 class="no-wrap">${param.title }</h3>
 		</div>
 		<div class="panel-body">
 			<img src="${pageContext.request.contextPath}/images/${param.image}"
@@ -26,7 +25,8 @@
 		</div>
 		<div class="panel-footer">
 			<h4>${param.price}&dollar;</h4>
-			<a href="${pageContext.request.contextPath}/add-to-cart/${param.id}">Add to shopping cart</a>
+			<a href="${pageContext.request.contextPath}/add-to-cart/${param.id}">Add
+				to shopping cart</a>
 		</div>
 	</div>
 </div>

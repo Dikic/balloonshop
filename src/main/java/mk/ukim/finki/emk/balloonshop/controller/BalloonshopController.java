@@ -64,7 +64,8 @@ public class BalloonshopController {
 
 	@RequestMapping(value = "/")
 	public ModelAndView index(@RequestParam(required = false) String notice,
-			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue="") String search) {
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "") String search) {
 		ModelAndView view = new CustomerModelAndView("home");
 		int pageCount = productService.getProductPageCount(search);
 
@@ -72,10 +73,9 @@ public class BalloonshopController {
 			page = 1;
 		}
 
-		List<Product> listProducts = productService
-				.getProductsInRange(page, search);
+		List<Product> listProducts = productService.getProductsInRange(page,
+				search);
 
-		
 		view.addObject("notice", notice);
 		view.addObject("pageCount", pageCount);
 		view.addObject("page", page);
@@ -83,5 +83,10 @@ public class BalloonshopController {
 		view.addObject("products", listProducts);
 		return view;
 	}
-
+	@RequestMapping(value="cart")
+	public ModelAndView cart(HttpSession session) {
+		ModelAndView view = new CustomerModelAndView("shopping_cart");
+		
+		return view;
+	}
 }

@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
 <meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript"
@@ -37,13 +39,15 @@
 		</c:if>
 		<div class="row">
 			<div class=" hidden-xs col-sm-2">
-				<img width="200"
+				<a href="${pageContext.request.contextPath}" class=""> <img
+					width="200"
 					src="${pageContext.request.contextPath}/images/logo.png"
-					class="img-responsive" alt="Responsive image" />
+					class="img-responsive" alt="Responsive image" /></a>
 			</div>
 			<div class="col-sm-8">
 				<h1>
 					<strong>Balloon Shop</strong> <small>selling happiness</small>
+
 				</h1>
 			</div>
 			<br>
@@ -77,9 +81,10 @@
 					<div class="row">
 						<form class="form-inline" role="form" method="get">
 							<div class="input-group">
-								<input type="text" class="form-control" name="search" placeholder="Search" value="${search}"> <span
-									class="input-group-btn">
-									<input class="btn btn-primary" type="submit" value="Go!">
+								<input type="text" class="form-control" name="search"
+									placeholder="Search" value="${search}"> <span
+									class="input-group-btn"> <input class="btn btn-primary"
+									type="submit" value="Go!">
 								</span>
 							</div>
 						</form>
@@ -98,10 +103,11 @@
 					</div>
 					<div class="row">
 						<!-- shopping cart -->
-						<button class="btn btn-block btn-primary shadow" type="button">
-							<span class="glyphicon glyphicon-shopping-cart pull-left"></span>
+						<a href="${pageContext.request.contextPath}/cart"
+							class="btn btn-block btn-primary shadow" type="button"> <span
+							class="glyphicon glyphicon-shopping-cart pull-left"></span>
 							Shopping cart <span class="badge">2</span>
-						</button>
+						</a>
 					</div>
 					<br>
 					<!-- shopping cart -->
