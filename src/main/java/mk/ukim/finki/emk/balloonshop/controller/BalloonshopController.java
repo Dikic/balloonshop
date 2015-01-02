@@ -11,6 +11,7 @@ import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -90,10 +91,12 @@ public class BalloonshopController {
 
 		return view;
 	}
+
 	@RequestMapping(value = "checkout", method = RequestMethod.GET)
 	public ModelAndView checkout(HttpSession session) {
 		ModelAndView view = new CustomerModelAndView("checkout");
 
 		return view;
 	}
+
 }
