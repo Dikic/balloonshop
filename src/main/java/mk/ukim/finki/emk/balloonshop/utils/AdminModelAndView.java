@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminModelAndView extends ModelAndView {
 
 	public AdminModelAndView(String view) {
-		super("/admin-pages/main");
+		super("/admin-pages/admin");
 		addObject("view", view);
 		addObject("user", new User());
 	}

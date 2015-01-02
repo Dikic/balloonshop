@@ -24,6 +24,16 @@ public class User {
 
 	private String address;
 
+	private int enabled;
+
+	public int getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
+
 	public String getAddress() {
 		return address;
 	}

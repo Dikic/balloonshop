@@ -40,11 +40,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 				data-source-ref="dataSource"
 
 				users-by-username-query="
-		      select email,password
+		      select email as username,password, enabled
 		      from user where email=?"
 
 				authorities-by-username-query="
-		      select email,authority from user 
+		      select email as username,authority from user 
 		      where email=?" />
 		</security:authentication-provider>
 	</security:authentication-manager>

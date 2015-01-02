@@ -23,7 +23,9 @@ public class AdminController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public ModelAndView adminHome() {
-		return new AdminModelAndView("admin");
+		ModelAndView view = new AdminModelAndView("admin");
+		view.addObject("users", userService.getAllUsers());
+		return view;
 	}
 
 }
