@@ -75,8 +75,8 @@
 							</h4>
 						</div>
 						<div class="col-xs-3">
-							<button type="button" class="btn btn-success btn-block">
-								Checkout</button>
+							<a href="${pageContext.request.contextPath}/checkout" type="button" class="btn btn-success btn-block">
+								Checkout</a>
 						</div>
 					</div>
 				</div>

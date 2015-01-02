@@ -83,10 +83,17 @@ public class BalloonshopController {
 		view.addObject("products", listProducts);
 		return view;
 	}
-	@RequestMapping(value="cart")
+
+	@RequestMapping(value = "cart", method = RequestMethod.GET)
 	public ModelAndView cart(HttpSession session) {
 		ModelAndView view = new CustomerModelAndView("shopping_cart");
-		
+
+		return view;
+	}
+	@RequestMapping(value = "checkout", method = RequestMethod.GET)
+	public ModelAndView checkout(HttpSession session) {
+		ModelAndView view = new CustomerModelAndView("checkout");
+
 		return view;
 	}
 }
