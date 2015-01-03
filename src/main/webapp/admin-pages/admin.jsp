@@ -15,31 +15,50 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
-	
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/table.css" />
+
 <title>Admin</title>
 </head>
 <body>
-	<table class="tablesorter table table-border" id="myTable">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Surname</th>
-				<th>E-mail</th>
-				<th>Password</th>
-				<th>Address</th>
-				<th>Authority</th>
-			</tr>
-		</thead>
-		<c:forEach var="user" items="${users}">
-			<tr>
-				<td>${user.name}</td>
-				<td>${user.surname}</td>
-				<td>${user.email}</td>
-				<td>${user.password}</td>
-				<td>${user.address}</td>
-				<td>${user.authority}</td>
-			</tr>		
-		</c:forEach>
-	</table>
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<table class="tablesorter table table-border" id="myTable">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Surname</th>
+						<th>E-mail</th>
+						<th>Password</th>
+						<th>Address</th>
+						<th>Authority</th>
+					</tr>
+				</thead>
+				<c:forEach var="user" items="${users}">
+					<tr>
+						<td>${user.name}</td>
+						<td>${user.surname}</td>
+						<td>${user.email}</td>
+						<td>${user.password}</td>
+						<td>${user.address}</td>
+						<td>${user.authority}</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#myTable").tablesorter();
+
+			$('.paging').click(function(event) {
+				event.preventDefault();
+
+				$('#form').attr('action', $(this).attr('href'));
+				$('#form').submit();
+			});
+		});
+	</script>
 </body>
 </html>
