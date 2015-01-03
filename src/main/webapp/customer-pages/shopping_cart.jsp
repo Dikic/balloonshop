@@ -60,7 +60,7 @@
 					<hr>
 					<div class="row">
 						<div class="text-center">
-							<div class="col-xs-3 pull-right">
+							<div class="col-xs-10 col-md-3 pull-right">
 								<button type="button" class=" btn btn-default btn-sm btn-block">
 									Update cart</button>
 							</div>
@@ -74,7 +74,7 @@
 								Total <strong>$cena</strong>
 							</h4>
 						</div>
-						<div class="col-xs-3">
+						<div class="col-xs-10 col-md-3">
 							<a href="${pageContext.request.contextPath}/checkout" type="button" class="btn btn-success btn-block">
 								Checkout</a>
 						</div>
