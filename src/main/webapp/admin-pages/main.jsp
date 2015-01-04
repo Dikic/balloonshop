@@ -26,7 +26,7 @@
 <link rel="icon" type="image/png"
 	href="${pageContext.request.contextPath}/images/speed-logo.png" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Balloon shop emk</title>
+<title>Admin</title>
 </head>
 <body>
 	<div class="container">
@@ -56,7 +56,7 @@
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Users</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/users">Users</a></li>
 							<li><a href="#">Products</a></li>
 							<li><a href="#">Categories</a></li>
 							<li><a href="#">Orders</a></li>
@@ -69,7 +69,7 @@
 							placeholder="Search" value="${search}">
 
 					</div>
-					<input class="btn btn-primary" type="submit" value="Search">
+					<input class="btn btn-danger" type="submit" value="Search">
 				</form>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -96,8 +96,8 @@
 					<br>
 					<div class="row">
 						<div class="list-group shadow">
-							<div class="list-group-item list-group-item-info">Choose</div>
-							<a class="list-group-item" href="#">Users</a> <a
+							<div class="list-group-item list-group-item-danger">Choose</div>
+							<a class="list-group-item" href="${pageContext.request.contextPath}/admin/users">Users</a> <a
 								class="list-group-item" href="#">Products</a> <a
 								class="list-group-item" href="#">Categories</a> <a
 								class="list-group-item" href="#">Orders</a>
