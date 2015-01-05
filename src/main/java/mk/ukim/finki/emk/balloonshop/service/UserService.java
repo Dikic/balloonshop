@@ -19,4 +19,6 @@ public interface UserService {
 	public List<User> getAllUsers();
 
 	public boolean signInUser(User user, HttpSession session);
+
+	public void addOrUpdateUser(User u);
 }

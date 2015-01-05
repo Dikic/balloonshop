@@ -1,5 +1,7 @@
 package mk.ukim.finki.emk.balloonshop.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,13 +27,14 @@ public class User {
 
 	private String address;
 
-	private int enabled;
+	@Column(columnDefinition="boolean default true")
+	private boolean enabled;
 
-	public int getEnabled() {
+	public boolean getEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(int enabled) {
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
@@ -43,7 +46,7 @@ public class User {
 		this.address = address;
 	}
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade={CascadeType.REMOVE})
 	private Cart cart;
 
 	public Cart getCart() {

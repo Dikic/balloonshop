@@ -62,4 +62,14 @@ public class UserServiceImpl implements UserService {
 		return dbUser != null;
 	}
 
+	@Override
+	public void addOrUpdateUser(User u) {
+		User user = getUser(u.getId());
+		if (user == null) {
+			addUser(u);
+			return;
+		}
+		updateUser(u);
+	}
+
 }

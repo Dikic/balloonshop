@@ -42,4 +42,14 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDao.getAllCategories();
 	}
 
+	@Override
+	public void addOrUpdateCategory(Category c) {
+		Category category = getCategory(c.getId());
+		if (category == null) {
+			addCategory(c);
+			return;
+		}
+		updateCategory(c);
+	}
+
 }

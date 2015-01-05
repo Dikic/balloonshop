@@ -23,7 +23,7 @@
 						<td>${product.largeImage}</td>
 						<td>${product.smallImage}</td>
 						<td>${product.onPromotion}</td>
-						<td><button class="btn btn-warning">Edit</button><br><button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button></td>
+						<td><button class="btn btn-warning btn-block">Edit</button><button class="btn btn-danger btn-block" onclick="deleteProduct(${product.id})">Delete</button></td>
 					</tr>
 				</c:forEach>
 			</table>		

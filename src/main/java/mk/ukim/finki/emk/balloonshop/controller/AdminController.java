@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,11 +28,10 @@ public class AdminController {
 
 	@Autowired
 	ProductService productService;
-	
+
 	@Autowired
 	CategoryService categoryService;
 
-	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView adminHome() {
 		ModelAndView view = new AdminModelAndView("admin");
@@ -42,6 +42,7 @@ public class AdminController {
 	public ModelAndView usersGet() {
 		ModelAndView view = new AdminModelAndView("users");
 		view.addObject("users", userService.getAllUsers());
+		view.addObject("user", new User());
 		return view;
 	}
 
@@ -54,36 +55,19 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/add/user", method = RequestMethod.POST)
-	public ModelAndView addUser(@RequestParam String name,
-			@RequestParam String surname, @RequestParam String email,
-			@RequestParam String password, @RequestParam String address,
-			@RequestParam String authority) {
-		ModelAndView view = null;
-		if (name != "" && surname != "" && email != ""
-				&& password != "" && address != "" && authority != "") {
-			User user = new User();
-			user.setName(name);
-			user.setSurname(surname);
-			user.setEmail(email);
-			user.setPassword(password);
-			user.setAddress(address);
-			user.setAuthority(authority);
-			userService.addUser(user);
-			view = new ModelAndView("redirect:/admin/users");
-			view.addObject("users", userService.getAllUsers());
-		} else {
-			view = new ModelAndView("redirect:/admin/users");
-		}
+	public ModelAndView addUser(@ModelAttribute User user) {
+		userService.addOrUpdateUser(user);
+		ModelAndView view = new ModelAndView("redirect:/admin/users");
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public ModelAndView productsGet() {
 		ModelAndView view = new AdminModelAndView("products");
 		view.addObject("products", productService.getAllProducts());
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/delete/product", method = RequestMethod.GET)
 	public ModelAndView deleteProduct(@RequestParam int id) {
 		productService.deleteProduct(id);
@@ -91,15 +75,16 @@ public class AdminController {
 		view.addObject("products", productService.getAllProducts());
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/add/product", method = RequestMethod.POST)
 	public ModelAndView addProduct(@RequestParam String name,
 			@RequestParam String description, @RequestParam double price,
 			@RequestParam String largeImage, @RequestParam String smallImage,
 			@RequestParam boolean onPromotion) {
 		ModelAndView view = null;
-		if (name != "" && description != "" && price == (double)price
-				&& largeImage != "" && smallImage != "" && onPromotion==true || onPromotion==false) {
+		if (name != "" && description != "" && price == (double) price
+				&& largeImage != "" && smallImage != "" && onPromotion == true
+				|| onPromotion == false) {
 			Product product = new Product();
 			product.setName(name);
 			product.setDescription(description);
@@ -115,14 +100,15 @@ public class AdminController {
 		}
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	public ModelAndView categoriesGet() {
 		ModelAndView view = new AdminModelAndView("categories");
 		view.addObject("categories", categoryService.getAllCategories());
+		view.addObject("category", new Category());
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/delete/category", method = RequestMethod.GET)
 	public ModelAndView deleteCategory(@RequestParam int id) {
 		categoryService.deleteCategory(id);
@@ -130,17 +116,29 @@ public class AdminController {
 		view.addObject("categories", categoryService.getAllCategories());
 		return view;
 	}
-	
+
 	@RequestMapping(value = "/add/category", method = RequestMethod.POST)
 	public ModelAndView addProduct(@ModelAttribute Category category) {
-		ModelAndView view = null;
-		if (category!=null) {
-			categoryService.addCategory(category);
-			view = new ModelAndView("redirect:/admin/categories");
-			view.addObject("categories", categoryService.getAllCategories());
-		} else {
-			view = new ModelAndView("redirect:/admin/categories");
-		}
+
+		categoryService.addOrUpdateCategory(category);
+		ModelAndView view = new ModelAndView("redirect:/admin/categories");
+
+		return view;
+	}
+
+	@RequestMapping(value = "/edit/categoryform/{categoryId}", method = RequestMethod.GET)
+	public ModelAndView editCategoryForm(@PathVariable int categoryId) {
+		ModelAndView view = new ModelAndView("/admin-pages/category_form");
+		view.addObject("category", categoryService.getCategory(categoryId));
+		view.addObject("edit", true);
+		return view;
+	}
+
+	@RequestMapping(value = "/edit/userform/{userId}", method = RequestMethod.GET)
+	public ModelAndView editUserForm(@PathVariable int userId) {
+		ModelAndView view = new ModelAndView("/admin-pages/user_form");
+		view.addObject("user", userService.getUser(userId));
+		view.addObject("editUser", true);
 		return view;
 	}
 
