@@ -8,7 +8,6 @@ import mk.ukim.finki.emk.balloonshop.model.CartProduct;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;

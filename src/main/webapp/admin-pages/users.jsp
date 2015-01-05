@@ -33,7 +33,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h4>Add new user</h4>
-    <form class="form-horizontal col-sm-9" role="form" method="post" action="${pageContext.request.contextPath}/admin/add">
+    <form class="form-horizontal col-sm-9" role="form" method="post" action="${pageContext.request.contextPath}/admin/add/user">
         <div class="form-group">
             <label class="control-label col-sm-2">Name:</label>
 
@@ -59,7 +59,7 @@
             <label class="control-label col-sm-2">Password:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="password" name="password" placeholder="Enter password">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
             </div>
         </div>
         <div class="form-group">
@@ -84,7 +84,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-danger">Create new user</button>
+                <input type="submit" class="btn btn-danger" value="Create new user"></input>
             </div>
         </div>
     </form>
@@ -98,7 +98,7 @@
 		
 		function deleteUser(id){
 		    if(confirm("Are you sure you want to delete the user?") ){
-		           location.href="/balloonshop/admin/delete?id="+id;
+		           location.href="/balloonshop/admin/delete/user?id="+id;
 		     }
 		}
 	</script>

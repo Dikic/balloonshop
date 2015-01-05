@@ -29,8 +29,8 @@
 	</div>
 
 	<div class="row">
-</c:if>
-</c:forEach>
+			</c:if>
+		</c:forEach>
 </div>
 <div class="row">
 	<nav class="text-center">

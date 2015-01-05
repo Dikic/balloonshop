@@ -57,8 +57,8 @@
 					</a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="${pageContext.request.contextPath}/admin/users">Users</a></li>
-							<li><a href="#">Products</a></li>
-							<li><a href="#">Categories</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/products">Products</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/categories">Categories</a></li>
 							<li><a href="#">Orders</a></li>
 						</ul></li>
 				</ul>
@@ -98,8 +98,8 @@
 						<div class="list-group shadow">
 							<div class="list-group-item list-group-item-danger">Choose</div>
 							<a class="list-group-item" href="${pageContext.request.contextPath}/admin/users">Users</a> <a
-								class="list-group-item" href="#">Products</a> <a
-								class="list-group-item" href="#">Categories</a> <a
+								class="list-group-item" href="${pageContext.request.contextPath}/admin/products">Products</a> <a
+								class="list-group-item" href="${pageContext.request.contextPath}/admin/categories">Categories</a> <a
 								class="list-group-item" href="#">Orders</a>
 						</div>
 					</div>

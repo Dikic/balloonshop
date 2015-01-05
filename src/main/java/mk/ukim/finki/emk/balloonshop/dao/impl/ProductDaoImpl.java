@@ -6,7 +6,6 @@ import mk.ukim.finki.emk.balloonshop.dao.ProductDao;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;

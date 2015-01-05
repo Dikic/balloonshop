@@ -1,6 +1,5 @@
 package mk.ukim.finki.emk.balloonshop.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mk.ukim.finki.emk.balloonshop.dao.CartDao;
@@ -8,7 +7,6 @@ import mk.ukim.finki.emk.balloonshop.dao.CartProductDao;
 import mk.ukim.finki.emk.balloonshop.dao.ProductDao;
 import mk.ukim.finki.emk.balloonshop.model.Cart;
 import mk.ukim.finki.emk.balloonshop.model.CartProduct;
-import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CartService;
 
