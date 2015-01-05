@@ -4,6 +4,7 @@ import java.util.List;
 
 import mk.ukim.finki.emk.balloonshop.dao.CartDao;
 import mk.ukim.finki.emk.balloonshop.dao.CartProductDao;
+import mk.ukim.finki.emk.balloonshop.model.Cart;
 import mk.ukim.finki.emk.balloonshop.model.CartProduct;
 import mk.ukim.finki.emk.balloonshop.service.CartProductService;
 
@@ -13,11 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class CartProductServiceImpl implements CartProductService{
+public class CartProductServiceImpl implements CartProductService {
 
 	@Autowired
 	CartProductDao cartProductDao;
-	
+
 	@Override
 	public void addCartProduct(CartProduct cp) {
 		cartProductDao.addCartProduct(cp);
@@ -41,6 +42,14 @@ public class CartProductServiceImpl implements CartProductService{
 	@Override
 	public List<CartProduct> getAllCartProducts() {
 		return cartProductDao.getAllCartProducts();
+	}
+	@Override
+	public List<CartProduct> getCartProductsFromCart(Cart cart) {
+		return cartProductDao.getCartProductsByCartId(cart.getId());
+	}
+	@Override
+	public int getProductCount(int id) {
+		return cartProductDao.getProductCount(id);
 	}
 
 }

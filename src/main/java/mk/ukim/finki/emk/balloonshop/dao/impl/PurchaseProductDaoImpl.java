@@ -37,7 +37,7 @@ public class PurchaseProductDaoImpl implements PurchaseProductDao {
 	public void updatePurchaseProduct(PurchaseProduct pp) {
 		PurchaseProduct purchaseProduct = getPurchaseProduct(pp.getId());
 		if (purchaseProduct != null) {
-			purchaseProduct.setProducts(pp.getProducts());
+			purchaseProduct.setProduct(pp.getProduct());
 			purchaseProduct.setQuantity(pp.getQuantity());
 			getCurrentSession().update(purchaseProduct);
 		}

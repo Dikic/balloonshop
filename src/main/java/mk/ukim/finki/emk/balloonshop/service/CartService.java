@@ -3,6 +3,7 @@ package mk.ukim.finki.emk.balloonshop.service;
 import java.util.List;
 
 import mk.ukim.finki.emk.balloonshop.model.Cart;
+import mk.ukim.finki.emk.balloonshop.model.User;
 
 public interface CartService {
 
@@ -15,4 +16,6 @@ public interface CartService {
 	public Cart getCart(int id);
 
 	public List<Cart> getAllCarts();
+
+	public boolean addToCart(int productId, User user);
 }

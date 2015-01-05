@@ -13,7 +13,7 @@
 			<p class="description">${product.description}</p>
 			<p>Category: ${product.categories}</p>
 			<a class="btn btn-primary"
-				href="${pageContext.request.contextPath}/add-to-cart/${param.id}">Add
+				href="${pageContext.request.contextPath}/add-to-cart/${product.id}">Add
 				to cart <span class="glyphicon glyphicon-shopping-cart"></span>
 			</a>
 		</div>

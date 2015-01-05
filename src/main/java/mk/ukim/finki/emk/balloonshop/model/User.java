@@ -1,6 +1,7 @@
 package mk.ukim.finki.emk.balloonshop.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -42,7 +43,7 @@ public class User {
 		this.address = address;
 	}
 
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
 	private Cart cart;
 
 	public Cart getCart() {

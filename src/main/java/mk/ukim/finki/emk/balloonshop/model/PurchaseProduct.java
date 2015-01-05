@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -17,8 +18,8 @@ public class PurchaseProduct {
 	@OneToMany(mappedBy = "purchaseProduct")
 	private List<Purchase> purchases;
 
-	@OneToMany(mappedBy = "purchaseProduct")
-	private List<Product> products;
+	@ManyToOne
+	private Product product;
 
 	private int quantity;
 
@@ -30,12 +31,20 @@ public class PurchaseProduct {
 		this.id = id;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<Purchase> getPurchases() {
+		return purchases;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public int getQuantity() {

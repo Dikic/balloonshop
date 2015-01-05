@@ -15,4 +15,6 @@ public interface CartDao {
 	public Cart getCart(int id);
 
 	public List<Cart> getAllCarts();
+
+	public Cart getByUserId(int id);
 }

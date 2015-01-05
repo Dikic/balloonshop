@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Product {
@@ -28,32 +29,32 @@ public class Product {
 
 	private boolean onPromotion;
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Category> categories;
 
-	@ManyToOne
-	private CartProduct cartProduct;
+	@OneToMany(mappedBy = "product")
+	private List<CartProduct> cartProducts;
 
-	@ManyToOne
-	private PurchaseDetail purchaseDetail;
+	@OneToMany(mappedBy = "product")
+	private List<PurchaseDetail> purchaseDetails;
 
-	@ManyToOne
-	private PurchaseProduct purchaseProduct;
+	@OneToMany(mappedBy = "product")
+	private List<PurchaseProduct> purchaseProducts;
 
-	public PurchaseProduct getPurchaseProduct() {
-		return purchaseProduct;
+	public List<PurchaseDetail> getPurchaseDetails() {
+		return purchaseDetails;
 	}
 
-	public void setPurchaseProduct(PurchaseProduct purchaseProduct) {
-		this.purchaseProduct = purchaseProduct;
+	public void setPurchaseDetails(List<PurchaseDetail> purchaseDetails) {
+		this.purchaseDetails = purchaseDetails;
 	}
 
-	public PurchaseDetail getPurchaseDetail() {
-		return purchaseDetail;
+	public List<PurchaseProduct> getPurchaseProducts() {
+		return purchaseProducts;
 	}
 
-	public void setPurchaseDetail(PurchaseDetail purchaseDetail) {
-		this.purchaseDetail = purchaseDetail;
+	public void setPurchaseProducts(List<PurchaseProduct> purchaseProducts) {
+		this.purchaseProducts = purchaseProducts;
 	}
 
 	public List<Category> getCategories() {
@@ -64,12 +65,12 @@ public class Product {
 		this.categories = categories;
 	}
 
-	public CartProduct getCartProduct() {
-		return cartProduct;
+	public List<CartProduct> getCartProducts() {
+		return cartProducts;
 	}
 
-	public void setCartProduct(CartProduct cartProduct) {
-		this.cartProduct = cartProduct;
+	public void setCartProducts(List<CartProduct> cartProducts) {
+		this.cartProducts = cartProducts;
 	}
 
 	public int getId() {

@@ -4,14 +4,16 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import mk.ukim.finki.emk.balloonshop.model.Cart;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
+import mk.ukim.finki.emk.balloonshop.service.CartProductService;
+import mk.ukim.finki.emk.balloonshop.service.CartService;
 import mk.ukim.finki.emk.balloonshop.service.ProductService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,22 @@ public class BalloonshopController {
 
 	@Autowired
 	ProductService productService;
+
+	@Autowired
+	CartService cartService;
+
+	@Autowired
+	CartProductService cartProductService;
+
+	@ModelAttribute("cartProductCount")
+	public int getProductCount(HttpSession session) {
+		User user = (User) session.getAttribute("customer");
+		if (user == null) {
+			return 0;
+		}
+		int id = user.getCart().getId();
+		return cartProductService.getProductCount(id);
+	}
 
 	@RequestMapping(value = "/*")
 	public String invalid() {
@@ -88,7 +106,9 @@ public class BalloonshopController {
 	@RequestMapping(value = "cart", method = RequestMethod.GET)
 	public ModelAndView cart(HttpSession session) {
 		ModelAndView view = new CustomerModelAndView("shopping_cart");
-
+		Cart cart = ((User) session.getAttribute("customer")).getCart();
+		view.addObject("cartProducts",
+				cartProductService.getCartProductsFromCart(cart));
 		return view;
 	}
 
@@ -97,6 +117,13 @@ public class BalloonshopController {
 		ModelAndView view = new CustomerModelAndView("checkout");
 
 		return view;
+	}
+
+	@RequestMapping(value = "add-to-cart/{productId}", method = RequestMethod.GET)
+	public String addToCart(HttpSession session, @PathVariable int productId) {
+		User user = (User) session.getAttribute("customer");
+		cartService.addToCart(productId, user);
+		return "redirect:/?notice=Your product is added to cart successfully.";
 	}
 
 }

@@ -106,7 +106,7 @@
 						<a href="${pageContext.request.contextPath}/cart"
 							class="btn btn-block btn-primary shadow" type="button"> <span
 							class="glyphicon glyphicon-shopping-cart pull-left"></span>
-							Shopping cart <span class="badge">2</span>
+							Shopping cart <span class="badge">${cartProductCount}</span>
 						</a>
 					</div>
 					<br>

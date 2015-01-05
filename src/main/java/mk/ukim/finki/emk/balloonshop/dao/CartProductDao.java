@@ -16,4 +16,8 @@ public interface CartProductDao {
 
 	public List<CartProduct> getAllCartProducts();
 
+	public int getProductCount(int id);
+
+	public List<CartProduct> getCartProductsByCartId(int id);
+
 }

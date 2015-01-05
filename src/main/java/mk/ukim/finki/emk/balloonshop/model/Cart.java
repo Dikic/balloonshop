@@ -1,10 +1,16 @@
 package mk.ukim.finki.emk.balloonshop.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Formula;
 
 @Entity
 public class Cart {
@@ -16,8 +22,8 @@ public class Cart {
 	@OneToOne
 	private User user;
 
-	@ManyToOne
-	private CartProduct cartProduct;
+	@OneToMany(mappedBy = "cart")
+	private List<CartProduct> cartProduct;
 
 	public int getId() {
 		return id;
@@ -35,11 +41,19 @@ public class Cart {
 		this.user = user;
 	}
 
-	public CartProduct getCartProduct() {
+	public List<CartProduct> getCartProduct() {
 		return cartProduct;
 	}
 
-	public void setCartProduct(CartProduct cartProduct) {
+	public void setCartProduct(List<CartProduct> cartProduct) {
 		this.cartProduct = cartProduct;
 	}
+
+	@Formula("(SELECT COUNT(*) FROM CartProduct as c WHERE c.cart_id=id)")
+	private int productCount;
+
+	public int getProductCount() {
+		return productCount;
+	}
+
 }

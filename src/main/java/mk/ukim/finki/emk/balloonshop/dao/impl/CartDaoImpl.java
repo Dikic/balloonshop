@@ -7,6 +7,7 @@ import mk.ukim.finki.emk.balloonshop.model.Cart;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -56,4 +57,11 @@ public class CartDaoImpl implements CartDao {
 		return (List<Cart>) getCurrentSession().createQuery("from Cart").list();
 	}
 
+	@Override
+	public Cart getByUserId(int id) {
+		return (Cart) getCurrentSession().createCriteria(Cart.class)
+				.add(Restrictions.eq("user.id", id)).uniqueResult();
+	}
+
+	
 }

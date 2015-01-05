@@ -40,7 +40,7 @@ public class ProductDaoImpl implements ProductDao {
 	public void updateProduct(Product p) {
 		Product product = getProduct(p.getId());
 		if (product != null) {
-			product.setCartProduct(p.getCartProduct());
+			product.setCartProducts(p.getCartProducts());
 			product.setCategories(p.getCategories());
 			product.setDescription(p.getDescription());
 			product.setLargeImage(p.getLargeImage()); // treba da se napravi za
@@ -48,7 +48,7 @@ public class ProductDaoImpl implements ProductDao {
 			product.setName(p.getName());
 			product.setOnPromotion(p.isOnPromotion());
 			product.setPrice(p.getPrice());
-			product.setPurchaseDetail(p.getPurchaseDetail());
+			product.setPurchaseDetails(p.getPurchaseDetails());
 			product.setSmallImage(p.getSmallImage()); // isto za upload
 			getCurrentSession().update(product);
 		}

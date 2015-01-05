@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="fluid-container">
 	<div class="row">
 		<div class="col-xs-12">
@@ -30,34 +31,15 @@
 						</div>
 					</div>
 					<hr>
-					<div class="row">
-						<div class="col-xs-2">
-							<img class="img-responsive"
-								src="${pageContext.request.contextPath}/images/logo.png">
-						</div>
-						<div class="col-xs-4">
-							<h4 class="product-name">
-								<strong>Balloon name</strong>
-							</h4>
-
-						</div>
-						<div class="col-xs-6">
-							<div class="col-xs-6 text-right">
-								<h6>
-									<strong>cena <span class="text-muted">x</span></strong>
-								</h6>
-							</div>
-							<div class="col-xs-4">
-								<input type="text" class="form-control input-sm" value="1">
-							</div>
-							<div class="col-xs-2">
-								<button type="button" class="btn btn-link btn-xs">
-									<span class="glyphicon glyphicon-trash"> </span>
-								</button>
-							</div>
-						</div>
-					</div>
-					<hr>
+					<c:forEach items="${cartProducts}" var="cartProduct">
+						<jsp:include page="shopping_cart_item.jsp">
+							<jsp:param value="${cartProduct.product.smallImage}" name="img" />
+							<jsp:param value="${cartProduct.product.name }" name="name" />
+							<jsp:param value="${cartProduct.product.price }" name="price" />
+							<jsp:param value="${cartProduct.quantity }" name="quantity" />
+							<jsp:param value="${cartProduct.id }" name="cartProductId" />
+						</jsp:include>
+					</c:forEach>
 					<div class="row">
 						<div class="text-center">
 							<div class="col-xs-10 col-md-3 pull-right">
@@ -75,8 +57,8 @@
 							</h4>
 						</div>
 						<div class="col-xs-10 col-md-3">
-							<a href="${pageContext.request.contextPath}/checkout" type="button" class="btn btn-success btn-block">
-								Checkout</a>
+							<a href="${pageContext.request.contextPath}/checkout"
+								type="button" class="btn btn-success btn-block"> Checkout</a>
 						</div>
 					</div>
 				</div>

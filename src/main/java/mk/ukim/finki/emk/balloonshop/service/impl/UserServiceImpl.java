@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import mk.ukim.finki.emk.balloonshop.dao.CartDao;
 import mk.ukim.finki.emk.balloonshop.dao.UserDao;
+import mk.ukim.finki.emk.balloonshop.model.Cart;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 
@@ -19,9 +21,16 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 
+	@Autowired
+	CartDao cartDao;
+
 	@Override
 	public void addUser(User u) {
 		userDao.addUser(u);
+		Cart cart = new Cart();
+		cart.setUser(u);
+		cartDao.addCart(cart);
+
 	}
 
 	@Override
