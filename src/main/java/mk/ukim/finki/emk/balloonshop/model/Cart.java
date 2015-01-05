@@ -46,12 +46,4 @@ public class Cart {
 	public void setCartProduct(List<CartProduct> cartProduct) {
 		this.cartProduct = cartProduct;
 	}
-
-	@Formula("(SELECT COUNT(*) FROM CartProduct as c WHERE c.cart_id=id)")
-	private int productCount;
-
-	public int getProductCount() {
-		return productCount;
-	}
-
 }

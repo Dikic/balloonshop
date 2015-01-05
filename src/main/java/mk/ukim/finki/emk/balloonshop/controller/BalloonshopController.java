@@ -126,4 +126,10 @@ public class BalloonshopController {
 		return "redirect:/?notice=Your product is added to cart successfully.";
 	}
 
+	@RequestMapping(value = "removeFromCart/{cartProductId}", method = RequestMethod.GET)
+	public String removeFromCart(HttpSession session,
+			@PathVariable int cartProductId) {
+		cartProductService.deleteCartProduct(cartProductId);
+		return "redirect:/cart";
+	}
 }

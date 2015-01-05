@@ -72,6 +72,6 @@ public class CartProductDaoImpl implements CartProductDao {
 	public List<CartProduct> getCartProductsByCartId(int id) {
 		return getCurrentSession().createCriteria(CartProduct.class)
 				.add(Restrictions.eq("cart.id", id))
-				.setFetchMode("product", FetchMode.JOIN).list();
+				.setFetchMode("product", FetchMode.SELECT).list();
 	}
 }

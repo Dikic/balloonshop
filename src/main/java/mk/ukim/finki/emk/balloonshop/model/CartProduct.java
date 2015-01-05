@@ -1,5 +1,6 @@
 package mk.ukim.finki.emk.balloonshop.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ public class CartProduct {
 	@ManyToOne
 	private Product product;
 
+	@Column(columnDefinition="int default 1")
 	private int quantity;
 
 	public int getId() {
