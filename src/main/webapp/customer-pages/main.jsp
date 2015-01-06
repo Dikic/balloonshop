@@ -79,7 +79,9 @@
 				<!-- sidebar -->
 				<div class="container-fluid">
 					<div class="row">
-						<form class="form-inline" role="form" method="get">
+						<form class="form-inline" role="form" method="get"
+							action="${pageContext.request.contextPath}/">
+							<input type="hidden" name="category" value="${category}">
 							<div class="input-group">
 								<input type="text" class="form-control" name="search"
 									placeholder="Search" value="${search}"> <span
@@ -92,13 +94,15 @@
 					<br>
 					<div class="row">
 						<div class="list-group shadow">
-							<div class="list-group-item list-group-item-info">Choose a
-								category</div>
-							<a class="list-group-item" href="#">Love &amp; romance</a> <a
-								class="list-group-item" href="#">Birthdays</a> <a
-								class="list-group-item" href="#">Wedding</a> <a
-								class="list-group-item" href="#">Cartoons</a> <a
-								class="list-group-item" href="#">Message balloons</a>
+							<div class="list-group-item list-group-item-info">
+								<a href="${pageContext.request.contextPath}/">Choose a
+									category</a>
+							</div>
+							<c:forEach var="cat" items="${categories}">
+								<a class="list-group-item ${category eq cat.id ? 'active':'' }"
+									href="${pageContext.request.contextPath}/?page=${page}&search=${search}&category=${cat.id}">
+									${cat.name } </a>
+							</c:forEach>
 						</div>
 					</div>
 					<div class="row">

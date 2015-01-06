@@ -14,36 +14,7 @@
 			</div>
 			<div class="modal-body">
 
-				<form:form action="${pageContext.request.contextPath}/signin" htmlEscape="true" method="POST"
-					role="form" commandName="user">
-
-					<div class="container-fluid">
-						<div class="row">
-							<div class="input-group">
-								<span class="input-group-addon"><span
-									class="glyphicon glyphicon-envelope"></span></span>
-								<form:input path="email" cssClass="form-control col-xs-12"
-									placeholder="Email" />
-							</div>
-						</div>
-						<br />
-						<div class="row">
-							<div class="input-group">
-								<span class="input-group-addon"><span
-									class="glyphicon glyphicon-lock"></span></span>
-								<form:password path="password" cssClass="form-control col-xs-12"
-									placeholder="Password" />
-							</div>
-						</div>
-						<br />
-						<div class="row">
-						
-							<input type="submit" value="Sign in"
-								class="btn btn-primary col-xs-12 col-md-4 col-md-offset-8">
-						</div>
-					</div>
-
-				</form:form>
+				<jsp:include page="sign-in-form.jsp"></jsp:include>
 
 			</div>
 		</div>

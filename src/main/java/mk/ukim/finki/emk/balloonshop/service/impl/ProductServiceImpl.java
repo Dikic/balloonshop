@@ -2,6 +2,7 @@ package mk.ukim.finki.emk.balloonshop.service.impl;
 
 import java.util.List;
 
+import mk.ukim.finki.emk.balloonshop.dao.CategoryDao;
 import mk.ukim.finki.emk.balloonshop.dao.ProductDao;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.service.ProductService;
@@ -14,10 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-	private static final int PRODUCTS_PER_PAGE = 12;
+	private static final int PRODUCTS_PER_PAGE = 8;
 
 	@Autowired
 	ProductDao productDao;
+
+	@Autowired
+	CategoryDao categoryDao;
 
 	@Override
 	public void addProduct(Product p) {
@@ -50,15 +54,25 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProductsInRange(int page, String keyword) {
+	public List<Product> getProductsInRange(int category, int page,
+			String keyword) {
 		int from = (page - 1) * PRODUCTS_PER_PAGE;
+		if (category != 0) {
+			return categoryDao.getCategoryInRange(category, from,
+					PRODUCTS_PER_PAGE, keyword);
+		}
 		return productDao.getProductsInRange(from, PRODUCTS_PER_PAGE, keyword);
 	}
 
 	@Override
-	public int getProductPageCount(String keyword) {
-		return (int) Math.ceil((productDao.getProductsCount(keyword) * 1.0)
-				/ PRODUCTS_PER_PAGE);
+	public int getProductPageCount(String keyword, int category) {
+		int total;
+		if (category != 0) {
+			total = categoryDao.getCategory(category).getProducts().size();
+		} else {
+			total = productDao.getProductsCount(keyword);
+		}
+		return (int) Math.ceil((total * 1.0) / PRODUCTS_PER_PAGE);
 	}
 
 }

@@ -18,11 +18,14 @@
 			</h6>
 		</div>
 		<div class="col-xs-4">
-			<input type="text" class="form-control input-sm" value="${param.quantity }">
+			<input type="number" class="form-control quantity-check" min="0"
+				init-value="${param.quantity}" cp-id="${param.cartProductId}" value="${param.quantity }">
 		</div>
 		<div class="col-xs-2">
-			<a href="${pageContext.request.contextPath}/removeFromCart/${param.cartProductId}" type="button" class="btn btn-link btn-xs">
-				<span class="glyphicon glyphicon-trash"> </span>
+			<a
+				href="${pageContext.request.contextPath}/removeFromCart/${param.cartProductId}"
+				type="button" class="btn btn-link btn-xs"> <span
+				class="glyphicon glyphicon-trash"> </span>
 			</a>
 		</div>
 	</div>

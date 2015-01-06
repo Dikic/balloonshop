@@ -19,8 +19,8 @@ public class CartProduct {
 	@ManyToOne
 	private Product product;
 
-	@Column(columnDefinition="int default 1")
-	private int quantity;
+	@Column(columnDefinition = "int default 1")
+	private int quantity = 1;// setting default value
 
 	public int getId() {
 		return id;

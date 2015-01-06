@@ -5,6 +5,7 @@ import java.util.List;
 import mk.ukim.finki.emk.balloonshop.dao.CartProductDao;
 import mk.ukim.finki.emk.balloonshop.model.Cart;
 import mk.ukim.finki.emk.balloonshop.model.CartProduct;
+import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CartProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,11 @@ public class CartProductServiceImpl implements CartProductService {
 	}
 
 	@Override
-	public void deleteCartProduct(int id) {
-		cartProductDao.deleteCartProduct(id);
+	public void deleteCartProduct(int id, User user) {
+		User user2 = getCartProduct(id).getCart().getUser();
+		if (user.getId() == user2.getId()) {//check if user is deleting own product from cart
+			cartProductDao.deleteCartProduct(id);
+		}
 	}
 
 	@Override
@@ -42,10 +46,12 @@ public class CartProductServiceImpl implements CartProductService {
 	public List<CartProduct> getAllCartProducts() {
 		return cartProductDao.getAllCartProducts();
 	}
+
 	@Override
 	public List<CartProduct> getCartProductsFromCart(Cart cart) {
 		return cartProductDao.getCartProductsByCartId(cart.getId());
 	}
+
 	@Override
 	public int getProductCount(int id) {
 		return cartProductDao.getProductCount(id);

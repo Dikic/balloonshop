@@ -4,9 +4,16 @@ import java.util.List;
 
 import mk.ukim.finki.emk.balloonshop.dao.CategoryDao;
 import mk.ukim.finki.emk.balloonshop.model.Category;
+import mk.ukim.finki.emk.balloonshop.model.Product;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -46,13 +53,28 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public Category getCategory(int id) {
-		return (Category) getCurrentSession().get(Category.class, id);
+		return (Category) getCurrentSession().createCriteria(Category.class)
+				.add(Restrictions.idEq(id))
+				.setFetchMode("products", FetchMode.JOIN).uniqueResult();
 	}
 
 	@Override
 	public List<Category> getAllCategories() {
 		return (List<Category>) getCurrentSession()
 				.createQuery("from Category").list();
+	}
+
+	@Override
+	public List<Product> getCategoryInRange(int category, int from, int max,
+			String keyword) {
+		Criteria criteria = getCurrentSession()
+				.createCriteria(Product.class)
+				.createAlias("categories", "category")
+				.add(Restrictions.eq("category.id", category))
+				.add(Restrictions.like("name", keyword, MatchMode.ANYWHERE))
+				.setResultTransformer(
+						CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		return criteria.setFirstResult(from).setMaxResults(max).list();
 	}
 
 }

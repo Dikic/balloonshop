@@ -5,10 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import mk.ukim.finki.emk.balloonshop.model.Cart;
+import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CartProductService;
 import mk.ukim.finki.emk.balloonshop.service.CartService;
+import mk.ukim.finki.emk.balloonshop.service.CategoryService;
 import mk.ukim.finki.emk.balloonshop.service.ProductService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
@@ -37,6 +39,9 @@ public class BalloonshopController {
 	@Autowired
 	CartProductService cartProductService;
 
+	@Autowired
+	CategoryService categoryService;
+
 	@ModelAttribute("cartProductCount")
 	public int getProductCount(HttpSession session) {
 		User user = (User) session.getAttribute("customer");
@@ -45,6 +50,11 @@ public class BalloonshopController {
 		}
 		int id = user.getCart().getId();
 		return cartProductService.getProductCount(id);
+	}
+
+	@ModelAttribute("categories")
+	public List<Category> getCategories() {
+		return categoryService.getAllCategories();
 	}
 
 	@RequestMapping(value = "/*")
@@ -84,29 +94,37 @@ public class BalloonshopController {
 	@RequestMapping(value = "/")
 	public ModelAndView index(@RequestParam(required = false) String notice,
 			@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "") String search) {
+			@RequestParam(defaultValue = "") String search,
+			@RequestParam(defaultValue = "0") int category) {
 		ModelAndView view = new CustomerModelAndView("home");
-		int pageCount = productService.getProductPageCount(search);
+		int pageCount = productService.getProductPageCount(search,category);
 
 		if (page < 1 || page > pageCount) {
 			page = 1;
 		}
 
-		List<Product> listProducts = productService.getProductsInRange(page,
-				search);
+		List<Product> listProducts = productService.getProductsInRange(
+				category, page, search);
 
 		view.addObject("notice", notice);
 		view.addObject("pageCount", pageCount);
 		view.addObject("page", page);
 		view.addObject("search", search);
+		view.addObject("category", category);
 		view.addObject("products", listProducts);
 		return view;
 	}
 
 	@RequestMapping(value = "cart", method = RequestMethod.GET)
 	public ModelAndView cart(HttpSession session) {
+
+		User user = (User) session.getAttribute("customer");
+		if (user == null) {
+			return new CustomerModelAndView("sign-in-form", "notice",
+					"please sign in to view your cart.");
+		}
 		ModelAndView view = new CustomerModelAndView("shopping_cart");
-		Cart cart = ((User) session.getAttribute("customer")).getCart();
+		Cart cart = user.getCart();
 		view.addObject("cartProducts",
 				cartProductService.getCartProductsFromCart(cart));
 		return view;
@@ -122,6 +140,9 @@ public class BalloonshopController {
 	@RequestMapping(value = "add-to-cart/{productId}", method = RequestMethod.GET)
 	public String addToCart(HttpSession session, @PathVariable int productId) {
 		User user = (User) session.getAttribute("customer");
+		if (user == null) {
+			return "redirect:/?notice=Please sign in to use your cart.";
+		}
 		cartService.addToCart(productId, user);
 		return "redirect:/?notice=Your product is added to cart successfully.";
 	}
@@ -129,7 +150,8 @@ public class BalloonshopController {
 	@RequestMapping(value = "removeFromCart/{cartProductId}", method = RequestMethod.GET)
 	public String removeFromCart(HttpSession session,
 			@PathVariable int cartProductId) {
-		cartProductService.deleteCartProduct(cartProductId);
+		User user = (User) session.getAttribute("customer");
+		cartProductService.deleteCartProduct(cartProductId, user);
 		return "redirect:/cart";
 	}
 }

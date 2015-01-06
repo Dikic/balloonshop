@@ -54,6 +54,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public boolean addToCart(int productId, User user) {
+		user.getCart().setUser(user);
 		CartProduct cartProduct = new CartProduct();
 		cartProduct.setCart(user.getCart());
 		cartProduct.setProduct(productDao.getProduct(productId));

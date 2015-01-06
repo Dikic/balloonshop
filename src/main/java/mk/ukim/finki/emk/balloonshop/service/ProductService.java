@@ -18,7 +18,7 @@ public interface ProductService {
 
 	public List<Product> search(String keyword);
 
-	public List<Product> getProductsInRange(int page, String keyword);
+	public List<Product> getProductsInRange(int category, int page, String keyword);
 
-	public int getProductPageCount(String keyword);
+	public int getProductPageCount(String keyword, int category);
 }

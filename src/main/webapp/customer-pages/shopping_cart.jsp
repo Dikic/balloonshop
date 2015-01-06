@@ -31,6 +31,8 @@
 						</div>
 					</div>
 					<hr>
+					<c:set var="total" value="0" />
+					<c:set var="count" value="0" />
 					<c:forEach items="${cartProducts}" var="cartProduct">
 						<jsp:include page="shopping_cart_item.jsp">
 							<jsp:param value="${cartProduct.product.smallImage}" name="img" />
@@ -39,11 +41,21 @@
 							<jsp:param value="${cartProduct.quantity }" name="quantity" />
 							<jsp:param value="${cartProduct.id }" name="cartProductId" />
 						</jsp:include>
+						<c:set var="total"
+							value="${total + cartProduct.quantity*cartProduct.product.price}"></c:set>
+						<c:set var="count" value="${count + cartProduct.quantity}" />
 					</c:forEach>
+					<div class="row">
+						<div class="col-xs-12">
+							<h4>
+								<strong>Total products: ${count}</strong>
+							</h4>
+						</div>
+					</div>
 					<div class="row">
 						<div class="text-center">
 							<div class="col-xs-10 col-md-3 pull-right">
-								<button type="button" class=" btn btn-default btn-sm btn-block">
+								<button type="button" class=" btn btn-default btn-sm btn-block" id="btn-updateCart">
 									Update cart</button>
 							</div>
 						</div>
@@ -53,7 +65,7 @@
 					<div class="row text-center">
 						<div class="col-xs-9">
 							<h4 class="text-right">
-								Total <strong>$cena</strong>
+								Total <strong>${total} $</strong>
 							</h4>
 						</div>
 						<div class="col-xs-10 col-md-3">

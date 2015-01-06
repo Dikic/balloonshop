@@ -25,6 +25,15 @@ public class CartProductDaoImpl implements CartProductDao {
 
 	@Override
 	public void addCartProduct(CartProduct cp) {
+		CartProduct cartProduct = (CartProduct) getCurrentSession()
+				.createCriteria(CartProduct.class)
+				.add(Restrictions.eq("cart.id", cp.getCart().getId()))
+				.add(Restrictions.eq("product.id", cp.getProduct().getId()))
+				.uniqueResult();
+		if (cartProduct != null) {
+			cartProduct.setQuantity(cartProduct.getQuantity() + 1);
+			return;
+		}
 		getCurrentSession().save(cp);
 	}
 

@@ -29,23 +29,26 @@
 	</div>
 
 	<div class="row">
-			</c:if>
-		</c:forEach>
+</c:if>
+</c:forEach>
 </div>
 <div class="row">
 	<nav class="text-center">
 		<ul class="pagination shadow">
 			<c:if test="${page ne 1}">
-				<li><a href="?page=${page - 1}&search=${search}"> <span
-						aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span></a></li>
+				<li><a
+					href="?page=${page - 1}&search=${search}&category=${category}">
+						<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
+				</a></li>
 			</c:if>
 			<c:forEach begin="1" end="${pageCount}" varStatus="status">
 				<li class="${page == status.count? 'active':'' }"><a
-					href="?page=${status.count}&search=${search}">${status.count}</a></li>
+					href="?page=${status.count}&search=${search}&category=${category}">${status.count}</a></li>
 			</c:forEach>
 			<c:if test="${page ne pageCount}">
-				<li><a href="?page=${page + 1}&search=${search}"> <span
-						aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
+				<li><a
+					href="?page=${page + 1}&search=${search}&category=${category}">
+						<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
 				</a></li>
 			</c:if>
 		</ul>
