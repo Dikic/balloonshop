@@ -57,6 +57,11 @@ public class BalloonshopController {
 		return categoryService.getAllCategories();
 	}
 
+	@ModelAttribute("promotions")
+	public List<Product> getOnPromotions() {
+		return productService.getOnPromotion();
+	}
+
 	@RequestMapping(value = "/*")
 	public String invalid() {
 		return "redirect:";
@@ -97,7 +102,7 @@ public class BalloonshopController {
 			@RequestParam(defaultValue = "") String search,
 			@RequestParam(defaultValue = "0") int category) {
 		ModelAndView view = new CustomerModelAndView("home");
-		int pageCount = productService.getProductPageCount(search,category);
+		int pageCount = productService.getProductPageCount(search, category);
 
 		if (page < 1 || page > pageCount) {
 			page = 1;

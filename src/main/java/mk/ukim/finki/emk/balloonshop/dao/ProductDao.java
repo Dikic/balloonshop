@@ -21,4 +21,6 @@ public interface ProductDao {
 	public List<Product> getProductsInRange(int from, int to, String keyword);
 	
 	public int getProductsCount(String keyword);
+
+	public List<Product> getOnPromotion();
 }

@@ -28,7 +28,7 @@ public class Product {
 
 	private boolean onPromotion;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	private List<Category> categories;
 
 	@OneToMany(mappedBy = "product")

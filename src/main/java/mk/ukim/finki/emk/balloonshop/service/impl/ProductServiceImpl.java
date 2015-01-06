@@ -75,4 +75,9 @@ public class ProductServiceImpl implements ProductService {
 		return (int) Math.ceil((total * 1.0) / PRODUCTS_PER_PAGE);
 	}
 
+	@Override
+	public List<Product> getOnPromotion() {
+		return productDao.getOnPromotion();
+	}
+
 }

@@ -55,6 +55,6 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return description;
+		return name;
 	}
 }
