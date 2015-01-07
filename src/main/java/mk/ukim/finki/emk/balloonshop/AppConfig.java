@@ -48,9 +48,11 @@ public class AppConfig {
 		return properties;
 	}
 
-	public static final String UPLOUD_PATH = "F:\\Development\\faxWorkspace\\balloonshop\\src\\main\\webapp\\images";
-	//TODO Deki's file path file path "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
-	//TODO Dikic's file path  "F:\\Development\\faxWorkspace\\balloonshop\\src\\main\\webapp\\images";
+	public static final String UPLOUD_PATH = "F:\\Development\\faxWorkspace\\balloonshop\\src\\main\\webapp\\images\\";
+	// TODO Deki's file path file path
+	// "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
+	// TODO Dikic's file path
+	// "F:\\Development\\faxWorkspace\\balloonshop\\src\\main\\webapp\\images\\";
 	static {
 		// URL location = AppConfig.class.getProtectionDomain().getCodeSource()
 		// .getLocation();
