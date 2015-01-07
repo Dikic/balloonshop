@@ -93,18 +93,23 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
-	public ModelAndView addProductGet() {
+	public ModelAndView addOrEditProductGet(@RequestParam int productId) {
 		ModelAndView view = new AdminModelAndView("add_product");
-		view.addObject("product", new Product());
+		if (productId == 0) {
+			view.addObject("product", new Product());
+		} else {
+			view.addObject("product", productService.getProduct(productId));
+		}
+		view.addObject("categories", categoryService.getAllCategories());
 		return view;
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.POST)
-	public String addProductPost(@RequestParam String name,
-			@RequestParam String description, @RequestParam double price,
-			@RequestParam boolean onPromotion, Product p)
-			throws ParseException, IOException {
-		
+	public String addProductPost(@RequestParam int productId,
+			@RequestParam String name, @RequestParam String description,
+			@RequestParam double price, @RequestParam boolean onPromotion,
+			Product p) throws ParseException, IOException {
+
 		small = p.getFileSmallImage().getFileItem();
 		large = p.getFileLargeImage().getFileItem();
 
@@ -112,29 +117,48 @@ public class AdminController {
 		FileOutputStream largeImageOutputStream = null;
 
 		if (small.getSize() > 0) {
-			smallImageOutputStream = new FileOutputStream(new File(FILEPATH+"t"+small.getName()));
+			smallImageOutputStream = new FileOutputStream(new File(FILEPATH
+					+ "t" + small.getName()));
 			smallImageOutputStream.write(small.get());
 			smallImageOutputStream.close();
 		}
 
 		if (large.getSize() > 0) {
-			largeImageOutputStream = new FileOutputStream(new File(FILEPATH+large.getName()));
+			largeImageOutputStream = new FileOutputStream(new File(FILEPATH
+					+ large.getName()));
 			largeImageOutputStream.write(large.get());
 			largeImageOutputStream.close();
 		}
 
 		if (name != "" && description != "" && price == (double) price
 				&& onPromotion == true || onPromotion == false) {
-			Product product = new Product();
 
-			product.setName(name);
-			product.setDescription(description);
-			product.setPrice(price);
-			product.setOnPromotion(onPromotion);
-			product.setSmallImage(small.getName().toString());
-			product.setLargeImage(large.getName().toString());
-			productService.addOrUpdateProduct(product);
-			return "redirect:/admin/products";
+			if (productId == 0) {
+				Product product = new Product();
+
+				product.setName(name);
+				product.setDescription(description);
+				product.setPrice(price);
+				product.setOnPromotion(onPromotion);
+				product.setSmallImage("t" + small.getName());
+				product.setLargeImage(large.getName());
+				productService.addProduct(product);
+				return "redirect:/admin/products";
+			} else {
+				Product product = productService.getProduct(productId);
+				product.setName(name);
+				product.setDescription(description);
+				product.setPrice(price);
+				product.setOnPromotion(onPromotion);
+				if (!"".equals(small.getName())) {
+					product.setSmallImage("t" + small.getName());
+				}
+				if (!"".equals(large.getName())) {
+					product.setLargeImage(large.getName());
+				}
+				productService.updateProduct(product);
+				return "redirect:/admin/products";
+			}
 		} else {
 			return "redirect:/admin/product";
 		}
