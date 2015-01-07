@@ -55,7 +55,7 @@
 					<div class="row">
 						<div class="text-center">
 							<div class="col-xs-10 col-md-3 pull-right">
-								<button type="button" class=" btn btn-default btn-sm btn-block" id="btn-updateCart">
+								<button type="button" data-loading-text="Updating..." class=" btn btn-default btn-sm btn-block" id="btn-updateCart">
 									Update cart</button>
 							</div>
 						</div>

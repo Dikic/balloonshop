@@ -1,14 +1,12 @@
 package mk.ukim.finki.emk.balloonshop.controller;
 
-import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import mk.ukim.finki.emk.balloonshop.model.Cart;
+import mk.ukim.finki.emk.balloonshop.model.CartProduct;
 import mk.ukim.finki.emk.balloonshop.model.Category;
-import mk.ukim.finki.emk.balloonshop.model.JsonCartProduct;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CartProductService;
@@ -22,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -167,9 +164,15 @@ public class BalloonshopController {
 	}
 
 	@RequestMapping(value = "update-cart", method = RequestMethod.POST, produces = "application/json", headers = "Accept=application/json")
-	public @ResponseBody boolean updateCart(HttpSession session,
-			@RequestBody JsonCartProduct[] list) {
-		System.out.println(Arrays.toString(list));
-		return true;
+	public @ResponseBody int updateCart(HttpSession session,
+			@RequestParam int id, @RequestParam int quantity) {
+		User user = (User) session.getAttribute("customer");
+		if (user == null) {
+			return 0;
+		}
+		CartProduct cartProduct = cartProductService.getCartProduct(id);
+		cartProduct.setQuantity(quantity);
+		cartProductService.updateCartProduct(cartProduct);
+		return id;
 	}
 }

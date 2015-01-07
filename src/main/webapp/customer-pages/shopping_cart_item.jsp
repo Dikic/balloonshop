@@ -14,7 +14,7 @@
 	<div class="col-xs-6">
 		<div class="col-xs-6 text-right">
 			<h6>
-				<strong>${param.price} <span class="text-muted">x</span></strong>
+				<strong >${param.price} <span class="text-muted">x</span></strong>
 			</h6>
 		</div>
 		<div class="col-xs-4">
