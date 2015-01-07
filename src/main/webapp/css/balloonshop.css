@@ -48,7 +48,7 @@ body {
 	max-width: 400px !important;
 }
 
-.img-static {
+img.img.img-static {
 	height: 120px;
 }
 
@@ -64,4 +64,8 @@ body {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.jumbotron.jumbotron-promotion{
+	background-color: #f0ad4e;
 }

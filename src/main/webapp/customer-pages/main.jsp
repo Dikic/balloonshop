@@ -121,7 +121,34 @@
 				<jsp:include page="${view}.jsp"></jsp:include>
 			</div>
 		</div>
+		<div class="jumbotron jumbotron-promotion shadow">
+			<div class="row">
+				<h3>Products on promotion!!!</h3>
+			</div>
+			<div class="row">
+				<c:forEach var="promotion" items="${promotions}">
+					<div class="col-sm-6 col-md-2">
+						<div class="thumbnail">
+							<a
+								href="${pageContext.request.contextPath}/details/${promotion.id}">
+								<img class="img img-static"
+								src="${pageContext.request.contextPath}/images/${promotion.smallImage}"
+								alt="...">
+							</a>
+							<div class="caption">
+								<h4 class="no-wrap">${promotion.name}</h4>
+								<p class="text-primary">${promotion.price}$
+									<abbr title="Add this item to cart"><a
+										href="${pageContext.request.contextPath}/add-to-cart/${promotion.id}"
+										class="glyphicon glyphicon-shopping-cart"></a></abbr>
+								</p>
 
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
 	</div>
 	<jsp:include page="sign-up-modal.jsp"></jsp:include>
 	<jsp:include page="sign-in-modal.jsp"></jsp:include>

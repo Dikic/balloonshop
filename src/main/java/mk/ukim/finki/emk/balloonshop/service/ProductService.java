@@ -22,5 +22,9 @@ public interface ProductService {
 
 	public int getProductPageCount(String keyword, int category);
 
+<<<<<<< HEAD
 	public void addOrUpdateProduct(Product p);
+=======
+	public List<Product> getOnPromotion();
+>>>>>>> 262ec316a8cdc8b0f1218dfc7526f14c48efc073
 }

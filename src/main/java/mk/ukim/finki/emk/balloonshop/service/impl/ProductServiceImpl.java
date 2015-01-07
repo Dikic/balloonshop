@@ -85,4 +85,8 @@ public class ProductServiceImpl implements ProductService {
 		updateProduct(p);
 	}
 
+	public List<Product> getOnPromotion() {
+		return productDao.getOnPromotion();
+	}
+
 }
