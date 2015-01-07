@@ -44,13 +44,20 @@ public class ProductDaoImpl implements ProductDao {
 			product.setCartProducts(p.getCartProducts());
 			product.setCategories(p.getCategories());
 			product.setDescription(p.getDescription());
-			product.setLargeImage(p.getLargeImage()); // treba da se napravi za
-														// upload
+			if (!"".equals(p.getLargeImage()))
+				product.setLargeImage(p.getLargeImage());
+			else {
+				product.setLargeImage(product.getLargeImage());
+			}
 			product.setName(p.getName());
 			product.setOnPromotion(p.isOnPromotion());
 			product.setPrice(p.getPrice());
 			product.setPurchaseDetails(p.getPurchaseDetails());
-			product.setSmallImage(p.getSmallImage()); // isto za upload
+			if (!"".equals(p.getSmallImage()))
+				product.setSmallImage(p.getSmallImage());
+			else {
+				product.setSmallImage(product.getSmallImage());
+			}
 			getCurrentSession().update(product);
 		}
 	}

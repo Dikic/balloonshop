@@ -76,6 +76,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public void addOrUpdateProduct(Product p) {
+		Product product = getProduct(p.getId());
+		if (product == null) {
+			addProduct(p);
+			return;
+		}
+		updateProduct(p);
+	}
+
 	public List<Product> getOnPromotion() {
 		return productDao.getOnPromotion();
 	}

@@ -1,5 +1,16 @@
 package mk.ukim.finki.emk.balloonshop.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.BindException;
+import java.text.ParseException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
@@ -8,6 +19,7 @@ import mk.ukim.finki.emk.balloonshop.service.ProductService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.AdminModelAndView;
 
+import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -22,6 +34,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/admin")
 @Controller
 public class AdminController {
+
+	FileItem small;
+	FileItem large;
+	public static final String FILEPATH = "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
 
 	@Autowired
 	UserService userService;
@@ -76,29 +92,76 @@ public class AdminController {
 		return view;
 	}
 
-	@RequestMapping(value = "/add/product", method = RequestMethod.POST)
-	public ModelAndView addProduct(@RequestParam String name,
-			@RequestParam String description, @RequestParam double price,
-			@RequestParam String largeImage, @RequestParam String smallImage,
-			@RequestParam boolean onPromotion) {
-		ModelAndView view = null;
-		if (name != "" && description != "" && price == (double) price
-				&& largeImage != "" && smallImage != "" && onPromotion == true
-				|| onPromotion == false) {
-			Product product = new Product();
-			product.setName(name);
-			product.setDescription(description);
-			product.setPrice(price);
-			product.setLargeImage(largeImage);
-			product.setSmallImage(smallImage);
-			product.setOnPromotion(onPromotion);
-			productService.addProduct(product);
-			view = new ModelAndView("redirect:/admin/products");
-			view.addObject("products", productService.getAllProducts());
+	@RequestMapping(value = "/product", method = RequestMethod.GET)
+	public ModelAndView addOrEditProductGet(@RequestParam int productId) {
+		ModelAndView view = new AdminModelAndView("add_product");
+		if (productId == 0) {
+			view.addObject("product", new Product());
 		} else {
-			view = new ModelAndView("redirect:/admin/products");
+			view.addObject("product", productService.getProduct(productId));
 		}
+		view.addObject("categories", categoryService.getAllCategories());
 		return view;
+	}
+
+	@RequestMapping(value = "/product", method = RequestMethod.POST)
+	public String addProductPost(@RequestParam int productId,
+			@RequestParam String name, @RequestParam String description,
+			@RequestParam double price, @RequestParam boolean onPromotion,
+			Product p) throws ParseException, IOException {
+
+		small = p.getFileSmallImage().getFileItem();
+		large = p.getFileLargeImage().getFileItem();
+
+		FileOutputStream smallImageOutputStream = null;
+		FileOutputStream largeImageOutputStream = null;
+
+		if (small.getSize() > 0) {
+			smallImageOutputStream = new FileOutputStream(new File(FILEPATH
+					+ "t" + small.getName()));
+			smallImageOutputStream.write(small.get());
+			smallImageOutputStream.close();
+		}
+
+		if (large.getSize() > 0) {
+			largeImageOutputStream = new FileOutputStream(new File(FILEPATH
+					+ large.getName()));
+			largeImageOutputStream.write(large.get());
+			largeImageOutputStream.close();
+		}
+
+		if (name != "" && description != "" && price == (double) price
+				&& onPromotion == true || onPromotion == false) {
+
+			if (productId == 0) {
+				Product product = new Product();
+
+				product.setName(name);
+				product.setDescription(description);
+				product.setPrice(price);
+				product.setOnPromotion(onPromotion);
+				product.setSmallImage("t" + small.getName());
+				product.setLargeImage(large.getName());
+				productService.addProduct(product);
+				return "redirect:/admin/products";
+			} else {
+				Product product = productService.getProduct(productId);
+				product.setName(name);
+				product.setDescription(description);
+				product.setPrice(price);
+				product.setOnPromotion(onPromotion);
+				if (!"".equals(small.getName())) {
+					product.setSmallImage("t" + small.getName());
+				}
+				if (!"".equals(large.getName())) {
+					product.setLargeImage(large.getName());
+				}
+				productService.updateProduct(product);
+				return "redirect:/admin/products";
+			}
+		} else {
+			return "redirect:/admin/product";
+		}
 	}
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
