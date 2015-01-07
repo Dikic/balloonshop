@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
@@ -45,6 +46,23 @@ public class AppConfig {
 		properties.put(PN_HIBERNATE_HBM2DDL_AUTO,
 				env.getRequiredProperty(PN_HIBERNATE_HBM2DDL_AUTO));
 		return properties;
+	}
+
+	public static final String UPLOUD_PATH = "F:\\Development\\faxWorkspace\\balloonshop\\src\\main\\webapp\\images";
+	//TODO Deki's file path file path "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
+	//TODO Dikic's file path  "F:\\Development\\faxWorkspace\\balloonshop\\src\\main\\webapp\\images";
+	static {
+		// URL location = AppConfig.class.getProtectionDomain().getCodeSource()
+		// .getLocation();
+		// String fullPath = location.getFile();
+		// UPLOUD_PATH = fullPath.substring(0, fullPath.indexOf("WEB-INF"))
+		// + "images";
+		// System.out.println("Uploud folder: " + UPLOUD_PATH);
+	}
+
+	@Bean
+	public FileSystemResource uploadDirResource() {
+		return new FileSystemResource(UPLOUD_PATH);
 	}
 
 	@Bean

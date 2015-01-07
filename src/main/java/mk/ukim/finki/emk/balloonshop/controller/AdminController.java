@@ -1,16 +1,11 @@
 package mk.ukim.finki.emk.balloonshop.controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.BindException;
 import java.text.ParseException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import mk.ukim.finki.emk.balloonshop.AppConfig;
 import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
@@ -37,7 +32,7 @@ public class AdminController {
 
 	FileItem small;
 	FileItem large;
-	public static final String FILEPATH = "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
+	public static final String FILEPATH = AppConfig.UPLOUD_PATH;
 
 	@Autowired
 	UserService userService;
@@ -120,6 +115,7 @@ public class AdminController {
 			smallImageOutputStream = new FileOutputStream(new File(FILEPATH
 					+ "t" + small.getName()));
 			smallImageOutputStream.write(small.get());
+			smallImageOutputStream.flush();
 			smallImageOutputStream.close();
 		}
 
@@ -127,6 +123,7 @@ public class AdminController {
 			largeImageOutputStream = new FileOutputStream(new File(FILEPATH
 					+ large.getName()));
 			largeImageOutputStream.write(large.get());
+			largeImageOutputStream.flush();
 			largeImageOutputStream.close();
 		}
 

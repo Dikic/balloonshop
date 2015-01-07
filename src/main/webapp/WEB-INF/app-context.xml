@@ -17,12 +17,6 @@
 		<property name="uploadTempDir" ref="uploadDirResource" />
 	</bean>
 
-	<bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
-		<constructor-arg>
-			<value>C:\Users\Dejan\Desktop\FINKI\eclipse proekti\balloonshop\src\main\webapp\images\</value>
-		</constructor-arg>
-	</bean>
-
 	<context:component-scan base-package="mk.ukim.finki.emk.balloonshop" />
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/js/**" location="/js/" />

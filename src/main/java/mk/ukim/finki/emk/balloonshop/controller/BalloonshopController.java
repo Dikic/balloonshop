@@ -1,6 +1,6 @@
 package mk.ukim.finki.emk.balloonshop.controller;
 
-import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,8 +18,6 @@ import mk.ukim.finki.emk.balloonshop.service.ProductService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.type.ArrayType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -67,6 +65,7 @@ public class BalloonshopController {
 	@ModelAttribute("promotions")
 	public List<Product> getOnPromotions() {
 		return productService.getOnPromotion();
+
 	}
 
 	@RequestMapping(value = "/*")
