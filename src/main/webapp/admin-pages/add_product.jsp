@@ -75,16 +75,25 @@
 		</div>
 		<div class="form-group">
 			<label class="control-label col-sm-2">Select category:</label>
-			<div class="col-sm-3">
-				<c:forEach var="category" items="${categories }">
-					<label class="checkbox"><input type="checkbox" value="${category.name}" />${category.name}</label>
-				</c:forEach>
+			<div class="col-sm-6">
+				<form:select path="categories">
+						<form:options items="${categoriesList}" itemValue="id"/>
+				</form:select>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<input type="submit" class="btn btn-danger"
-					value="Create new product"></input>
+				<c:choose>
+					<c:when test="${product.id==0}">
+						<input type="submit" class="btn btn-danger"
+							value="Create new product"></input>
+					</c:when>
+					<c:otherwise>
+						<input type="submit" class="btn btn-danger"
+					value="Edit product"></input>
+					</c:otherwise>
+				</c:choose>
+
 			</div>
 		</div>
 	</form:form>

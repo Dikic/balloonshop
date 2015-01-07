@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import mk.ukim.finki.emk.balloonshop.AppConfig;
 import mk.ukim.finki.emk.balloonshop.model.Category;
@@ -32,7 +33,7 @@ public class AdminController {
 
 	FileItem small;
 	FileItem large;
-	public static final String FILEPATH = AppConfig.UPLOUD_PATH;
+	public static final String FILEPATH = AppConfig.UPLOAD_PATH;
 
 	@Autowired
 	UserService userService;
@@ -95,15 +96,17 @@ public class AdminController {
 		} else {
 			view.addObject("product", productService.getProduct(productId));
 		}
-		view.addObject("categories", categoryService.getAllCategories());
+		view.addObject("categoriesList", categoryService.getAllCategories());
 		return view;
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String addProductPost(@RequestParam int productId,
 			@RequestParam String name, @RequestParam String description,
-			@RequestParam double price, @RequestParam boolean onPromotion,
-			Product p) throws ParseException, IOException {
+			@RequestParam double price,
+			@RequestParam(defaultValue = "false") boolean onPromotion,
+			@RequestParam String[] categories, Product p) throws ParseException,
+			IOException {
 
 		small = p.getFileSmallImage().getFileItem();
 		large = p.getFileLargeImage().getFileItem();
@@ -132,17 +135,22 @@ public class AdminController {
 
 			if (productId == 0) {
 				Product product = new Product();
-
+				ArrayList<Category> categoryList = new ArrayList<Category>();
 				product.setName(name);
 				product.setDescription(description);
 				product.setPrice(price);
 				product.setOnPromotion(onPromotion);
 				product.setSmallImage("t" + small.getName());
 				product.setLargeImage(large.getName());
+				for (String i : categories) {
+					categoryList.add(categoryService.getCategory(Integer.parseInt(i)));
+				}
+				product.setCategories(categoryList);
 				productService.addProduct(product);
 				return "redirect:/admin/products";
 			} else {
 				Product product = productService.getProduct(productId);
+				ArrayList<Category> categoryList = new ArrayList<Category>();
 				product.setName(name);
 				product.setDescription(description);
 				product.setPrice(price);
@@ -152,6 +160,9 @@ public class AdminController {
 				}
 				if (!"".equals(large.getName())) {
 					product.setLargeImage(large.getName());
+				}
+				for (String i : categories) {
+					categoryList.add(categoryService.getCategory(Integer.parseInt(i)));
 				}
 				productService.updateProduct(product);
 				return "redirect:/admin/products";

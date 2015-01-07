@@ -48,7 +48,7 @@ public class AppConfig {
 		return properties;
 	}
 
-	public static final String UPLOUD_PATH = "F:\\Development\\faxWorkspace\\balloonshop\\src\\main\\webapp\\images\\";
+	public static final String UPLOAD_PATH = "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
 	// TODO Deki's file path file path
 	// "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
 	// TODO Dikic's file path
@@ -59,12 +59,12 @@ public class AppConfig {
 		// String fullPath = location.getFile();
 		// UPLOUD_PATH = fullPath.substring(0, fullPath.indexOf("WEB-INF"))
 		// + "images";
-		// System.out.println("Uploud folder: " + UPLOUD_PATH);
+		// System.out.println("Upload folder: " + UPLOUD_PATH);
 	}
 
 	@Bean
 	public FileSystemResource uploadDirResource() {
-		return new FileSystemResource(UPLOUD_PATH);
+		return new FileSystemResource(UPLOAD_PATH);
 	}
 
 	@Bean
