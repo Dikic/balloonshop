@@ -1,11 +1,14 @@
 package mk.ukim.finki.emk.balloonshop.controller;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import mk.ukim.finki.emk.balloonshop.model.Cart;
 import mk.ukim.finki.emk.balloonshop.model.Category;
+import mk.ukim.finki.emk.balloonshop.model.JsonCartProduct;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CartProductService;
@@ -15,13 +18,17 @@ import mk.ukim.finki.emk.balloonshop.service.ProductService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.type.ArrayType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -158,5 +165,12 @@ public class BalloonshopController {
 		User user = (User) session.getAttribute("customer");
 		cartProductService.deleteCartProduct(cartProductId, user);
 		return "redirect:/cart";
+	}
+
+	@RequestMapping(value = "update-cart", method = RequestMethod.POST, produces = "application/json", headers = "Accept=application/json")
+	public @ResponseBody boolean updateCart(HttpSession session,
+			@RequestBody JsonCartProduct[] list) {
+		System.out.println(Arrays.toString(list));
+		return true;
 	}
 }

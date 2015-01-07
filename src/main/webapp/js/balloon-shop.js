@@ -1,21 +1,34 @@
 $(function() {
 
-	$("#btn-updateCart").click(function() {
-		var elements = $(".quantity-changed");
-		var count = elements.size();
-		if (count == 0) {
-			return;
-		}
-		var ids = [];
-		var vals = [];
-
-		$(elements).each(function() {
-			ids[ids.length] = $(this).attr("cp-id");
-			vals[vals.length] = $(this).val();
-		});
-
-		$.post(link, podatoci, uspeh);// TODO napravi
-	});
+	$("#btn-updateCart")
+			.click(
+					function() {
+						var elements = $(".quantity-changed");
+						var count = elements.size();
+						if (count == 0) {
+							return;
+						}
+						var arr = [];
+						var i = 0;
+						$(elements).each(function() {
+							arr[arr.length] = {
+								id : $(this).attr("cp-id"),
+								quantity : $(this).val()
+							};
+						});
+						$.post("/balloonshop/update-cart", {
+									list : arr
+								})
+								.done(
+										function(response) {
+											if (response) {
+												location.reload();
+											} else {
+												location
+														.assign("/balloonshop/?notice=Not able to process last command.")
+											}
+										});// TODO napravi
+					});
 
 	window.onbeforeunload = function(e) {
 		var count = $(".quantity-changed").size();

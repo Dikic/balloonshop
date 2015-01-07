@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -56,7 +57,9 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public Product getProduct(int id) {
-		return (Product) getCurrentSession().get(Product.class, id);
+		return (Product) getCurrentSession().createCriteria(Product.class)
+				.add(Restrictions.idEq(id))
+				.setFetchMode("categories", FetchMode.JOIN).uniqueResult();
 	}
 
 	@Override
