@@ -75,4 +75,14 @@ public class ProductServiceImpl implements ProductService {
 		return (int) Math.ceil((total * 1.0) / PRODUCTS_PER_PAGE);
 	}
 
+	@Override
+	public void addOrUpdateProduct(Product p) {
+		Product product = getProduct(p.getId());
+		if (product == null) {
+			addProduct(p);
+			return;
+		}
+		updateProduct(p);
+	}
+
 }

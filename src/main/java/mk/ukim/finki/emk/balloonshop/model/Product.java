@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 @Entity
 public class Product {
 
@@ -23,8 +25,10 @@ public class Product {
 	private double price;
 
 	private String smallImage;
+	private CommonsMultipartFile fileSmallImage;
 
 	private String largeImage;
+	private CommonsMultipartFile fileLargeImage;
 
 	private boolean onPromotion;
 
@@ -126,6 +130,22 @@ public class Product {
 
 	public void setOnPromotion(boolean onPromotion) {
 		this.onPromotion = onPromotion;
+	}
+
+	public CommonsMultipartFile getFileSmallImage() {
+		return fileSmallImage;
+	}
+
+	public void setFileSmallImage(CommonsMultipartFile fileSmallImage) {
+		this.fileSmallImage = fileSmallImage;
+	}
+
+	public CommonsMultipartFile getFileLargeImage() {
+		return fileLargeImage;
+	}
+
+	public void setFileLargeImage(CommonsMultipartFile fileLargeImage) {
+		this.fileLargeImage = fileLargeImage;
 	}
 
 }

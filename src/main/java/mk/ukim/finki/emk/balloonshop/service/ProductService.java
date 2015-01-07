@@ -21,4 +21,6 @@ public interface ProductService {
 	public List<Product> getProductsInRange(int category, int page, String keyword);
 
 	public int getProductPageCount(String keyword, int category);
+
+	public void addOrUpdateProduct(Product p);
 }
