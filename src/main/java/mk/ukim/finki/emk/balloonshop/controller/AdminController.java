@@ -105,7 +105,7 @@ public class AdminController {
 			@RequestParam String name, @RequestParam String description,
 			@RequestParam double price,
 			@RequestParam(defaultValue = "false") boolean onPromotion,
-			@RequestParam String[] categories, Product p) throws ParseException,
+			@RequestParam("cat") String[] categories, Product p) throws ParseException,
 			IOException {
 
 		small = p.getFileSmallImage().getFileItem();
@@ -155,6 +155,7 @@ public class AdminController {
 				product.setDescription(description);
 				product.setPrice(price);
 				product.setOnPromotion(onPromotion);
+				product.setCategories(categoryList);
 				if (!"".equals(small.getName())) {
 					product.setSmallImage("t" + small.getName());
 				}
