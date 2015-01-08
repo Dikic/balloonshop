@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import mk.ukim.finki.emk.balloonshop.AppConfig;
 import mk.ukim.finki.emk.balloonshop.model.Category;
@@ -74,9 +75,18 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
-	public ModelAndView productsGet() {
+	public ModelAndView productsGet(@RequestParam(defaultValue = "1") int page) {
 		ModelAndView view = new AdminModelAndView("products");
-		view.addObject("products", productService.getAllProducts());
+		int pageCount = productService.getProductPageCount("", 0);
+		if (page < 1 || page > pageCount) {
+			page = 1;
+		}
+
+		List<Product> listProducts = productService.getProductsInRange(0, page,
+				"");
+		view.addObject("products", listProducts);
+		view.addObject("pageCount", pageCount);
+		view.addObject("page", page);
 		return view;
 	}
 
@@ -105,8 +115,8 @@ public class AdminController {
 			@RequestParam String name, @RequestParam String description,
 			@RequestParam double price,
 			@RequestParam(defaultValue = "false") boolean onPromotion,
-			@RequestParam("cat") String[] categories, Product p) throws ParseException,
-			IOException {
+			@RequestParam("cat") String[] categories, Product p)
+			throws ParseException, IOException {
 
 		small = p.getFileSmallImage().getFileItem();
 		large = p.getFileLargeImage().getFileItem();
@@ -143,7 +153,8 @@ public class AdminController {
 				product.setSmallImage("t" + small.getName());
 				product.setLargeImage(large.getName());
 				for (String i : categories) {
-					categoryList.add(categoryService.getCategory(Integer.parseInt(i)));
+					categoryList.add(categoryService.getCategory(Integer
+							.parseInt(i)));
 				}
 				product.setCategories(categoryList);
 				productService.addProduct(product);
@@ -163,7 +174,8 @@ public class AdminController {
 					product.setLargeImage(large.getName());
 				}
 				for (String i : categories) {
-					categoryList.add(categoryService.getCategory(Integer.parseInt(i)));
+					categoryList.add(categoryService.getCategory(Integer
+							.parseInt(i)));
 				}
 				productService.updateProduct(product);
 				return "redirect:/admin/products";

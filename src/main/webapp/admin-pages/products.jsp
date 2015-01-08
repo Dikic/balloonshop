@@ -41,6 +41,28 @@
 		<br>
 	</div>
 </div>
+<div class="row">
+	<nav class="text-center">
+		<ul class="pagination shadow">
+			<c:if test="${page ne 1}">
+				<li><a
+					href="?page=${page - 1}">
+						<span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span>
+				</a></li>
+			</c:if>
+			<c:forEach begin="1" end="${pageCount}" varStatus="status">
+				<li class="${page == status.count? 'active':'' }"><a
+					href="?page=${status.count}">${status.count}</a></li>
+			</c:forEach>
+			<c:if test="${page ne pageCount}">
+				<li><a
+					href="?page=${page + 1}">
+						<span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
+				</a></li>
+			</c:if>
+		</ul>
+	</nav>
+</div>
 
 
 <script type="text/javascript">
