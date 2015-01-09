@@ -40,6 +40,27 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label col-sm-2">City:</label>
+
+            <div class="col-sm-10">
+                <form:input class="form-control" path="city" placeholder="Enter city"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Zip:</label>
+
+            <div class="col-sm-10">
+                <form:input class="form-control" path="zip" placeholder="Enter zip"/>
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="control-label col-sm-2">Country:</label>
+
+            <div class="col-sm-10">
+                <form:input class="form-control" path="country" placeholder="Enter country"/>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-sm-2">Authority:</label>
 
             <div class="col-sm-10">

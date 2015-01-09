@@ -21,4 +21,10 @@ public interface UserService {
 	public boolean signInUser(User user, HttpSession session);
 
 	public void addOrUpdateUser(User u);
+
+	public List<User> search(String keyword);
+
+	public List<User> getUsersInRange(int page, String keyword);
+
+	public int getUsersCount(String keyword);
 }
