@@ -36,7 +36,7 @@
 			<br>	
 		</div>
 	</div>
-	<div class="row">
+<div class="row">
 	<nav class="text-center">
 		<ul class="pagination shadow">
 			<c:if test="${page ne 1}">

@@ -193,10 +193,20 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
-	public ModelAndView categoriesGet() {
+	public ModelAndView categoriesGet(@RequestParam(defaultValue = "1") int page) {
+		int pageCount = categoryService.getCategoriesCount("");
+		if (page < 1 || page > pageCount) {
+			page = 1;
+		}
+
+		List<Category> listCategories = categoryService.getCategoriesInRange(
+				page, "");
+
 		ModelAndView view = new AdminModelAndView("categories");
-		view.addObject("categories", categoryService.getAllCategories());
+		view.addObject("categories", listCategories);
 		view.addObject("category", new Category());
+		view.addObject("pageCount", pageCount);
+		view.addObject("page", page);
 		return view;
 	}
 

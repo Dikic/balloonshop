@@ -5,6 +5,7 @@ import java.util.List;
 import mk.ukim.finki.emk.balloonshop.dao.CategoryDao;
 import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Product;
+import mk.ukim.finki.emk.balloonshop.model.User;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -12,7 +13,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -75,6 +75,34 @@ public class CategoryDaoImpl implements CategoryDao {
 				.setResultTransformer(
 						CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return criteria.setFirstResult(from).setMaxResults(max).list();
+	}
+
+	@Override
+	public List<Category> search(String keyword) {
+		return (List<Category>) getCurrentSession()
+				.createQuery(
+						"from Category where name LIKE :keyword or description LIKE :keyword")
+				.setParameter("keyword", "%" + keyword + "%").list();
+	}
+
+	@Override
+	public List<Category> getCategoriesInRange(int from, int max, String keyword) {
+		Criteria query = getCurrentSession().createCriteria(Category.class)
+				.add(Restrictions.like("name", "%" + keyword + "%"))
+				.add(Restrictions.like("description", "%" + keyword + "%"));
+
+		return query.setFirstResult(from).setMaxResults(max).list();
+	}
+
+	@Override
+	public int getCategoriesCount(String keyword) {
+		String count = getCurrentSession()
+				.createQuery(
+						"select count(*) from Category where name LIKE :keyword or description LIKE :keyword")
+				.setParameter("keyword", "%" + keyword + "%").uniqueResult()
+				.toString();
+
+		return Integer.parseInt(count);
 	}
 
 }
