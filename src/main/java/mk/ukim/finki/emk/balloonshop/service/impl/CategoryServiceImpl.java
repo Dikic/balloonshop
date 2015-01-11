@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
 
+	private static final int CATEGORIES_PER_PAGE = 5;
+
 	@Autowired
 	CategoryDao categoryDao;
 
@@ -50,6 +52,24 @@ public class CategoryServiceImpl implements CategoryService {
 			return;
 		}
 		updateCategory(c);
+	}
+
+	@Override
+	public List<Category> search(String keyword) {
+		return categoryDao.search(keyword);
+	}
+
+	@Override
+	public List<Category> getCategoriesInRange(int page, String keyword) {
+		int from = (page - 1) * CATEGORIES_PER_PAGE;
+		return categoryDao.getCategoriesInRange(from, CATEGORIES_PER_PAGE,
+				keyword);
+	}
+
+	@Override
+	public int getCategoriesCount(String keyword) {
+		return (int) Math.ceil((categoryDao.getCategoriesCount(keyword) * 1.0)
+				/ CATEGORIES_PER_PAGE);
 	}
 
 }

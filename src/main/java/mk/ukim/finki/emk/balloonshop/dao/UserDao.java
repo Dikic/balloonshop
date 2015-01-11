@@ -19,4 +19,10 @@ public interface UserDao {
 	public User getUserByEmail(String email);
 
 	public User checkCredentials(String email, String password);
+
+	public List<User> search(String keyword);
+
+	public List<User> getUsersInRange(int from, int max, String keyword);
+
+	public int getUsersCount(String keyword);
 }

@@ -15,6 +15,7 @@
 	src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/balloon-shop.js"></script>
+<script type="text/javascript" async defer  data-pin-color="red" data-pin-hover="true" src="//assets.pinterest.com/js/pinit.js"></script>
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet"
@@ -100,7 +101,7 @@
 							</div>
 							<c:forEach var="cat" items="${categories}">
 								<a class="list-group-item ${category eq cat.id ? 'active':'' }"
-									href="${pageContext.request.contextPath}/?page=${page}&search=${search}&category=${cat.id}">
+									href="${pageContext.request.contextPath}/?page=${empty page?1:page}&search=${search}&category=${cat.id}">
 									${cat.name } </a>
 							</c:forEach>
 						</div>

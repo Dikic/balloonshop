@@ -52,10 +52,17 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public ModelAndView usersGet() {
+	public ModelAndView usersGet(@RequestParam(defaultValue = "1") int page) {
 		ModelAndView view = new AdminModelAndView("users");
-		view.addObject("users", userService.getAllUsers());
+		int pageCount = userService.getUsersCount("");
+		if (page < 1 || page > pageCount) {
+			page = 1;
+		}
+		List<User> listUsers = userService.getUsersInRange(page, "");
+		view.addObject("users", listUsers);
 		view.addObject("user", new User());
+		view.addObject("pageCount", pageCount);
+		view.addObject("page", page);
 		return view;
 	}
 
@@ -186,10 +193,20 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
-	public ModelAndView categoriesGet() {
+	public ModelAndView categoriesGet(@RequestParam(defaultValue = "1") int page) {
+		int pageCount = categoryService.getCategoriesCount("");
+		if (page < 1 || page > pageCount) {
+			page = 1;
+		}
+
+		List<Category> listCategories = categoryService.getCategoriesInRange(
+				page, "");
+
 		ModelAndView view = new AdminModelAndView("categories");
-		view.addObject("categories", categoryService.getAllCategories());
+		view.addObject("categories", listCategories);
 		view.addObject("category", new Category());
+		view.addObject("pageCount", pageCount);
+		view.addObject("page", page);
 		return view;
 	}
 

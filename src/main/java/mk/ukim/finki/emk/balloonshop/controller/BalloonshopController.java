@@ -1,5 +1,6 @@
 package mk.ukim.finki.emk.balloonshop.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -8,11 +9,16 @@ import mk.ukim.finki.emk.balloonshop.model.Cart;
 import mk.ukim.finki.emk.balloonshop.model.CartProduct;
 import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Product;
+import mk.ukim.finki.emk.balloonshop.model.Purchase;
+import mk.ukim.finki.emk.balloonshop.model.PurchaseDetail;
+import mk.ukim.finki.emk.balloonshop.model.PurchaseProduct;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CartProductService;
 import mk.ukim.finki.emk.balloonshop.service.CartService;
 import mk.ukim.finki.emk.balloonshop.service.CategoryService;
 import mk.ukim.finki.emk.balloonshop.service.ProductService;
+import mk.ukim.finki.emk.balloonshop.service.PurchaseProductService;
+import mk.ukim.finki.emk.balloonshop.service.PurchaseService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 
@@ -43,6 +49,12 @@ public class BalloonshopController {
 
 	@Autowired
 	CategoryService categoryService;
+
+	@Autowired
+	PurchaseService purchaseService;
+
+	@Autowired
+	PurchaseProductService purchaseProductService;
 
 	@ModelAttribute("cartProductCount")
 	public int getProductCount(HttpSession session) {
@@ -141,8 +153,50 @@ public class BalloonshopController {
 	@RequestMapping(value = "checkout", method = RequestMethod.GET)
 	public ModelAndView checkout(HttpSession session) {
 		ModelAndView view = new CustomerModelAndView("checkout");
-
+		view.addObject("user", session.getAttribute("customer"));
 		return view;
+	}
+
+	@RequestMapping(value = "checkout", method = RequestMethod.POST)
+	public String checkoutPost(HttpSession session, @ModelAttribute User user) {
+		User customer = (User) session.getAttribute("customer");
+		Cart cart = customer.getCart();
+
+		Purchase purchase = new Purchase();
+		purchase.setUser(customer);
+		purchase.setDateCreated(new Date());
+		purchaseService.addPurchase(purchase);
+		List<CartProduct> cartProducts = cartProductService
+				.getCartProductsFromCart(cart);
+		double amount = 0;
+		for (CartProduct cartProduct : cartProducts) {
+			PurchaseProduct purchaseProduct = new PurchaseProduct();
+			purchaseProduct.setProduct(cartProduct.getProduct());
+			purchaseProduct.setQuantity(cartProduct.getQuantity());
+			purchaseProduct.setPurchase(purchase);
+			purchaseProductService.addPurchaseProduct(purchaseProduct);
+			amount += cartProduct.getQuantity()
+					* cartProduct.getProduct().getPrice();
+		}
+
+		StringBuilder link = new StringBuilder(
+				"https://www.paypal.com/xclick?business=balloonshopemk@balloonshop.com.mk");
+		link.append("&item_name=balloonshopOrder").append(purchase.getId());
+		link.append("&item_number=").append(purchase.getId());
+		link.append("&amount=").append(Math.ceil(amount));
+		link.append("&currency_code=USD");
+		link.append("&address1=").append(user.getAddress());
+		link.append("&address=").append(user.getAddress());
+		link.append("&city=").append(user.getCity());
+		link.append("&zip=").append(user.getZip());
+		link.append("&email=").append(user.getEmail());
+		link.append("&first_name=").append(user.getName());
+		link.append("&last_name=").append(user.getSurname());
+		link.append("&lc=").append(user.getCountry());
+		link.append("&return=http://localhost:8080/balloonshop/");
+		link.append("&cancel_return=http://localhost:8080/balloonshop/");
+		System.out.println(link.toString());
+		return "redirect:" + link.toString();
 	}
 
 	@RequestMapping(value = "add-to-cart/{productId}", method = RequestMethod.GET)

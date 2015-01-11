@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+	private static final int USERS_PER_PAGE = 5;
+
 	@Autowired
 	UserDao userDao;
 
@@ -70,6 +72,23 @@ public class UserServiceImpl implements UserService {
 			return;
 		}
 		updateUser(u);
+	}
+
+	@Override
+	public List<User> search(String keyword) {
+		return userDao.search(keyword);
+	}
+
+	@Override
+	public List<User> getUsersInRange(int page, String keyword) {
+		int from = (page - 1) * USERS_PER_PAGE;
+		return userDao.getUsersInRange(from, USERS_PER_PAGE, keyword);
+	}
+
+	@Override
+	public int getUsersCount(String keyword) {
+		return (int) Math.ceil((userDao.getUsersCount(keyword) * 1.0)
+				/ USERS_PER_PAGE);
 	}
 
 }

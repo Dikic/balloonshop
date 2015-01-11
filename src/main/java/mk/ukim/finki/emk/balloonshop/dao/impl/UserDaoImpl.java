@@ -3,8 +3,10 @@ package mk.ukim.finki.emk.balloonshop.dao.impl;
 import java.util.List;
 
 import mk.ukim.finki.emk.balloonshop.dao.UserDao;
+import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.User;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -70,5 +72,34 @@ public class UserDaoImpl implements UserDao {
 		return (User) getCurrentSession().createCriteria(User.class)
 				.add(Restrictions.eq("email", email))
 				.add(Restrictions.eq("password", password)).uniqueResult();
+	}
+
+	@Override
+	public List<User> search(String keyword) {
+		return (List<User>) getCurrentSession()
+				.createQuery(
+						"from User where name LIKE :keyword or surname LIKE :keyword or email LIKE :keyword")
+				.setParameter("keyword", "%" + keyword + "%").list();
+	}
+
+	@Override
+	public List<User> getUsersInRange(int from, int max, String keyword) {
+		Criteria query = getCurrentSession().createCriteria(User.class)
+				.add(Restrictions.like("name", "%" + keyword + "%"))
+				.add(Restrictions.like("surname", "%" + keyword + "%"))
+				.add(Restrictions.like("email", "%" + keyword + "%"));
+
+		return query.setFirstResult(from).setMaxResults(max).list();
+	}
+
+	@Override
+	public int getUsersCount(String keyword) {
+		String count = getCurrentSession()
+				.createQuery(
+						"select count(*) from User where name LIKE :keyword or surname LIKE :keyword or email LIKE :keyword")
+				.setParameter("keyword", "%" + keyword + "%").uniqueResult()
+				.toString();
+
+		return Integer.parseInt(count);
 	}
 }
