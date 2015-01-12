@@ -1,6 +1,8 @@
 package mk.ukim.finki.emk.balloonshop.controller;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,7 +12,6 @@ import mk.ukim.finki.emk.balloonshop.model.CartProduct;
 import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.Purchase;
-import mk.ukim.finki.emk.balloonshop.model.PurchaseDetail;
 import mk.ukim.finki.emk.balloonshop.model.PurchaseProduct;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CartProductService;
@@ -22,6 +23,7 @@ import mk.ukim.finki.emk.balloonshop.service.PurchaseService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 
+import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,6 +33,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.datacash.client.Agent;
+import com.datacash.client.Amount;
+import com.datacash.client.CardDetails;
+import com.datacash.util.XMLDocument;
 
 @Controller
 public class BalloonshopController {
@@ -55,6 +62,11 @@ public class BalloonshopController {
 
 	@Autowired
 	PurchaseProductService purchaseProductService;
+
+	private static final String TRANSACTION_HOST = "https://testserver.datacash.com/Transaction";
+	private static final String TRANSACTION_USERNAME = "99571100";
+	private static final String TRANSACTION_PASSWORD = "nAwc3Yqt";
+	private static final int TRANSACTION_TIMEOUT = 6000;
 
 	@ModelAttribute("cartProductCount")
 	public int getProductCount(HttpSession session) {
@@ -157,8 +169,35 @@ public class BalloonshopController {
 		return view;
 	}
 
+	@RequestMapping(value = "profile", method = RequestMethod.GET)
+	public ModelAndView profile(HttpSession session) {
+		ModelAndView view = new CustomerModelAndView("profile");
+		User user = (User) session.getAttribute("customer");
+		if (user == null) {
+			return new CustomerModelAndView("profile");
+		}
+		view.addObject("user", user);
+		return view;
+	}
+
+	@RequestMapping(value = "profile", method = RequestMethod.POST)
+	public String profilePost(HttpSession session, @ModelAttribute User user) {
+		User customer = (User) session.getAttribute("customer");
+
+		customer.setName(user.getName());
+		customer.setSurname(user.getSurname());
+		customer.setAddress(user.getAddress());
+		customer.setCity(user.getCity());
+		customer.setZip(user.getZip());
+		customer.setCountry(user.getCountry());
+
+		userService.addOrUpdateUser(customer);
+		return "redirect:/?notice=Your account update successfully.";
+	}
+
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
-	public String checkoutPost(HttpSession session, @ModelAttribute User user) {
+	public String checkoutPost(HttpSession session, @ModelAttribute User user,
+			@RequestParam String cardNumber, @RequestParam String dateExpire) {
 		User customer = (User) session.getAttribute("customer");
 		Cart cart = customer.getCart();
 
@@ -179,24 +218,58 @@ public class BalloonshopController {
 					* cartProduct.getProduct().getPrice();
 		}
 
-		StringBuilder link = new StringBuilder(
-				"https://www.paypal.com/xclick?business=balloonshopemk@balloonshop.com.mk");
-		link.append("&item_name=balloonshopOrder").append(purchase.getId());
-		link.append("&item_number=").append(purchase.getId());
-		link.append("&amount=").append(Math.ceil(amount));
-		link.append("&currency_code=USD");
-		link.append("&address1=").append(user.getAddress());
-		link.append("&address=").append(user.getAddress());
-		link.append("&city=").append(user.getCity());
-		link.append("&zip=").append(user.getZip());
-		link.append("&email=").append(user.getEmail());
-		link.append("&first_name=").append(user.getName());
-		link.append("&last_name=").append(user.getSurname());
-		link.append("&lc=").append(user.getCountry());
-		link.append("&return=http://localhost:8080/balloonshop/");
-		link.append("&cancel_return=http://localhost:8080/balloonshop/");
-		System.out.println(link.toString());
-		return "redirect:" + link.toString();
+		Agent agent = new Agent();
+		agent.setHost(TRANSACTION_HOST);
+		agent.setTimeout(TRANSACTION_TIMEOUT);
+
+		XMLDocument xmlPreRequest = null;
+
+		try {
+			xmlPreRequest = new XMLDocument();
+			/*
+			 * Set your client and password details, for your test account
+			 */
+			xmlPreRequest.set("Request.Authentication.client",
+					TRANSACTION_USERNAME);
+			xmlPreRequest.set("Request.Authentication.password",
+					TRANSACTION_PASSWORD);
+
+			xmlPreRequest.set("Request.Transaction.TxnDetails.merchantreference",
+					10000000000L + purchase.getId() + "");
+
+			CardDetails cardDetails=new CardDetails();
+			cardDetails.put("pan", cardNumber);
+			cardDetails.put("expirydate", dateExpire);
+			cardDetails.put("method", "pre");
+			xmlPreRequest.set(cardDetails);
+			xmlPreRequest.set(new Amount("2.0", "USD"));
+			
+		} catch (IOException | JDOMException e) {
+			e.printStackTrace();
+		}
+		//TODO strana 39 produzi ss Preresponse
+		String cardInfoPath = null;
+
+		// StringBuilder link = new StringBuilder(
+		// "https://www.paypal.com/xclick?business=balloonshopemk@balloonshop.com.mk");
+		// link.append("&item_name=balloonshopOrder").append(purchase.getId());
+		// link.append("&item_number=").append(purchase.getId());
+		// link.append("&amount=").append(Math.ceil(amount));
+		// link.append("&currency_code=USD");
+		// link.append("&address1=").append(user.getAddress());
+		// link.append("&address=").append(user.getAddress());
+		// link.append("&city=").append(user.getCity());
+		// link.append("&zip=").append(user.getZip());
+		// link.append("&email=").append(user.getEmail());
+		// link.append("&first_name=").append(user.getName());
+		// link.append("&last_name=").append(user.getSurname());
+		// link.append("&lc=").append(user.getCountry());
+		// link.append("&return=http://localhost:8080/balloonshop/");
+		// link.append("&cancel_return=http://localhost:8080/balloonshop/");
+		// System.out.println(link.toString());
+		// return "redirect:" + link.toString();
+
+		return "";
 	}
 
 	@RequestMapping(value = "add-to-cart/{productId}", method = RequestMethod.GET)

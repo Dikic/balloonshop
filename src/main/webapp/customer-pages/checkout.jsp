@@ -2,7 +2,8 @@
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div class="jumbotron">
-	<form:form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/checkout"
+	<form:form class="form-horizontal" role="form"
+		action="${pageContext.request.contextPath}/checkout"
 		commandName="user" method="POST">
 		<div class="form-group">
 			<label class="control-label col-sm-2">First name:</label>
@@ -66,7 +67,22 @@
 				</div>
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">Credit card:</label>
 
+			<div class="col-sm-10">
+				<input name="cardNumber" class="form-control"
+					placeholder="Enter your credit card number" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2">Expire date:</label>
+
+			<div class="col-md-3 col-sm-10">
+				<input type="text" name="dateExpire" class="form-control"
+					placeholder="Enter expire date of card" />
+			</div>
+		</div>
 
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
