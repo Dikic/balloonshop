@@ -12,9 +12,11 @@
 			<h3 class="no-wrap">${param.title }</h3>
 		</div>
 		<div class="panel-body">
-<a>
-			<img src="${pageContext.request.contextPath}/images/${param.image}"
-				class="img img-thumbnail img-circle img-responsive img-static"> </img></a>
+			<a href="${pageContext.request.contextPath}/details/${param.id}">
+				<img src="${pageContext.request.contextPath}/images/${param.image}"
+				class="img img-thumbnail img-circle img-responsive img-static"
+				alt="${param.title}">
+			</a>
 			<h5>
 				${fn:length(param.description) gt maxCharsDesc ?  (fn:substring(param.description,0,maxCharsDesc)) : param.description}
 				${fn:length(param.description) gt maxCharsDesc ? '...':''} <small>

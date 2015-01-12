@@ -20,5 +20,7 @@ public interface CartProductService {
 
 	public int getProductCount(int id);
 
-	List<CartProduct> getCartProductsFromCart(Cart cart);
+	public List<CartProduct> getCartProductsFromCart(Cart cart);
+
+	public void deleteCartProduct(int id);
 }

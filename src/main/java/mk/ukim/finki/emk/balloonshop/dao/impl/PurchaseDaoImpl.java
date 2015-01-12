@@ -42,7 +42,7 @@ public class PurchaseDaoImpl implements PurchaseDao {
 			purchase.setCompleted(p.isCompleted());
 			purchase.setDateCreated(p.getDateCreated());
 			purchase.setDateShipped(p.getDateShipped());
-			purchase.setPurchaseDetail(p.getPurchaseDetail());
+			purchase.setPurchaseDetails(p.getPurchaseDetails());
 			purchase.setShippingAddress(p.getShippingAddress());
 			purchase.setUser(p.getUser());
 			purchase.setVerified(p.isVerified());

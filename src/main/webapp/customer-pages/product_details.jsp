@@ -8,7 +8,7 @@
 		<div class="media-left">
 			<img class="img-responsive img-thumbnail"
 				src="${pageContext.request.contextPath}/images/${product.largeImage}"
-				alt="img">
+				alt="Balloonshop - ${product.name}">
 		</div>
 		<div class="media-body">
 			<h3 class="text-info">${product.price}&dollar;</h3>

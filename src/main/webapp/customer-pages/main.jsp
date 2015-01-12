@@ -134,7 +134,7 @@
 								href="${pageContext.request.contextPath}/details/${promotion.id}">
 								<img class="img img-static"
 								src="${pageContext.request.contextPath}/images/${promotion.smallImage}"
-								alt="...">
+								alt="Balloonshop - ${promotion.name }">
 							</a>
 							<div class="caption">
 								<h4 class="no-wrap">${promotion.name}</h4>

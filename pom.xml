@@ -161,7 +161,16 @@
 			<artifactId>jdom</artifactId>
 			<version>1.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.datacash</groupId>
+			<artifactId>datacash</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.11.0</version>
+		</dependency>
 	</dependencies>
 
 
@@ -184,6 +193,7 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 </project>

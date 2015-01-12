@@ -2,6 +2,7 @@ package mk.ukim.finki.emk.balloonshop.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Cart {
 	@OneToOne
 	private User user;
 
-	@OneToMany(mappedBy = "cart")
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
 	private List<CartProduct> cartProduct;
 
 	public int getId() {

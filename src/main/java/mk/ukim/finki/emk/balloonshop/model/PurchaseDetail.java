@@ -2,6 +2,7 @@ package mk.ukim.finki.emk.balloonshop.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,11 +22,11 @@ public class PurchaseDetail {
 
 	private double unitCost;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.DETACH)
 	private Product product;
 
-	@OneToMany(mappedBy = "purchaseDetail")
-	private List<Purchase> purchase;
+	@ManyToOne
+	private Purchase purchase;
 
 	public int getId() {
 		return id;
@@ -67,12 +68,13 @@ public class PurchaseDetail {
 		this.product = product;
 	}
 
-	public List<Purchase> getPurchase() {
+	public Purchase getPurchase() {
 		return purchase;
 	}
 
-	public void setPurchase(List<Purchase> purchase) {
+	public void setPurchase(Purchase purchase) {
 		this.purchase = purchase;
 	}
 
+	
 }

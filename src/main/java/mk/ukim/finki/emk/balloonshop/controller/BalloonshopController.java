@@ -2,7 +2,6 @@ package mk.ukim.finki.emk.balloonshop.controller;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,12 +11,14 @@ import mk.ukim.finki.emk.balloonshop.model.CartProduct;
 import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Product;
 import mk.ukim.finki.emk.balloonshop.model.Purchase;
+import mk.ukim.finki.emk.balloonshop.model.PurchaseDetail;
 import mk.ukim.finki.emk.balloonshop.model.PurchaseProduct;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CartProductService;
 import mk.ukim.finki.emk.balloonshop.service.CartService;
 import mk.ukim.finki.emk.balloonshop.service.CategoryService;
 import mk.ukim.finki.emk.balloonshop.service.ProductService;
+import mk.ukim.finki.emk.balloonshop.service.PurchaseDetailService;
 import mk.ukim.finki.emk.balloonshop.service.PurchaseProductService;
 import mk.ukim.finki.emk.balloonshop.service.PurchaseService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
@@ -37,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.datacash.client.Agent;
 import com.datacash.client.Amount;
 import com.datacash.client.CardDetails;
+import com.datacash.errors.FailureReport;
 import com.datacash.util.XMLDocument;
 
 @Controller
@@ -63,6 +65,9 @@ public class BalloonshopController {
 	@Autowired
 	PurchaseProductService purchaseProductService;
 
+	@Autowired
+	PurchaseDetailService purchaseDetailService;
+
 	private static final String TRANSACTION_HOST = "https://testserver.datacash.com/Transaction";
 	private static final String TRANSACTION_USERNAME = "99571100";
 	private static final String TRANSACTION_PASSWORD = "nAwc3Yqt";
@@ -71,7 +76,7 @@ public class BalloonshopController {
 	@ModelAttribute("cartProductCount")
 	public int getProductCount(HttpSession session) {
 		User user = (User) session.getAttribute("customer");
-		if (user == null) {
+		if (user == null || user.getCart() == null) {
 			return 0;
 		}
 		int id = user.getCart().getId();
@@ -204,6 +209,7 @@ public class BalloonshopController {
 		Purchase purchase = new Purchase();
 		purchase.setUser(customer);
 		purchase.setDateCreated(new Date());
+		purchase.setShippingAddress(user.getAddress());
 		purchaseService.addPurchase(purchase);
 		List<CartProduct> cartProducts = cartProductService
 				.getCartProductsFromCart(cart);
@@ -217,7 +223,7 @@ public class BalloonshopController {
 			amount += cartProduct.getQuantity()
 					* cartProduct.getProduct().getPrice();
 		}
-
+		String merchantReference = 10000000000L + purchase.getId() + "";
 		Agent agent = new Agent();
 		agent.setHost(TRANSACTION_HOST);
 		agent.setTimeout(TRANSACTION_TIMEOUT);
@@ -234,21 +240,99 @@ public class BalloonshopController {
 			xmlPreRequest.set("Request.Authentication.password",
 					TRANSACTION_PASSWORD);
 
-			xmlPreRequest.set("Request.Transaction.TxnDetails.merchantreference",
-					10000000000L + purchase.getId() + "");
+			xmlPreRequest.set(
+					"Request.Transaction.TxnDetails.merchantreference",
+					merchantReference);
 
-			CardDetails cardDetails=new CardDetails();
+			CardDetails cardDetails = new CardDetails();
 			cardDetails.put("pan", cardNumber);
 			cardDetails.put("expirydate", dateExpire);
 			cardDetails.put("method", "pre");
 			xmlPreRequest.set(cardDetails);
-			xmlPreRequest.set(new Amount("2.0", "USD"));
-			
+			xmlPreRequest.set(new Amount("" + amount, "GBP"));
+
 		} catch (IOException | JDOMException e) {
 			e.printStackTrace();
+			return "redirect:/?notice=Prerequest failed.";
 		}
-		//TODO strana 39 produzi ss Preresponse
-		String cardInfoPath = null;
+
+		String status = null;
+		String reason = null;
+		String authCode = null;
+		String dcref = null; // data cash reference
+		boolean success = false;
+		XMLDocument xmlPreResponse;
+
+		try {
+			xmlPreResponse = agent.request(xmlPreRequest);
+			status = xmlPreResponse.get("Response.status");
+			reason = "prerequest: " + xmlPreResponse.get("Response.reason");
+			authCode = xmlPreResponse.get("Response.CardTxn.authcode");
+			dcref = xmlPreResponse.get("Response.datacash_reference");
+		} catch (FailureReport e) {
+			e.printStackTrace();
+			return "redirect:/?notice=Preresponse failed.";
+		}
+
+		if (dcref != null && authCode != null) {
+			XMLDocument xmlFulfillRequest = null;
+			try {
+				xmlFulfillRequest = new XMLDocument();
+				xmlFulfillRequest.set("Request.Authentication.client",
+						TRANSACTION_USERNAME);
+				xmlFulfillRequest.set("Request.Authentication.password",
+						TRANSACTION_PASSWORD);
+				xmlFulfillRequest.set(
+						"Request.Transaction.TxnDetails.merchantreference",
+						merchantReference);
+				xmlFulfillRequest.set(
+						"Request.Transaction.HistoricTxn.reference", dcref);
+				xmlFulfillRequest.set(
+						"Request.Transaction.HistoricTxn.authcode", authCode);
+				xmlFulfillRequest.set("Request.Transaction.HistoricTxn.method",
+						"fulfill");
+
+			} catch (IOException | JDOMException e) {
+				e.printStackTrace();
+				return "redirect:/?notice=Fulfillrequest failed.";
+			}
+
+			try {
+				XMLDocument xmlFulfillResponse = agent
+						.request(xmlFulfillRequest);
+				status = xmlFulfillResponse.get("Response.status");
+				reason = "fulfillment: "
+						+ xmlFulfillResponse.get("Response.reason");
+				if (status.equals("1")) {
+					success = true;
+				}
+				System.out.println(xmlFulfillResponse.toString());
+			} catch (FailureReport e) {
+				e.printStackTrace();
+				return "redirect:/?notice=Fulfillresponse failed.";
+			}
+
+		}
+
+		if (success) {
+			purchase.setVerified(true);
+			for (CartProduct cartProduct : cartProducts) {
+				PurchaseDetail purchaseDetail = new PurchaseDetail();
+				purchaseDetail.setProduct(cartProduct.getProduct());
+				purchaseDetail.setPurchase(purchase);
+				purchaseDetail.setProductName(cartProduct.getProduct()
+						.getName());
+				purchaseDetail.setQuantity(cartProduct.getQuantity());
+				purchaseDetail.setUnitCost(cartProduct.getProduct().getPrice());
+				purchaseDetailService.addPurchaseDetail(purchaseDetail);
+				cartProductService.deleteCartProduct(cartProduct.getId());
+			}
+			customer.getCart().setCartProduct(null);
+		} else {
+			purchase.setCanceled(true);
+		}
+
+		purchaseService.updatePurchase(purchase);
 
 		// StringBuilder link = new StringBuilder(
 		// "https://www.paypal.com/xclick?business=balloonshopemk@balloonshop.com.mk");
@@ -269,7 +353,7 @@ public class BalloonshopController {
 		// System.out.println(link.toString());
 		// return "redirect:" + link.toString();
 
-		return "";
+		return "redirect:/?notice=your transaction successed.";
 	}
 
 	@RequestMapping(value = "add-to-cart/{productId}", method = RequestMethod.GET)

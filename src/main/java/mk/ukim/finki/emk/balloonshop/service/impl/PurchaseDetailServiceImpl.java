@@ -17,6 +17,7 @@ public class PurchaseDetailServiceImpl implements PurchaseDetailService {
 	@Autowired
 	PurchaseDetailDao purchaseDetailDao;
 
+	
 	@Override
 	public void addPurchaseDetail(PurchaseDetail pd) {
 		purchaseDetailDao.addPurchaseDetail(pd);

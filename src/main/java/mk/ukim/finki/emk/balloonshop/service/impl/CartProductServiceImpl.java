@@ -31,6 +31,10 @@ public class CartProductServiceImpl implements CartProductService {
 			cartProductDao.deleteCartProduct(id);
 		}
 	}
+	@Override
+	public void deleteCartProduct(int id){
+		cartProductDao.deleteCartProduct(id);
+	}
 
 	@Override
 	public void updateCartProduct(CartProduct cp) {

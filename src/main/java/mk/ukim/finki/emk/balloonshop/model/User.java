@@ -26,13 +26,13 @@ public class User {
 	private String authority;
 
 	private String address;
-	
+
 	private String city;
-	
+
 	private int zip;
-	
+
 	private String country;
-	
+
 	public String getCity() {
 		return city;
 	}
@@ -57,7 +57,7 @@ public class User {
 		this.country = country;
 	}
 
-	@Column(columnDefinition="boolean default true")
+	@Column(columnDefinition = "boolean default true")
 	private boolean enabled;
 
 	public boolean getEnabled() {
@@ -76,7 +76,7 @@ public class User {
 		this.address = address;
 	}
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade={CascadeType.REMOVE})
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
 	private Cart cart;
 
 	public Cart getCart() {
@@ -135,4 +135,8 @@ public class User {
 		this.authority = authority;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return id == ((User) obj).id;
+	}
 }

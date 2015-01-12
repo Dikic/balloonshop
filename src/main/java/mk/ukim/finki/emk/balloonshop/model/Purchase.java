@@ -34,8 +34,8 @@ public class Purchase {
 	@OneToOne
 	private User user;
 
-	@ManyToOne
-	private PurchaseDetail purchaseDetail;
+	@OneToMany
+	private List<PurchaseDetail> purchaseDetails;
 
 	@OneToMany(mappedBy = "purchase")
 	private List<PurchaseProduct> purchaseProducts;
@@ -48,12 +48,12 @@ public class Purchase {
 		this.purchaseProducts = purchaseProducts;
 	}
 
-	public PurchaseDetail getPurchaseDetail() {
-		return purchaseDetail;
+	public List<PurchaseDetail> getPurchaseDetails() {
+		return purchaseDetails;
 	}
 
-	public void setPurchaseDetail(PurchaseDetail purchaseDetail) {
-		this.purchaseDetail = purchaseDetail;
+	public void setPurchaseDetails(List<PurchaseDetail> purchaseDetails) {
+		this.purchaseDetails = purchaseDetails;
 	}
 
 	public int getId() {
