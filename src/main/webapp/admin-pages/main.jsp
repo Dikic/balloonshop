@@ -48,8 +48,10 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a class="glyphicon glyphicon-bell" href="#"><span
-							class="badge">${ordersCount}</span></a></li>
+					<li><a href="#">Unverified  <span
+							class="badge badge-danger">${unverifiedCount}</span></a></li>
+					<li><a href="#">Uncompleted  <span
+							class="badge badge-danger">${uncompletedCount}</span></a></li>
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-expanded="false">Manage
@@ -57,9 +59,11 @@
 					</a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="${pageContext.request.contextPath}/admin/users">Users</a></li>
-							<li><a href="${pageContext.request.contextPath}/admin/products">Products</a></li>
-							<li><a href="${pageContext.request.contextPath}/admin/categories">Categories</a></li>
-							<li><a href="#">Orders</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/admin/products">Products</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/admin/categories">Categories</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/purchases">Orders</a></li>
 						</ul></li>
 				</ul>
 				<form class="navbar-form navbar-right" role="search" method="get">
@@ -97,10 +101,13 @@
 					<div class="row">
 						<div class="list-group shadow">
 							<div class="list-group-item list-group-item-danger">Choose</div>
-							<a class="list-group-item" href="${pageContext.request.contextPath}/admin/users">Users</a> <a
-								class="list-group-item" href="${pageContext.request.contextPath}/admin/products">Products</a> <a
-								class="list-group-item" href="${pageContext.request.contextPath}/admin/categories">Categories</a> <a
-								class="list-group-item" href="#">Orders</a>
+							<a class="list-group-item"
+								href="${pageContext.request.contextPath}/admin/users">Users</a>
+							<a class="list-group-item"
+								href="${pageContext.request.contextPath}/admin/products">Products</a>
+							<a class="list-group-item"
+								href="${pageContext.request.contextPath}/admin/categories">Categories</a>
+							<a class="list-group-item" href="${pageContext.request.contextPath}/admin/purchases">Orders</a>
 						</div>
 					</div>
 

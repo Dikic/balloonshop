@@ -353,7 +353,7 @@ public class BalloonshopController {
 		// System.out.println(link.toString());
 		// return "redirect:" + link.toString();
 
-		return "redirect:/?notice=your transaction successed.";
+		return "redirect:/?notice=your transaction"+ (success?"":" not")+" succeeded.";
 	}
 
 	@RequestMapping(value = "add-to-cart/{productId}", method = RequestMethod.GET)

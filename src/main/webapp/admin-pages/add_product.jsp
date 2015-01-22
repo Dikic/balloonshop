@@ -53,6 +53,7 @@
 			<label class="control-label col-sm-2">Large image:</label>
 
 			<div class="col-sm-10">
+			
 				<form:input type="file" path="fileLargeImage" />
 				<!--  <input type="file" class="form-control" id="largeImage"
 					name="largeImage" placeholder="Enter password">-->

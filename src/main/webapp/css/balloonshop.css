@@ -68,3 +68,7 @@ img.img.img-static {
 .jumbotron.jumbotron-promotion {
 	background-color: #f0ad4e;
 }
+
+.badge.badge-danger{
+	background-color: red !important;
+}

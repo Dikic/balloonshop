@@ -1,5 +1,6 @@
 package mk.ukim.finki.emk.balloonshop.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class PurchaseProduct {
 	@ManyToOne
 	private Purchase purchase;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.DETACH)
 	private Product product;
 
 	private int quantity;
@@ -35,8 +36,6 @@ public class PurchaseProduct {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
 
 	public Product getProduct() {
 		return product;

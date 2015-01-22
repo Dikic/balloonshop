@@ -3,12 +3,13 @@ package mk.ukim.finki.emk.balloonshop.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Purchase {
@@ -31,13 +32,13 @@ public class Purchase {
 
 	private String shippingAddress;
 
-	@OneToOne
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	private User user;
 
-	@OneToMany
+	@OneToMany(cascade=CascadeType.DETACH)
 	private List<PurchaseDetail> purchaseDetails;
 
-	@OneToMany(mappedBy = "purchase")
+	@OneToMany(mappedBy = "purchase",cascade=CascadeType.REMOVE)
 	private List<PurchaseProduct> purchaseProducts;
 
 	public List<PurchaseProduct> getPurchaseProducts() {

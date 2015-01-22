@@ -5,14 +5,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mk.ukim.finki.emk.balloonshop.AppConfig;
 import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Product;
+import mk.ukim.finki.emk.balloonshop.model.Purchase;
 import mk.ukim.finki.emk.balloonshop.model.User;
 import mk.ukim.finki.emk.balloonshop.service.CategoryService;
 import mk.ukim.finki.emk.balloonshop.service.ProductService;
+import mk.ukim.finki.emk.balloonshop.service.PurchaseService;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 import mk.ukim.finki.emk.balloonshop.utils.AdminModelAndView;
 
@@ -45,6 +48,19 @@ public class AdminController {
 	@Autowired
 	CategoryService categoryService;
 
+	@Autowired
+	PurchaseService purchaseService;
+
+	@ModelAttribute("unverifiedCount")
+	public long unverifiedCount() {
+		return purchaseService.unverifiedCount();
+	}
+
+	@ModelAttribute("uncompletedCount")
+	public long uncompletedCount() {
+		return purchaseService.uncompletedCount();
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView adminHome() {
 		ModelAndView view = new AdminModelAndView("admin");
@@ -64,6 +80,36 @@ public class AdminController {
 		view.addObject("pageCount", pageCount);
 		view.addObject("page", page);
 		return view;
+	}
+
+	@RequestMapping(value = "/purchases", method = RequestMethod.GET)
+	public ModelAndView purchasesGet(@RequestParam(defaultValue = "1") int page) {
+		ModelAndView view = new AdminModelAndView("purchases");
+		/*
+		 * int pageCount = userService.getUsersCount(""); if (page < 1 || page >
+		 * pageCount) { page = 1; } List<User> listUsers =
+		 * userService.getUsersInRange(page, ""); view.addObject("users",
+		 * listUsers); view.addObject("user", new User());
+		 * view.addObject("pageCount", pageCount); view.addObject("page", page);
+		 */
+		view.addObject("purchases", purchaseService.getAllPurchases());
+		return view;
+	}
+
+	@RequestMapping(value = "/purchases/edit", method = RequestMethod.GET)
+	public ModelAndView getPurchase(@RequestParam int id) {
+		return new ModelAndView("/admin-pages/purchase_form", "purchase",
+				purchaseService.getPurchase(id));
+	}
+
+	@RequestMapping(value = "/purchases/edit", method = RequestMethod.POST)
+	public String purchaseEditPOST(@ModelAttribute Purchase purchase,
+			@RequestParam boolean shipped) {
+		if (shipped) {
+			purchase.setDateShipped(new Date());
+		}
+		purchaseService.updatePurchase(purchase);
+		return "redirect:/admin/purchases";
 	}
 
 	@RequestMapping(value = "/delete/user", method = RequestMethod.GET)

@@ -1,11 +1,14 @@
 package mk.ukim.finki.emk.balloonshop.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -32,6 +35,9 @@ public class User {
 	private int zip;
 
 	private String country;
+	
+	@OneToMany(mappedBy="user",cascade=CascadeType.DETACH)
+	private List<Purchase> purchases;
 
 	public String getCity() {
 		return city;

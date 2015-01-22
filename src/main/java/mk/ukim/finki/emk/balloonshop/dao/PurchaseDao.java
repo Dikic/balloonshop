@@ -2,6 +2,7 @@ package mk.ukim.finki.emk.balloonshop.dao;
 
 import java.util.List;
 
+import mk.ukim.finki.emk.balloonshop.model.Category;
 import mk.ukim.finki.emk.balloonshop.model.Purchase;
 
 public interface PurchaseDao {
@@ -15,5 +16,13 @@ public interface PurchaseDao {
 	public Purchase getPurchase(int id);
 
 	public List<Purchase> getAllPurchases();
+
+	public long unverifiedCount();
+
+	public long uncompletedCount();
+
+	public List<Purchase> getPurchasesInRange(int from, int max); //for paging on admin page
+
+	public int getPurchasesCount();
 
 }
