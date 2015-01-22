@@ -104,9 +104,11 @@ public class AdminController {
 
 	@RequestMapping(value = "/purchases/edit", method = RequestMethod.POST)
 	public String purchaseEditPOST(@ModelAttribute Purchase purchase,
-			@RequestParam boolean shipped) {
+			@RequestParam(defaultValue = "false") boolean shipped) {
 		if (shipped) {
 			purchase.setDateShipped(new Date());
+		} else {
+			purchase.setDateShipped(null);
 		}
 		purchaseService.updatePurchase(purchase);
 		return "redirect:/admin/purchases";

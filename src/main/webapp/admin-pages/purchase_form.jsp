@@ -21,7 +21,7 @@
 							<label class="control-label col-sm-3">Date shipped:</label>
 
 							<div class="col-sm-9">
-								<input type="checkbox" name="shipped" value="${purchase.dateShipped}">
+								<input type="checkbox" name="shipped" ${empty purchase.dateShipped ? '':'checked'}>
 							</div>
 						</div>
 						<div class="form-group">
