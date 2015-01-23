@@ -44,11 +44,21 @@ public class PurchaseDaoImpl implements PurchaseDao {
 			purchase.setCanceled(p.isCanceled());
 			purchase.setComments(p.getComments());
 			purchase.setCompleted(p.isCompleted());
-			purchase.setDateCreated(p.getDateCreated());
-			purchase.setDateShipped(p.getDateShipped());
-			purchase.setPurchaseDetails(p.getPurchaseDetails());
-			purchase.setShippingAddress(p.getShippingAddress());
-			purchase.setUser(p.getUser());
+			if (p.getDateCreated() != null) {
+				purchase.setDateCreated(p.getDateCreated());
+			}
+			if (p.getDateShipped() != null) {
+				purchase.setDateShipped(p.getDateShipped());
+			}
+			if (p.getPurchaseDetails() != null) {
+				purchase.setPurchaseDetails(p.getPurchaseDetails());
+			}
+			if (p.getShippingAddress() != null) {
+				purchase.setShippingAddress(p.getShippingAddress());
+			}
+			if (p.getUser() != null) {
+				purchase.setUser(p.getUser());
+			}
 			purchase.setVerified(p.isVerified());
 			getCurrentSession().update(purchase);
 		}
@@ -94,5 +104,17 @@ public class PurchaseDaoImpl implements PurchaseDao {
 				.toString();
 
 		return Integer.parseInt(count);
+	}
+
+	@Override
+	public List<Purchase> getUnverified() {
+		return getCurrentSession().createCriteria(Purchase.class)
+				.add(Restrictions.eq("verified", false)).list();
+	}
+
+	@Override
+	public List<Purchase> getUncompleted() {
+		return getCurrentSession().createCriteria(Purchase.class)
+				.add(Restrictions.eq("completed", false)).list();
 	}
 }

@@ -64,6 +64,13 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView adminHome() {
 		ModelAndView view = new AdminModelAndView("admin");
+		view.addObject("usersCount", userService.getAllUsers().size());
+		view.addObject("productsCount", productService.getAllProducts().size());
+		view.addObject("categoriesCount", categoryService.getAllCategories()
+				.size());
+		view.addObject("purchasesCount", purchaseService.getAllPurchases()
+				.size());
+		view.addObject("promotions", productService.getOnPromotion());
 		return view;
 	}
 
@@ -83,17 +90,38 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/purchases", method = RequestMethod.GET)
-	public ModelAndView purchasesGet(@RequestParam(defaultValue = "1") int page) {
+	public ModelAndView purchasesGet(
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "false") boolean unverified,
+			@RequestParam(defaultValue = "false") boolean uncompleted) {
 		ModelAndView view = new AdminModelAndView("purchases");
-		/*
-		 * int pageCount = userService.getUsersCount(""); if (page < 1 || page >
-		 * pageCount) { page = 1; } List<User> listUsers =
-		 * userService.getUsersInRange(page, ""); view.addObject("users",
-		 * listUsers); view.addObject("user", new User());
-		 * view.addObject("pageCount", pageCount); view.addObject("page", page);
-		 */
-		view.addObject("purchases", purchaseService.getAllPurchases());
+		if (unverified) {
+			view.addObject("purchases", purchaseService.getUnverified());
+			return view;
+		}
+
+		if (uncompleted) {
+			view.addObject("purchases", purchaseService.getUncompleted());
+			return view;
+		}
+
+		int pageCount = purchaseService.getPurchasesCount();
+		if (page < 1 || page > pageCount) {
+			page = 1;
+		}
+		List<Purchase> listPurchases = purchaseService
+				.getPurchasesInRange(page);
+		view.addObject("purchases", listPurchases);
+		view.addObject("pageCount", pageCount);
+		view.addObject("page", page);
+
 		return view;
+	}
+
+	private ModelAndView AdminModelAndView(String string, String string2,
+			List<Purchase> unverified) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@RequestMapping(value = "/purchases/edit", method = RequestMethod.GET)

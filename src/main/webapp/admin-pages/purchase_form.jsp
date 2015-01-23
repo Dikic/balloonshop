@@ -13,29 +13,30 @@
 			</div>
 			<div class="modal-body">
 				<div class="container-fluid">
-					<form:form class="form-horizontal" role="form"
-						method="post" commandName="purchase"
+					<form:form class="form-horizontal" role="form" method="post"
+						commandName="purchase"
 						action="${pageContext.request.contextPath}/admin/purchases/edit">
 						<form:hidden path="id" />
 						<div class="form-group">
-							<label class="control-label col-sm-3">Date shipped:</label>
+							<label class="control-label col-sm-3">Shipped:</label>
 
 							<div class="col-sm-9">
-								<input type="checkbox" name="shipped" ${empty purchase.dateShipped ? '':'checked'}>
+								<input type="checkbox" name="shipped"
+									${empty purchase.dateShipped ? '':'checked'}>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-3">Completed:</label>
 
 							<div class="col-sm-9">
-								<form:checkbox  path="completed" value="${purchase.completed}"/>
+								<form:checkbox path="completed" value="${purchase.completed}" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class=" control-label col-sm-3">Canceled:</label>
 
 							<div class="col-sm-9">
-								<form:checkbox path="canceled" value="${purchase.canceled}"/>
+								<form:checkbox path="canceled" value="${purchase.canceled}" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -43,19 +44,20 @@
 
 							<div class="col-sm-9">
 								<form:input class="form-control" path="shippingAddress"
-									placeholder="Enter address" value="${purchase.shippingAddress}"/>
+									placeholder="Enter address" value="${purchase.shippingAddress}" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-3">Comments:</label>
 							<div class="col-sm-9">
 								<form:textarea class="form-control" path="comments"
-									placeholder="Enter comments..." value="${purchase.comments}"/>
+									placeholder="Enter comments..." value="${purchase.comments}" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-12">
-								<input type="submit" class="btn btn-danger btn-block" value="Edit"></input>
+								<input type="submit" class="btn btn-danger btn-block"
+									value="Edit"></input>
 							</div>
 						</div>
 					</form:form>

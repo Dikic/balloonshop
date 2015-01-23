@@ -55,6 +55,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	@Override
+	public List<Purchase> getUnverified(){
+		return purchaseDao.getUnverified();
+	}
+	
+	@Override
 	public List<Purchase> getPurchasesInRange(int page) {
 		int from = (page - 1) * PURCHASES_PER_PAGE;
 		return purchaseDao.getPurchasesInRange(from, PURCHASES_PER_PAGE);
@@ -64,6 +69,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public int getPurchasesCount() {
 		return (int) Math.ceil((purchaseDao.getPurchasesCount() * 1.0)
 				/ PURCHASES_PER_PAGE);
+	}
+
+	@Override
+	public List<Purchase> getUncompleted() {
+		return purchaseDao.getUncompleted();
 	}
 
 }

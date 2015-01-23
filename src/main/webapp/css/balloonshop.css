@@ -69,6 +69,10 @@ img.img.img-static {
 	background-color: #f0ad4e;
 }
 
-.badge.badge-danger{
+.badge.badge-danger {
 	background-color: red !important;
+}
+
+.panel-body.static-height {
+	min-height: 80px !important;
 }

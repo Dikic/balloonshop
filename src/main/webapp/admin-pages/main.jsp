@@ -48,9 +48,9 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="#">Unverified  <span
+					<li><a href="${pageContext.request.contextPath}/admin/purchases?unverified=true">Unverified  <span
 							class="badge badge-danger">${unverifiedCount}</span></a></li>
-					<li><a href="#">Uncompleted  <span
+					<li><a href="${pageContext.request.contextPath}/admin/purchases?uncompleted=true">Uncompleted  <span
 							class="badge badge-danger">${uncompletedCount}</span></a></li>
 
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -63,7 +63,7 @@
 								href="${pageContext.request.contextPath}/admin/products">Products</a></li>
 							<li><a
 								href="${pageContext.request.contextPath}/admin/categories">Categories</a></li>
-							<li><a href="${pageContext.request.contextPath}/admin/purchases">Orders</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/purchases">Purchases</a></li>
 						</ul></li>
 				</ul>
 				<form class="navbar-form navbar-right" role="search" method="get">
@@ -107,7 +107,7 @@
 								href="${pageContext.request.contextPath}/admin/products">Products</a>
 							<a class="list-group-item"
 								href="${pageContext.request.contextPath}/admin/categories">Categories</a>
-							<a class="list-group-item" href="${pageContext.request.contextPath}/admin/purchases">Orders</a>
+							<a class="list-group-item" href="${pageContext.request.contextPath}/admin/purchases">Purchases</a>
 						</div>
 					</div>
 

@@ -18,10 +18,14 @@ public interface PurchaseService {
 	public List<Purchase> getAllPurchases();
 
 	public long unverifiedCount();
-	
+
 	public long uncompletedCount();
-	
+
 	public List<Purchase> getPurchasesInRange(int page);
 
 	public int getPurchasesCount();
+
+	public List<Purchase> getUnverified();
+	
+	public List<Purchase> getUncompleted();
 }

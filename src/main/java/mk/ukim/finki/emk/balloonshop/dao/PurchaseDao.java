@@ -21,8 +21,14 @@ public interface PurchaseDao {
 
 	public long uncompletedCount();
 
-	public List<Purchase> getPurchasesInRange(int from, int max); //for paging on admin page
+	public List<Purchase> getPurchasesInRange(int from, int max); // for paging
+																	// on admin
+																	// page
 
 	public int getPurchasesCount();
+
+	public List<Purchase> getUnverified();
+
+	public List<Purchase> getUncompleted();
 
 }
