@@ -1,6 +1,7 @@
 package mk.ukim.finki.emk.balloonshop.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,8 +9,10 @@ import mk.ukim.finki.emk.balloonshop.dao.CartDao;
 import mk.ukim.finki.emk.balloonshop.dao.UserDao;
 import mk.ukim.finki.emk.balloonshop.model.Cart;
 import mk.ukim.finki.emk.balloonshop.model.User;
+import mk.ukim.finki.emk.balloonshop.model.VerificationUser;
 import mk.ukim.finki.emk.balloonshop.service.UserService;
 
+import org.hibernate.usertype.UserVersionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addUser(User u) {
+		VerificationUser verificationUser = new VerificationUser();
+		verificationUser.setUser(u);
+		verificationUser.setLink(UUID.randomUUID().toString());
+		u.setVerificationUser(verificationUser);
 		userDao.addUser(u);
 		Cart cart = new Cart();
 		cart.setUser(u);
@@ -89,6 +96,17 @@ public class UserServiceImpl implements UserService {
 	public int getUsersCount(String keyword) {
 		return (int) Math.ceil((userDao.getUsersCount(keyword) * 1.0)
 				/ USERS_PER_PAGE);
+	}
+
+	@Override
+	public boolean verifyUser(String uuid) {
+		User user = userDao.getUserByUUID(uuid);
+		if (user != null) {
+			user.setEnabled(true);
+			userDao.updateUser(user);
+			return true;
+		}
+		return false;
 	}
 
 }

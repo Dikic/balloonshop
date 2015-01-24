@@ -27,6 +27,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void addUser(User u) {
 		getCurrentSession().save(u);
+		getCurrentSession().save(u.getVerificationUser());
 	}
 
 	@Override
@@ -105,5 +106,13 @@ public class UserDaoImpl implements UserDao {
 				.toString();
 
 		return Integer.parseInt(count);
+	}
+
+	@Override
+	public User getUserByUUID(String uuid) {
+		return (User) getCurrentSession().createCriteria(User.class,"user")
+				.createAlias("user.verificationUser", "verification")
+				.add(Restrictions.eq("verification.link", uuid))
+				.uniqueResult();
 	}
 }

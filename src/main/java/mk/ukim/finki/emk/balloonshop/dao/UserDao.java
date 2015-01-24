@@ -25,4 +25,6 @@ public interface UserDao {
 	public List<User> getUsersInRange(int from, int max, String keyword);
 
 	public int getUsersCount(String keyword);
+
+	public User getUserByUUID(String uuid);
 }

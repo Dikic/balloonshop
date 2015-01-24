@@ -108,7 +108,18 @@ public class BalloonshopController {
 	public String loginPost(@ModelAttribute User user, HttpSession session) {
 		userService.addUser(user);
 		session.setAttribute("user", user);
+		sendMail(user.getEmail(),
+				"Please verify you account with the following link "
+						+ session.getServletContext().getContextPath()
+						+ "/verify/" + user.getVerificationUser().getLink());
 		return "redirect:?notice=Your account has been created, please verify your account!";
+	}
+
+	@RequestMapping(value = "/verify/{uuid}")
+	public String verify(@PathVariable String uuid) {
+		String notice = userService.verifyUser(uuid) ? "Your account has been verified."
+				: "Error verifying account.";
+		return String.format("redirect:/?notice=%s", notice);
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
@@ -335,27 +346,11 @@ public class BalloonshopController {
 			}
 			customer.getCart().setCartProduct(null);
 
-			JavaMailSenderImpl mail = new JavaMailSenderImpl();
-			mail.setHost("smtp.gmail.com");
-			mail.setPort(25);
-			mail.setJavaMailProperties(getMailProperties());
-			mail.setUsername("balloonshopemk@gmail.com");
-			mail.setPassword("seminarskarabota");
-
-			MimeMessage msg = mail.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(msg);
-			try {
-				helper.setSubject("Balloonshop transaction");
-				helper.setTo(customer.getEmail());
-				helper.setText("Your transaction is successful. \n"
-						+ amount
-						+ "$ have been paid. \n\n\n Thank you for using our service! \n Ballonshop team");
-				helper.setFrom("balloonshop@balloonshop.com");
-			} catch (MessagingException e) {
-				e.printStackTrace();
-			}
-
-			mail.send(msg);
+			sendMail(
+					user.getEmail(),
+					"Your transaction is successful. \n"
+							+ amount
+							+ "$ have been paid. \n\n\n Thank you for using our service! \n Ballonshop team");
 		} else {
 			purchase.setCanceled(true);
 		}
@@ -385,11 +380,33 @@ public class BalloonshopController {
 				+ " succeeded.";
 	}
 
+	private void sendMail(String to, String message) {
+		JavaMailSenderImpl mail = new JavaMailSenderImpl();
+		mail.setHost("smtp.gmail.com");
+		mail.setPort(25);
+		mail.setJavaMailProperties(getMailProperties());
+		mail.setUsername("balloonshopemk@gmail.com");
+		mail.setPassword("seminarskarabota");
+
+		MimeMessage msg = mail.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(msg);
+		try {
+			helper.setSubject("Balloonshop transaction");
+			helper.setTo(to);
+			helper.setText(message);
+			helper.setFrom("balloonshop@balloonshop.com");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+
+		mail.send(msg);
+	}
+
 	private Properties getMailProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("mail.transport.protocol", "smtp");
 		properties.setProperty("mail.smtp.auth", "true");
-		properties.setProperty("mail.smtp.starttls.enable", "true");
+//		properties.setProperty("mail.smtp.starttls.enable", "true");
 		properties.setProperty("mail.debug", "false");
 		return properties;
 	}

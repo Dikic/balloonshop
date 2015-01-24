@@ -27,4 +27,6 @@ public interface UserService {
 	public List<User> getUsersInRange(int page, String keyword);
 
 	public int getUsersCount(String keyword);
+
+	public boolean verifyUser(String uuid);
 }

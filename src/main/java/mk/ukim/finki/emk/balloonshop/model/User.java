@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 public class User {
@@ -24,6 +25,7 @@ public class User {
 
 	private String password;
 
+	@Column(unique = true)
 	private String email;
 
 	private String authority;
@@ -35,9 +37,31 @@ public class User {
 	private int zip;
 
 	private String country;
-	
-	@OneToMany(mappedBy="user",cascade=CascadeType.DETACH)
+
+	@Column(columnDefinition = "boolean default true")
+	private boolean enabled;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.DETACH)
 	private List<Purchase> purchases;
+
+	@OneToOne(mappedBy = "user")
+	private VerificationUser verificationUser;
+
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public VerificationUser getVerificationUser() {
+		return verificationUser;
+	}
+
+	public void setVerificationUser(VerificationUser verificationUser) {
+		this.verificationUser = verificationUser;
+	}
 
 	public String getCity() {
 		return city;
@@ -62,9 +86,6 @@ public class User {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
-	@Column(columnDefinition = "boolean default true")
-	private boolean enabled;
 
 	public boolean getEnabled() {
 		return enabled;
