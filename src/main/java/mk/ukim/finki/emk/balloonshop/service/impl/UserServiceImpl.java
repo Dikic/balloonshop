@@ -103,6 +103,7 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.getUserByUUID(uuid);
 		if (user != null) {
 			user.setEnabled(true);
+			user.setAuthority("ROLE_USER");
 			userDao.updateUser(user);
 			return true;
 		}

@@ -124,7 +124,7 @@
 		</div>
 		<div class="jumbotron jumbotron-promotion shadow">
 			<div class="row">
-				<h3>Products on promotion!!!</h3>
+				<h2 class="text-center"><strong>Products on promotion</strong></h2>
 			</div>
 			<div class="row">
 				<c:forEach var="promotion" items="${promotions}">

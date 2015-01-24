@@ -2,6 +2,7 @@ package mk.ukim.finki.emk.balloonshop.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,16 +33,16 @@ public class Product {
 
 	private boolean onPromotion;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Category> categories;
 
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<CartProduct> cartProducts;
 
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<PurchaseDetail> purchaseDetails;
 
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<PurchaseProduct> purchaseProducts;
 
 	public List<PurchaseDetail> getPurchaseDetails() {

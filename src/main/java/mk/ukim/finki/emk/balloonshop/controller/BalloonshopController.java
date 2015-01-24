@@ -77,6 +77,15 @@ public class BalloonshopController {
 	private static final String TRANSACTION_USERNAME = "99571100";
 	private static final String TRANSACTION_PASSWORD = "nAwc3Yqt";
 	private static final int TRANSACTION_TIMEOUT = 6000;
+	private static final String LINK = "https://localhost:8443"; // for
+																	// verifying
+																	// account,
+																	// change
+																	// this when
+																	// you're
+																	// planning
+																	// to host
+																	// the app
 
 	@ModelAttribute("cartProductCount")
 	public int getProductCount(HttpSession session) {
@@ -106,10 +115,16 @@ public class BalloonshopController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String loginPost(@ModelAttribute User user, HttpSession session) {
+		List<User> users = userService.getAllUsers();
+		for (User u : users) {
+			if (u.getEmail().equals(user.getEmail())) {
+				return "redirect:?notice=This account already exists please try again with different email address!";
+			}
+		}
 		userService.addUser(user);
 		session.setAttribute("user", user);
 		sendMail(user.getEmail(),
-				"Please verify you account with the following link "
+				"Please verify your account with the following link " + LINK
 						+ session.getServletContext().getContextPath()
 						+ "/verify/" + user.getVerificationUser().getLink());
 		return "redirect:?notice=Your account has been created, please verify your account!";
@@ -406,7 +421,7 @@ public class BalloonshopController {
 		Properties properties = new Properties();
 		properties.setProperty("mail.transport.protocol", "smtp");
 		properties.setProperty("mail.smtp.auth", "true");
-//		properties.setProperty("mail.smtp.starttls.enable", "true");
+		properties.setProperty("mail.smtp.starttls.enable", "true");
 		properties.setProperty("mail.debug", "false");
 		return properties;
 	}
