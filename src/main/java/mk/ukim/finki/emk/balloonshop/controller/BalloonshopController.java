@@ -3,7 +3,10 @@ package mk.ukim.finki.emk.balloonshop.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import mk.ukim.finki.emk.balloonshop.model.Cart;
@@ -26,6 +29,8 @@ import mk.ukim.finki.emk.balloonshop.utils.CustomerModelAndView;
 
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -326,8 +331,31 @@ public class BalloonshopController {
 				purchaseDetail.setUnitCost(cartProduct.getProduct().getPrice());
 				purchaseDetailService.addPurchaseDetail(purchaseDetail);
 				cartProductService.deleteCartProduct(cartProduct.getId());
+
 			}
 			customer.getCart().setCartProduct(null);
+
+			JavaMailSenderImpl mail = new JavaMailSenderImpl();
+			mail.setHost("smtp.gmail.com");
+			mail.setPort(25);
+			mail.setJavaMailProperties(getMailProperties());
+			mail.setUsername("balloonshopemk@gmail.com");
+			mail.setPassword("seminarskarabota");
+
+			MimeMessage msg = mail.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(msg);
+			try {
+				helper.setSubject("Balloonshop transaction");
+				helper.setTo(customer.getEmail());
+				helper.setText("Your transaction is successful. \n"
+						+ amount
+						+ "$ have been paid. \n\n\n Thank you for using our service! \n Ballonshop team");
+				helper.setFrom("balloonshop@balloonshop.com");
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+
+			mail.send(msg);
 		} else {
 			purchase.setCanceled(true);
 		}
@@ -353,8 +381,17 @@ public class BalloonshopController {
 		// System.out.println(link.toString());
 		// return "redirect:" + link.toString();
 
-		return "redirect:/?notice=your transaction" + (success ? "" : " not")
+		return "redirect:/?notice=Your transaction" + (success ? "" : " not")
 				+ " succeeded.";
+	}
+
+	private Properties getMailProperties() {
+		Properties properties = new Properties();
+		properties.setProperty("mail.transport.protocol", "smtp");
+		properties.setProperty("mail.smtp.auth", "true");
+		properties.setProperty("mail.smtp.starttls.enable", "true");
+		properties.setProperty("mail.debug", "false");
+		return properties;
 	}
 
 	@RequestMapping(value = "add-to-cart/{productId}", method = RequestMethod.GET)
