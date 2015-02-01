@@ -18,12 +18,19 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+/**
+ * Configuration class
+ * 
+ * @author Dejan, Mila, Bojan
+ *
+ */
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
 public class AppConfig {
 
+	// variables for configuration paths from db.properties file
 	private static final String PN_DATABASE_DRIVER = "db.driver";
 	private static final String PN_DATABASE_PASSWORD = "db.password";
 	private static final String PN_DATABASE_URL = "db.url";
@@ -37,6 +44,11 @@ public class AppConfig {
 	@Resource
 	private Environment env;
 
+	/**
+	 * Hibernate properties
+	 * 
+	 * @return Hibernate properties
+	 */
 	private Properties hibProperties() {
 		Properties properties = new Properties();
 		properties.put(PN_HIBERNATE_DIALECT,
@@ -48,11 +60,9 @@ public class AppConfig {
 		return properties;
 	}
 
+	// system file path for images
 	public static final String UPLOAD_PATH = "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
-	// TODO Deki's file path file path
-	// "C:\\Users\\Dejan\\Desktop\\FINKI\\eclipse proekti\\balloonshop\\src\\main\\webapp\\images\\";
-	// TODO Dikic's file path
-	// "F:\\Development\\faxWorkspace\\balloonshop\\src\\main\\webapp\\images\\";
+	
 	static {
 		// URL location = AppConfig.class.getProtectionDomain().getCodeSource()
 		// .getLocation();

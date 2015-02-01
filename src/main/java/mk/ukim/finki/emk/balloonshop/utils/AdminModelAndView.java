@@ -2,6 +2,12 @@ package mk.ukim.finki.emk.balloonshop.utils;
 
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Custom view class for admin pages
+ * 
+ * @author Dejan, Mila, Bojan
+ *
+ */
 public class AdminModelAndView extends ModelAndView {
 
 	public AdminModelAndView(String view) {

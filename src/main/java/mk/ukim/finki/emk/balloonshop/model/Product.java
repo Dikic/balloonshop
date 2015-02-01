@@ -33,7 +33,7 @@ public class Product {
 
 	private boolean onPromotion;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.DETACH)
 	private List<Category> categories;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

@@ -30,6 +30,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Admin controller
+ * 
+ * @author Dejan, Mila, Bojan
+ *
+ */
 @Secured("ROLE_ADMIN")
 @RequestMapping(value = "/admin")
 @Controller
@@ -51,16 +57,29 @@ public class AdminController {
 	@Autowired
 	PurchaseService purchaseService;
 
+	/**
+	 * 
+	 * @return number of unverified purchases
+	 */
 	@ModelAttribute("unverifiedCount")
 	public long unverifiedCount() {
 		return purchaseService.unverifiedCount();
 	}
 
+	/**
+	 * 
+	 * @return number of uncompleted purchases
+	 */
 	@ModelAttribute("uncompletedCount")
 	public long uncompletedCount() {
 		return purchaseService.uncompletedCount();
 	}
 
+	/**
+	 * Admin root path
+	 * 
+	 * @return view
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView adminHome() {
 		ModelAndView view = new AdminModelAndView("admin");
@@ -74,6 +93,13 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to show all users
+	 * 
+	 * @param page
+	 *            number of page
+	 * @return view
+	 */
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ModelAndView usersGet(@RequestParam(defaultValue = "1") int page) {
 		ModelAndView view = new AdminModelAndView("users");
@@ -89,6 +115,17 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to show all purchases
+	 * 
+	 * @param page
+	 *            number of purchases page
+	 * @param unverified
+	 *            request unverified
+	 * @param uncompleted
+	 *            request uncompleted
+	 * @return view
+	 */
 	@RequestMapping(value = "/purchases", method = RequestMethod.GET)
 	public ModelAndView purchasesGet(
 			@RequestParam(defaultValue = "1") int page,
@@ -118,18 +155,26 @@ public class AdminController {
 		return view;
 	}
 
-	private ModelAndView AdminModelAndView(String string, String string2,
-			List<Purchase> unverified) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	/**
+	 * Request method to get purchase for editing
+	 * 
+	 * @param id
+	 *            of purchase
+	 * @return view
+	 */
 	@RequestMapping(value = "/purchases/edit", method = RequestMethod.GET)
 	public ModelAndView getPurchase(@RequestParam int id) {
 		return new ModelAndView("/admin-pages/purchase_form", "purchase",
 				purchaseService.getPurchase(id));
 	}
 
+	/**
+	 * Request method to get purchase for editing
+	 * 
+	 * @param purchase
+	 *            to edit
+	 * @return view
+	 */
 	@RequestMapping(value = "/purchases/edit", method = RequestMethod.POST)
 	public String purchaseEditPOST(@ModelAttribute Purchase purchase,
 			@RequestParam(defaultValue = "false") boolean shipped) {
@@ -142,6 +187,13 @@ public class AdminController {
 		return "redirect:/admin/purchases";
 	}
 
+	/**
+	 * Request method to delete user
+	 * 
+	 * @param id
+	 *            of user
+	 * @return view
+	 */
 	@RequestMapping(value = "/delete/user", method = RequestMethod.GET)
 	public ModelAndView deleteUser(@RequestParam int id) {
 		userService.deleteUser(id);
@@ -150,6 +202,13 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to add user
+	 * 
+	 * @param user
+	 *            to add
+	 * @return view
+	 */
 	@RequestMapping(value = "/add/user", method = RequestMethod.POST)
 	public ModelAndView addUser(@ModelAttribute User user) {
 		userService.addOrUpdateUser(user);
@@ -157,6 +216,13 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to show all products
+	 * 
+	 * @param page
+	 *            number for products
+	 * @return view
+	 */
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	public ModelAndView productsGet(@RequestParam(defaultValue = "1") int page) {
 		ModelAndView view = new AdminModelAndView("products");
@@ -173,6 +239,13 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to delete product
+	 * 
+	 * @param id
+	 *            of product to delete
+	 * @return view
+	 */
 	@RequestMapping(value = "/delete/product", method = RequestMethod.GET)
 	public ModelAndView deleteProduct(@RequestParam int id) {
 		productService.deleteProduct(id);
@@ -181,6 +254,13 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to show one product
+	 * 
+	 * @param productId
+	 *            id of product to show
+	 * @return view
+	 */
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public ModelAndView addOrEditProductGet(@RequestParam int productId) {
 		ModelAndView view = new AdminModelAndView("add_product");
@@ -193,6 +273,20 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to add or edit product
+	 * 
+	 * @param productId
+	 * @param name
+	 * @param description
+	 * @param price
+	 * @param onPromotion
+	 * @param categories
+	 * @param p
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String addProductPost(@RequestParam int productId,
 			@RequestParam String name, @RequestParam String description,
@@ -268,6 +362,13 @@ public class AdminController {
 		}
 	}
 
+	/**
+	 * Request method to show all categories
+	 * 
+	 * @param page
+	 *            number of categories
+	 * @return view
+	 */
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	public ModelAndView categoriesGet(@RequestParam(defaultValue = "1") int page) {
 		int pageCount = categoryService.getCategoriesCount("");
@@ -286,6 +387,13 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to delete category
+	 * 
+	 * @param id
+	 *            of category to delete
+	 * @return view
+	 */
 	@RequestMapping(value = "/delete/category", method = RequestMethod.GET)
 	public ModelAndView deleteCategory(@RequestParam int id) {
 		categoryService.deleteCategory(id);
@@ -294,8 +402,15 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to add or update category
+	 * 
+	 * @param category
+	 *            to add or update
+	 * @return view
+	 */
 	@RequestMapping(value = "/add/category", method = RequestMethod.POST)
-	public ModelAndView addProduct(@ModelAttribute Category category) {
+	public ModelAndView addCategory(@ModelAttribute Category category) {
 
 		categoryService.addOrUpdateCategory(category);
 		ModelAndView view = new ModelAndView("redirect:/admin/categories");
@@ -303,6 +418,13 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to get form for category
+	 * 
+	 * @param categoryId
+	 *            category to edit
+	 * @return view form
+	 */
 	@RequestMapping(value = "/edit/categoryform/{categoryId}", method = RequestMethod.GET)
 	public ModelAndView editCategoryForm(@PathVariable int categoryId) {
 		ModelAndView view = new ModelAndView("/admin-pages/category_form");
@@ -311,6 +433,13 @@ public class AdminController {
 		return view;
 	}
 
+	/**
+	 * Request method to get user form
+	 * 
+	 * @param userId
+	 *            to edit
+	 * @return view
+	 */
 	@RequestMapping(value = "/edit/userform/{userId}", method = RequestMethod.GET)
 	public ModelAndView editUserForm(@PathVariable int userId) {
 		ModelAndView view = new ModelAndView("/admin-pages/user_form");

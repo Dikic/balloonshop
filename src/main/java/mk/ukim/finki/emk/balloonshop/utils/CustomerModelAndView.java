@@ -4,6 +4,12 @@ import mk.ukim.finki.emk.balloonshop.model.User;
 
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Custom view class for user pages
+ * 
+ * @author Dejan, Mila, Bojan
+ *
+ */
 public class CustomerModelAndView extends ModelAndView {
 
 	public CustomerModelAndView(String view) {

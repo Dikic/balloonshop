@@ -46,6 +46,12 @@ import com.datacash.client.CardDetails;
 import com.datacash.errors.FailureReport;
 import com.datacash.util.XMLDocument;
 
+/**
+ * User controller
+ * 
+ * @author Dejan, Mila, Bojan
+ *
+ */
 @Controller
 public class BalloonshopController {
 
@@ -77,16 +83,17 @@ public class BalloonshopController {
 	private static final String TRANSACTION_USERNAME = "99571100";
 	private static final String TRANSACTION_PASSWORD = "nAwc3Yqt";
 	private static final int TRANSACTION_TIMEOUT = 6000;
-	private static final String LINK = "https://localhost:8443"; // for
-																	// verifying
-																	// account,
-																	// change
-																	// this when
-																	// you're
-																	// planning
-																	// to host
-																	// the app
 
+	// for verifying account, change this when you're planning to host the app
+	private static final String LINK = "https://localhost:8443";
+
+	/**
+	 * Request method to get number of cart products
+	 * 
+	 * @param session
+	 *            for user
+	 * @return number of products in users cart
+	 */
 	@ModelAttribute("cartProductCount")
 	public int getProductCount(HttpSession session) {
 		User user = (User) session.getAttribute("customer");
@@ -97,22 +104,46 @@ public class BalloonshopController {
 		return cartProductService.getProductCount(id);
 	}
 
+	/**
+	 * Request method to get all categories
+	 * 
+	 * @return categories
+	 */
 	@ModelAttribute("categories")
 	public List<Category> getCategories() {
 		return categoryService.getAllCategories();
 	}
 
+	/**
+	 * Request method to get products on promotion
+	 * 
+	 * @return
+	 */
 	@ModelAttribute("promotions")
 	public List<Product> getOnPromotions() {
 		return productService.getOnPromotion();
 
 	}
 
+	/**
+	 * Request method invoiced when url is invalid
+	 * 
+	 * @return root path
+	 */
 	@RequestMapping(value = "/*")
 	public String invalid() {
 		return "redirect:";
 	}
 
+	/**
+	 * Request method to sign up user
+	 * 
+	 * @param user
+	 *            to sign up
+	 * @param session
+	 *            for user
+	 * @return redirect link
+	 */
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String loginPost(@ModelAttribute User user, HttpSession session) {
 		List<User> users = userService.getAllUsers();
@@ -130,6 +161,12 @@ public class BalloonshopController {
 		return "redirect:?notice=Your account has been created, please verify your account!";
 	}
 
+	/**
+	 * Request method to verify user
+	 * 
+	 * @param uuid
+	 * @return redirect path
+	 */
 	@RequestMapping(value = "/verify/{uuid}")
 	public String verify(@PathVariable String uuid) {
 		String notice = userService.verifyUser(uuid) ? "Your account has been verified."
@@ -137,6 +174,15 @@ public class BalloonshopController {
 		return String.format("redirect:/?notice=%s", notice);
 	}
 
+	/**
+	 * Request method to sign in user
+	 * 
+	 * @param user
+	 *            to sign in
+	 * @param session
+	 *            for user
+	 * @return redirect path
+	 */
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public String signinPost(@ModelAttribute User user, HttpSession session) {
 		String notice = userService.signInUser(user, session) ? "Welcome."
@@ -144,12 +190,26 @@ public class BalloonshopController {
 		return String.format("redirect:?notice=%s", notice);
 	}
 
+	/**
+	 * Request method to sign out user
+	 * 
+	 * @param session
+	 *            for user
+	 * @return redirect path
+	 */
 	@RequestMapping(value = "/signout", method = RequestMethod.GET)
 	public String signOut(HttpSession session) {
 		session.removeAttribute("customer");
 		return "redirect:?notice=You have signed out successfully";
 	}
 
+	/**
+	 * Request method to get product detail
+	 * 
+	 * @param productId
+	 *            id of product to view
+	 * @return view
+	 */
 	@RequestMapping(value = "/details/{productId}", method = RequestMethod.GET)
 	public ModelAndView details(@PathVariable int productId) {
 		ModelAndView view = new CustomerModelAndView("product_details");
@@ -159,6 +219,17 @@ public class BalloonshopController {
 		return view;
 	}
 
+	/**
+	 * Root path
+	 * 
+	 * @param notice
+	 *            message from application
+	 * @param page
+	 *            number of page for products
+	 * @param search
+	 * @param category
+	 * @return view
+	 */
 	@RequestMapping(value = "/")
 	public ModelAndView index(@RequestParam(required = false) String notice,
 			@RequestParam(defaultValue = "1") int page,
@@ -183,6 +254,13 @@ public class BalloonshopController {
 		return view;
 	}
 
+	/**
+	 * Request method to get users cart
+	 * 
+	 * @param session
+	 *            for user
+	 * @return view
+	 */
 	@RequestMapping(value = "cart", method = RequestMethod.GET)
 	public ModelAndView cart(HttpSession session) {
 
@@ -198,6 +276,13 @@ public class BalloonshopController {
 		return view;
 	}
 
+	/**
+	 * Request method to get checkout view
+	 * 
+	 * @param session
+	 *            for user
+	 * @return view
+	 */
 	@RequestMapping(value = "checkout", method = RequestMethod.GET)
 	public ModelAndView checkout(HttpSession session) {
 		ModelAndView view = new CustomerModelAndView("checkout");
@@ -205,6 +290,13 @@ public class BalloonshopController {
 		return view;
 	}
 
+	/**
+	 * Request method to get users profile
+	 * 
+	 * @param session
+	 *            for user
+	 * @return view
+	 */
 	@RequestMapping(value = "profile", method = RequestMethod.GET)
 	public ModelAndView profile(HttpSession session) {
 		ModelAndView view = new CustomerModelAndView("profile");
@@ -216,6 +308,15 @@ public class BalloonshopController {
 		return view;
 	}
 
+	/**
+	 * Request method to update users attributes
+	 * 
+	 * @param session
+	 *            for user
+	 * @param user
+	 *            to update
+	 * @return redirect path
+	 */
 	@RequestMapping(value = "profile", method = RequestMethod.POST)
 	public String profilePost(HttpSession session, @ModelAttribute User user) {
 		User customer = (User) session.getAttribute("customer");
@@ -231,6 +332,19 @@ public class BalloonshopController {
 		return "redirect:/?notice=Your account update successfully.";
 	}
 
+	/**
+	 * Request method to place purchases
+	 * 
+	 * @param session
+	 *            for user
+	 * @param user
+	 *            that place purchases
+	 * @param cardNumber
+	 *            of users card
+	 * @param dateExpire
+	 *            of users card
+	 * @return redirect path
+	 */
 	@RequestMapping(value = "checkout", method = RequestMethod.POST)
 	public String checkoutPost(HttpSession session, @ModelAttribute User user,
 			@RequestParam String cardNumber, @RequestParam String dateExpire) {
@@ -372,29 +486,17 @@ public class BalloonshopController {
 
 		purchaseService.updatePurchase(purchase);
 
-		// StringBuilder link = new StringBuilder(
-		// "https://www.paypal.com/xclick?business=balloonshopemk@balloonshop.com.mk");
-		// link.append("&item_name=balloonshopOrder").append(purchase.getId());
-		// link.append("&item_number=").append(purchase.getId());
-		// link.append("&amount=").append(Math.ceil(amount));
-		// link.append("&currency_code=USD");
-		// link.append("&address1=").append(user.getAddress());
-		// link.append("&address=").append(user.getAddress());
-		// link.append("&city=").append(user.getCity());
-		// link.append("&zip=").append(user.getZip());
-		// link.append("&email=").append(user.getEmail());
-		// link.append("&first_name=").append(user.getName());
-		// link.append("&last_name=").append(user.getSurname());
-		// link.append("&lc=").append(user.getCountry());
-		// link.append("&return=http://localhost:8080/balloonshop/");
-		// link.append("&cancel_return=http://localhost:8080/balloonshop/");
-		// System.out.println(link.toString());
-		// return "redirect:" + link.toString();
-
 		return "redirect:/?notice=Your transaction" + (success ? "" : " not")
 				+ " succeeded.";
 	}
 
+	/**
+	 * Method for sending mails
+	 * 
+	 * @param to
+	 *            address
+	 * @param message
+	 */
 	private void sendMail(String to, String message) {
 		JavaMailSenderImpl mail = new JavaMailSenderImpl();
 		mail.setHost("smtp.gmail.com");
@@ -417,6 +519,11 @@ public class BalloonshopController {
 		mail.send(msg);
 	}
 
+	/**
+	 * Get mail properties
+	 * 
+	 * @return properties
+	 */
 	private Properties getMailProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("mail.transport.protocol", "smtp");
@@ -426,6 +533,15 @@ public class BalloonshopController {
 		return properties;
 	}
 
+	/**
+	 * Request method to put product into cart
+	 * 
+	 * @param session
+	 *            for user
+	 * @param productId
+	 *            id of product to add
+	 * @return redirect path
+	 */
 	@RequestMapping(value = "add-to-cart/{productId}", method = RequestMethod.GET)
 	public String addToCart(HttpSession session, @PathVariable int productId) {
 		User user = (User) session.getAttribute("customer");
@@ -436,6 +552,15 @@ public class BalloonshopController {
 		return "redirect:/?notice=Your product is added to cart successfully.";
 	}
 
+	/**
+	 * Request method to remove product from cart
+	 * 
+	 * @param session
+	 *            for user
+	 * @param cartProductId
+	 *            id of product to remove
+	 * @return redirect path
+	 */
 	@RequestMapping(value = "removeFromCart/{cartProductId}", method = RequestMethod.GET)
 	public String removeFromCart(HttpSession session,
 			@PathVariable int cartProductId) {
@@ -444,6 +569,17 @@ public class BalloonshopController {
 		return "redirect:/cart";
 	}
 
+	/**
+	 * Request method to update product quantity in cart
+	 * 
+	 * @param session
+	 *            for user
+	 * @param id
+	 *            of product in cart
+	 * @param quantity
+	 *            for product
+	 * @return id of updated product in cart
+	 */
 	@RequestMapping(value = "update-cart", method = RequestMethod.POST, produces = "application/json", headers = "Accept=application/json")
 	public @ResponseBody int updateCart(HttpSession session,
 			@RequestParam int id, @RequestParam int quantity) {
