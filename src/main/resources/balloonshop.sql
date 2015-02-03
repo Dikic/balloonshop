@@ -223,8 +223,21 @@ INSERT INTO `product_category` (`products_id`, `categories_id`) VALUES
 (64, 6),
 (64, 8),
 (64, 9);
-NSERT INTO user (id, address, authority, city, country, email, enabled, name, password, surname, zip) VALUES
+
+INSERT INTO `user` (`id`, `address`, `authority`, `city`, `country`, `email`, `enabled`, `name`, `password`, `surname`, `zip`) VALUES
 (1, 'admin', 'ROLE_ADMIN', 'admin', 'admin', 'admin', 1, 'admin', 'admin', 'admin', 1000);
+
+INSERT INTO `cart` (`id`, `user_id`) VALUES
+(3, 1),
+(4, 2),
+(5, 3),
+(6, 4),
+(2, 5),
+(8, 6),
+(9, 7),
+(10, 8),
+(11, 13);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
